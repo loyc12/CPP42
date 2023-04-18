@@ -7,7 +7,7 @@ std::string	get_input(std::string message)
 {
 	std::cout << message;
 
-	std::string	input;CPP
+	std::string	input;
 	std::getline(std::cin, input);
 
 	for (unsigned long i = 0; i < input.length(); i++)
