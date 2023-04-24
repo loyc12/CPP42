@@ -8,8 +8,6 @@ int main(void)
 	std::string input;
 	PhoneBook	book;
 
-	book.FillContacts();
-
 	welcome();
 
 	while (true)
@@ -18,9 +16,10 @@ int main(void)
 		std::cout << std::endl;
 		if (!input.compare("EXIT")) return EXIT_SUCCESS;
 		else if (!input.compare("ADD")) book.AddContact();
-		else if (!input.compare("LIST")) book.ListContacts();
 		else if (!input.compare("SEARCH")) book.SearchContacts();
-		else if (!input.compare("CLEAR")) book.ClearContacts();
+	//	else if (!input.compare("FILL")) book.FillContacts();
+	//	else if (!input.compare("LIST")) book.ListContacts();
+	//	else if (!input.compare("CLEAR")) book.ClearContacts();
 		else std::cout << "! INVALID COMMAND !" << std::endl << std::endl;
 	}
 }

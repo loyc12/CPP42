@@ -6,10 +6,10 @@ void	welcome()
 	std::cout << "o ---------------------------- o" << std::endl;
 	std::cout << "|  Welcome to your Phonebook!  |" << std::endl;
 	std::cout << "|  Usage :                     |" << std::endl;
-	std::cout << "|    ADD : adds new contact    |" << std::endl;
-	//std::cout << "|    LIST : lists contacts     |" << std::endl;
-	std::cout << "|    SEARCH : lookup a contact |" << std::endl;
-	//std::cout << "|    CLEAR : removes contacts  |" << std::endl;
+	std::cout << "|    ADD : add a new contact   |" << std::endl;
+	std::cout << "|    SEARCH : lookup contacts  |" << std::endl;
+//	std::cout << "|    LIST : list contacts      |" << std::endl;
+//	std::cout << "|    CLEAR : clear contacts    |" << std::endl;
 	std::cout << "o ---------------------------- o" << std::endl;
 	std::cout << std::endl;
 }
@@ -84,7 +84,8 @@ int true_lenght(std::string message)
 
 	for (unsigned long i = 0; i < message.length(); i++)
 	{
-		lenght += (message[i] & 0xc0) != 0x80;
+		if ((message[i] & 0xc0) != 0x80)
+			lenght++;
 	}
 	return lenght;
 }

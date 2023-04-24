@@ -7,16 +7,16 @@
 class	Contact
 {
 	private:
-		std::string	_first_name;
-		std::string	_last_name;
-		std::string	_phone_number;
-		std::string	_nick_name;
+		std::string	first_name;
+		std::string	last_name;
+		std::string	nick_name;
+		std::string	phone_number;
 
 	public:
 		Contact();
 		~Contact();
 		void Init();
-		void Load(std::string _fn, std::string _ln, std::string _pn, std::string _nn);
+		void Load(std::string fn, std::string ln, std::string nn, std::string pn);
 		void Display();
 		void GetInfo();
 };
