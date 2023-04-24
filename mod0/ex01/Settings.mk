@@ -9,6 +9,7 @@ NAME		=	phonebook
 FILES		=	main \
 				PhoneBook \
 				Contact \
+				suplements \
 
 # Directory names
 SRCDIR		=
