@@ -8,8 +8,10 @@ void	welcome()
 	std::cout << "|  Usage :                     |" << std::endl;
 	std::cout << "|    ADD : add a new contact   |" << std::endl;
 	std::cout << "|    SEARCH : lookup contacts  |" << std::endl;
-//	std::cout << "|    LIST : list contacts      |" << std::endl;
+//	std::cout << "|    FILL : add dummy contacts |" << std::endl;
+//	std::cout << "|    LIST : list all contacts  |" << std::endl;
 //	std::cout << "|    CLEAR : clear contacts    |" << std::endl;
+	std::cout << "|    EXIT : quit and leave     |" << std::endl;
 	std::cout << "o ---------------------------- o" << std::endl;
 	std::cout << std::endl;
 }

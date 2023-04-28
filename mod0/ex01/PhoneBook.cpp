@@ -20,12 +20,11 @@ void PhoneBook::AddContact(void)
 		for (int i = 0; i < BookSize - 1; i++)
 			this->contacts[i] = this->contacts[i + 1];
 		contact_count = BookSize - 1;
+
+		std::cout << "Removed previous contact !" << std::endl;
 	}
-	else
-	{
-		this->contacts[contact_count] = new_contact;
-		contact_count++;
-	}
+	this->contacts[contact_count] = new_contact;
+	contact_count++;
 
 	std::cout << "Added new contact !" << std::endl << std::endl;
 }
@@ -55,6 +54,7 @@ void PhoneBook::SearchContacts(void)
 	}
 }
 
+//adds the following dummy contacts (for testing purposes)
 void PhoneBook::FillContacts(void)
 {
 	this->contacts[0].Load("Alice", "Allard", "Lili", "0");
@@ -72,6 +72,7 @@ void PhoneBook::FillContacts(void)
 	std::cout << "Filled book with dummy contacts !" << std::endl << std::endl;
 }
 
+//the listing part of SEARCH, without asking for an index (for testing purposes)
 void PhoneBook::ListContacts(void)
 {
 	if (this->contact_count > 0)
@@ -90,6 +91,7 @@ void PhoneBook::ListContacts(void)
 	std::cout << std::endl;
 }
 
+//clears all contact info (for testing purposes)
 void PhoneBook::ClearContacts(void)
 {
 	Contact	empty_contact;
