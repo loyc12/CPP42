@@ -32,7 +32,7 @@ void Contact::Load(std::string fn, std::string ln, std::string nn, std::string p
 	this->phone_number = pn;
 }
 
-void Contact::Display()
+void Contact::Display() const
 {
 	std::cout << "| ";
 	truncate_print(this->first_name);
@@ -43,7 +43,7 @@ void Contact::Display()
 	std::cout << " |" << std::endl;
 }
 
-void Contact::GetInfo()
+void Contact::GetInfo() const
 {
 	std::cout << "First name : " << this->first_name << std::endl;
 	std::cout << "Last name  : " << this->last_name << std::endl;

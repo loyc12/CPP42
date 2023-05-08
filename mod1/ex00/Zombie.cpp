@@ -17,12 +17,12 @@ void Zombie::setName(std::string name)
 	this->name = name;
 }
 
-std::string Zombie::getName()
+std::string Zombie::getName() const
 {
 	return (this->name);
 }
 
-void Zombie::announce()
+void Zombie::announce() const
 {
 	std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 }

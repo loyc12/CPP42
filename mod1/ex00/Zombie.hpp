@@ -12,8 +12,8 @@ class	Zombie
 		Zombie();
 		~Zombie();
 		void setName(std::string name);
-		std::string getName();
-		void announce();
+		std::string getName() const;
+		void announce() const;
 };
 
 #endif //ZOMBIE_HPP

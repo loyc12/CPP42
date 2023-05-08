@@ -17,8 +17,8 @@ class	Contact
 		~Contact();
 		void Init();
 		void Load(std::string fn, std::string ln, std::string nn, std::string pn);
-		void Display();
-		void GetInfo();
+		void Display() const;
+		void GetInfo() const;
 };
 
 #endif //CONTACT_HPP

@@ -18,10 +18,10 @@ class	PhoneBook
 		~PhoneBook();
 
 		void AddContact(void);
-		void SearchContacts(void);
+		void SearchContacts(void) const;
 
 		void FillContacts();
-		void ListContacts(void);
+		void ListContacts(void) const;
 		void ClearContacts(void);
 };
 

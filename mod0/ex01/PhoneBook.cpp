@@ -29,7 +29,7 @@ void PhoneBook::AddContact(void)
 	std::cout << "Added new contact !" << std::endl << std::endl;
 }
 
-void PhoneBook::SearchContacts(void)
+void PhoneBook::SearchContacts(void) const
 {
 
 	ListContacts();
@@ -73,7 +73,7 @@ void PhoneBook::FillContacts(void)
 }
 
 //the listing part of SEARCH, without asking for an index (for testing purposes)
-void PhoneBook::ListContacts(void)
+void PhoneBook::ListContacts(void) const
 {
 	if (this->contact_count > 0)
 	{
