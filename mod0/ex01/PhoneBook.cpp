@@ -57,16 +57,16 @@ void PhoneBook::SearchContacts(void) const
 //adds the following dummy contacts (for testing purposes)
 void PhoneBook::FillContacts(void)
 {
-	this->contacts[0].Load("Alice", "Allard", "Lili", "0");
-	this->contacts[1].Load("Bob", "Bergeron", "Bobby", "1");
-	this->contacts[2].Load("Clarence", "Caron", "Carré", "10");
-	this->contacts[3].Load("Daniel", "Dupré-Deschamps", "Dan", "11");
-	this->contacts[4].Load("Étienne", "Érrant", "Titiènne", "100");
-	this->contacts[5].Load("Fabienne", "Félicité", "Fabi", "101");
-	this->contacts[6].Load("Gaétan", "Gastonguay", "Gaston", "110");
-	this->contacts[7].Load("Héliot", "Hébert", "Éli", "111");
-	//this->contacts[8].Load("Isabelle", "Irène", "Iza", "1000");
-	//this->contacts[9].Load("Justin", "Jaspar", "Jas", "1001");
+	this->contacts[0].Load("Alice", "Allard", "Lili", "0", "Aime beaucoup trop le hockey");
+	this->contacts[1].Load("Bob", "Bergeron", "Bobby", "1", "N'aime pas son surnom");
+	this->contacts[2].Load("Clarence", "Caron", "Carré", "10", "A déjà roulé sur une couleuvre en vélo");
+	this->contacts[3].Load("Daniel", "Dupré-Deschamps", "Dan", "11", "A une famille secrete");
+	this->contacts[4].Load("Étienne", "Érrant", "Titiènne", "100", "Torture des mouches");
+	this->contacts[5].Load("Fabienne", "Félicité", "Fabi", "101", "Souhaite que sa pire ennemie soufre");
+	this->contacts[6].Load("Gaétan", "Gastonguay", "Gaston", "110", "A déjà trouvé un cadavre dans les bois");
+	this->contacts[7].Load("Héliot", "Hébert", "Éli", "111", "A déjà enterré un cadavre dans les bois");
+	//this->contacts[8].Load("Isabelle", "Irène", "Iza", "1000", "Vote secretement pour le parti vert");
+	//this->contacts[9].Load("Justin", "Jaspar", "Jas", "1001", A déjà frappé quelqu'un en voiture);
 	this->contact_count = BookSize;
 
 	std::cout << "Filled book with dummy contacts !" << std::endl << std::endl;

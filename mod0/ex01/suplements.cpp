@@ -6,11 +6,11 @@ void	welcome()
 	std::cout << "o ----------------------------- o" << std::endl;
 	std::cout << "|  Welcome to your Phonebook    |" << std::endl;
 	std::cout << "|    Available commands ;       |" << std::endl;
-//	std::cout << "|  HELP   : show this menu      |" << std::endl;
+	std::cout << "|  HELP   : show this menu      |" << std::endl;
 	std::cout << "|  ADD    : add a new contact   |" << std::endl;
-//	std::cout << "|  FILL   : add dummy contacts  |" << std::endl;
-//	std::cout << "|  CLEAR  : clear all contacts  |" << std::endl;
-//	std::cout << "|  LIST   : list all contacts   |" << std::endl;
+	std::cout << "|  FILL   : add dummy contacts  |" << std::endl;
+	std::cout << "|  CLEAR  : clear all contacts  |" << std::endl;
+	std::cout << "|  LIST   : list all contacts   |" << std::endl;
 	std::cout << "|  SEARCH : lookup a contact    |" << std::endl;
 	std::cout << "|  EXIT   : close the program   |" << std::endl;
 	std::cout << "o ----------------------------- o" << std::endl;
