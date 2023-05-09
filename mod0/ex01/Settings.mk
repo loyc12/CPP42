@@ -14,7 +14,7 @@ FILES		=	main \
 # Directory names
 SRCDIR		=
 OBJDIR		=
-TSTDIR		=	tests/
+#TSTDIR		=	tests/
 #SUBDIRS	=	example \
 
 # Libraries (.a files) to include for compilation

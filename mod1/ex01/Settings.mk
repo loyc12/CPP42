@@ -8,8 +8,7 @@ NAME		=	Zombie
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
 				Zombie \
-				newZombie \
-				randomChump \
+				zombieHorde \
 
 # Directory names
 SRCDIR		=

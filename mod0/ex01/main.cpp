@@ -24,9 +24,3 @@ int main(void)
 		else std::cout << "! INVALID COMMAND !" << std::endl << std::endl;
 	}
 }
-
-/*
-TODO
-use iomanips instead of lenght finder thingy0,,
-
-*/
