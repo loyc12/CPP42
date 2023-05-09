@@ -3,16 +3,17 @@
 //displays the allowed commands
 void	welcome()
 {
-	std::cout << "o ---------------------------- o" << std::endl;
-	std::cout << "|  Welcome to your Phonebook!  |" << std::endl;
-	std::cout << "|  Usage :                     |" << std::endl;
-	std::cout << "|    ADD : add a new contact   |" << std::endl;
-	std::cout << "|    FILL : add dummy contacts |" << std::endl;
-	std::cout << "|    CLEAR : clear contacts    |" << std::endl;
-	std::cout << "|    LIST : list all contacts  |" << std::endl;
-	std::cout << "|    SEARCH : lookup a number  |" << std::endl;
-	std::cout << "|    EXIT : quit and leave     |" << std::endl;
-	std::cout << "o ---------------------------- o" << std::endl;
+	std::cout << "o ----------------------------- o" << std::endl;
+	std::cout << "|  Welcome to your Phonebook    |" << std::endl;
+	std::cout << "|    Available commands ;       |" << std::endl;
+//	std::cout << "|  HELP   : show this menu      |" << std::endl;
+	std::cout << "|  ADD    : add a new contact   |" << std::endl;
+//	std::cout << "|  FILL   : add dummy contacts  |" << std::endl;
+//	std::cout << "|  CLEAR  : clear all contacts  |" << std::endl;
+//	std::cout << "|  LIST   : list all contacts   |" << std::endl;
+	std::cout << "|  SEARCH : lookup a contact    |" << std::endl;
+	std::cout << "|  EXIT   : close the program   |" << std::endl;
+	std::cout << "o ----------------------------- o" << std::endl;
 	std::cout << std::endl;
 }
 
@@ -43,7 +44,7 @@ std::string get_input(std::string message, bool capitalize)
 	}
 	else
 	{
-		std::cout << "INPUT ERROR!" << std::endl;
+		std::cout << "! INPUT ERROR !" << std::endl;
 		return ("ERROR");
 	}
 }

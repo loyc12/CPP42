@@ -7,7 +7,7 @@
 
 # define FIELD_LENGHT 10
 
-void	welcome();
+void welcome();
 
 std::string get_input(std::string message);
 std::string get_input(std::string message, bool capitalize);

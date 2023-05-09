@@ -87,7 +87,11 @@ void PhoneBook::ListContacts(void) const
 		std::cout << "o - o ---------- o ---------- o ---------- o" << std::endl;
 	}
 	else
-		std::cout << "! PHONEBOOK IS EMPTY !" << std::endl;
+	{
+		std::cout << "o ------- o" << std::endl;
+		std::cout << "|  Empty  |" << std::endl;
+		std::cout << "o ------- o" << std::endl;
+	}
 	std::cout << std::endl;
 }
 
