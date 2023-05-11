@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 
 #include "Weapon.hpp"
 #include "Human_A.hpp"
@@ -12,7 +12,7 @@ int main(void)
 
 		std::cout << std::endl;
 
-		Human_A alice = Human_A("Alice", sword);
+		Human_A alice("Alice", sword);
 		alice.attack();
 
 		std::cout << std::endl;
@@ -21,7 +21,6 @@ int main(void)
 		alice.attack();
 
 		std::cout << std::endl;
-
 	}
 	std::cout << std::endl << std::endl << std::endl;
 	{
@@ -29,8 +28,8 @@ int main(void)
 
 		std::cout << std::endl;
 
-		Human_B billy = Human_B("Billy");
-		billy.setWeapon(sword);
+		Human_B billy("Billy");
+		billy.setWeapon(&sword);
 		billy.attack();
 
 		std::cout << std::endl;
@@ -39,7 +38,6 @@ int main(void)
 		billy.attack();
 
 		std::cout << std::endl;
-
 	}
 	std::cout << std::endl;
 }

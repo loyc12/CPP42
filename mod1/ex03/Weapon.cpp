@@ -1,10 +1,5 @@
 #include "Weapon.hpp"
 
-Weapon::Weapon()
-{
-	this->type = "NOTHING";
-}
-
 Weapon::Weapon(std::string type)
 {
 	std::cout << "Weapon()   | Forged a " << type << std::endl;

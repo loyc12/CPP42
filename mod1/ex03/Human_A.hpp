@@ -8,15 +8,14 @@
 class	Human_A
 {
 	private:
-		Weapon weapon;
-		std::string	name;
+		std::string name;
+		Weapon &weapon;
 
 	public:
-		Human_A();
-		Human_A(std::string name, Weapon weapon);
+		Human_A(std::string name_, Weapon &weapon_);
 		~Human_A();
 
-		void attack();
+		void attack() const;
 };
 
 #endif //HUMAN_A_HPP

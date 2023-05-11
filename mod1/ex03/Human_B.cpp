@@ -1,14 +1,10 @@
 #include "Human_B.hpp"
 
-Human_B::Human_B()
+Human_B::Human_B(std::string name_)
 {
-	this->name = "NOBODY";
-}
-
-Human_B::Human_B(std::string name)
-{
-	std::cout << "Human_A()  | " << name << " was born" << std::endl;
-	this->name = name;
+	std::cout << "Human_A()  | " << name_ << " was born" << std::endl;
+	this->name = name_;
+	this->weapon = NULL;
 }
 
 Human_B::~Human_B()
@@ -16,13 +12,13 @@ Human_B::~Human_B()
 	std::cout << "~Human_A() | " << this->name << " died a gruesome death" << std::endl;
 }
 
-void Human_B::setWeapon(Weapon weapon)
+void Human_B::setWeapon(Weapon *weapon_)
 {
-	std::cout << "Human_A()  | " << this->name << " picked up a " << weapon.getType() << std::endl;
-	this->weapon = weapon;
+	std::cout << "Human_A()  | " << this->name << " picked up a " << weapon_->getType() << std::endl;
+	this->weapon = weapon_;
 }
 
-void Human_B::attack()
+void Human_B::attack() const
 {
-	std::cout << "attack()   | " << this->name << " attacked with a " << this->weapon.getType() << std::endl;
+	std::cout << "attack()   | " << this->name << " attacked with their " << this->weapon->getType() << std::endl;
 }
