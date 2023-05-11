@@ -7,6 +7,9 @@ NAME		=	violence
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
+				Weapon \
+				Human_A \
+				Human_B \
 
 # Directory names
 SRCDIR		=
