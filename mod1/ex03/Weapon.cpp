@@ -13,7 +13,7 @@ Weapon::~Weapon()
 
 void Weapon::setType(std::string newType)
 {
-	std::cout << "setType()  | Weapon changed from " << this->type << " to " << newType << std::endl;
+	std::cout << "setType()  | Reforged " << this->type << " into " << newType << std::endl;
 	this->type = newType;
 }
 

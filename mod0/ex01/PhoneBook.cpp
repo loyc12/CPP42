@@ -57,7 +57,7 @@ void PhoneBook::SearchContacts(void) const
 //adds the following dummy contacts (for testing purposes)
 void PhoneBook::FillContacts(void)
 {
-	this->contacts[0].Load("Alice", "Allard", "Lili", "0", "Aime beaucoup trop le hockey");
+	this->contacts[0].Load("Alice", "Allard", "Lili", "0", "Aimes beaucoup trop le hockey");
 	this->contacts[1].Load("Bob", "Bergeron", "Bobby", "1", "N'aime pas son surnom");
 	this->contacts[2].Load("Clarence", "Caron", "Carré", "10", "A déjà roulé sur une couleuvre en vélo");
 	this->contacts[3].Load("Daniel", "Dupré-Deschamps", "Dan", "11", "A une famille secrete");
