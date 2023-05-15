@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "Weapon.hpp"
-#include "Human_A.hpp"
-#include "Human_B.hpp"
+#include "HumanA.hpp"
+#include "HumanB.hpp"
 
 int main(void)
 {
@@ -12,7 +12,7 @@ int main(void)
 
 		std::cout << std::endl;
 
-		Human_A alice("Alice", sword);
+		HumanA alice("Alice", sword);
 		alice.attack();
 
 		std::cout << std::endl;
@@ -28,7 +28,7 @@ int main(void)
 
 		std::cout << std::endl;
 
-		Human_B billy("Billy");
+		HumanB billy("Billy");
 		billy.setWeapon(&sword);
 		billy.attack();
 

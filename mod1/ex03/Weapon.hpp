@@ -9,7 +9,6 @@ class	Weapon
 		std::string	type;
 
 	public:
-		Weapon();
 		Weapon(std::string type);
 		~Weapon();
 
