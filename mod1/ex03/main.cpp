@@ -6,7 +6,8 @@
 
 int main(void)
 {
-	std::cout << std::endl;
+	//tests HumanA
+	std::cout << std::endl << "[ Human A ]" << std::endl << std::endl;
 	{
 		Weapon sword = Weapon("longsword");
 
@@ -22,7 +23,8 @@ int main(void)
 
 		std::cout << std::endl;
 	}
-	std::cout << std::endl << std::endl << std::endl;
+	//tests HumanB
+	std::cout << std::endl << std::endl << "[ Human B ]" << std::endl << std::endl;
 	{
 		Weapon sword = Weapon("longsword");
 

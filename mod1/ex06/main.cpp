@@ -7,9 +7,7 @@ int main(int ac, char** av)
 
 	std::cout << std::endl;
 	if (ac != 2)
-	{
 		std::cout << "Please specify a single logging level" << std::endl << std::endl;
-	}
 	else
 	{
 		int i = -1;

@@ -62,7 +62,8 @@ void Harl::complain(std::string level)
 		case 2:
 			this->warning();
 		case 3:
-			this->error(); break;
+			this->error();
+			break; // prevents printing default case exists
 		default:
 			this->invalid();
 	}

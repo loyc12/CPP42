@@ -6,5 +6,7 @@ Zombie *newZombie(std::string name)
 
 	z->setName(name);
 
+	std::cout << "newZombie() | Returning named zombie" << std::endl;
+
 	return (z);
 }

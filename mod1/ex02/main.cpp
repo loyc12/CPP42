@@ -36,7 +36,7 @@ int main(void)
 
 	std::cout << "TL;DR: A reference is a shortcut to a given variable that can only be used to read, and never write to said variable." << std::endl;
 	std::cout << "This means that any modification to the variable will also apply to the reference itself, as it is an alias, not a copy." << std::endl;
-	std::cout << "In a way, a reference acts similarily to \'#define {REF} static {VAR}\', at least conceptually." << std::endl;
+	std::cout << "In a way, a reference acts similarily to \'#define {REF} static {VAR}\' - at least conceptually - within the same scope." << std::endl;
 	std::cout << "PS: From what I understand, during compilation, references generally get replaced by the variable itself" << std::endl;
 
 	std::cout << std::endl;

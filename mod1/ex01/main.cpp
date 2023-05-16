@@ -7,14 +7,16 @@ int main(void)
 
 	int N = 5;
 
-	std::cout << " - Testing zombieHorde() :" << std::endl;
+	std::cout << "[ zombieHorde() ]" << std::endl << std::endl;
 
 	Zombie *horde = zombieHorde(N, "Quinn Quintuple");
 
+	std::cout << std::endl;
+
 	for (int i = 0; i < N; i++)
-	{
 		horde[i].announce();
-	}
+
+	std::cout << std::endl;
 
 	delete[] horde;
 
