@@ -31,7 +31,7 @@ int main(void)
 		std::cout << std::endl;
 
 		HumanB billy("Billy");
-		billy.setWeapon(&sword);
+		billy.setWeapon(sword);
 		billy.attack();
 
 		std::cout << std::endl;

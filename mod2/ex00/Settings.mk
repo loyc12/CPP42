@@ -3,23 +3,16 @@
 #------------------------------------------------------------------------------#
 
 # Executable name
-NAME		=	phonebook
+NAME		=	harl
 
-# Source file names (prefix their subdir if needed)
-FILES		=	main \
-				PhoneBook \
-				Contact \
-				suplements \
+# Arguments to call the command with
+ARGS		=
 
 # Directory names
-SRCDIR		=
-OBJDIR		=
-TSTDIR		=	tests/
-#SUBDIRS	=	example \
+SRCDIR		=	src/
+OBJDIR		=	obj/
+HDRDIR		=	hdr/
 
 # Libraries (.a files) to include for compilation
 LIBS		=
 LIBX		=
-
-# Arguments to call the command with
-ARGS		=

@@ -12,10 +12,10 @@ HumanB::~HumanB()
 	std::cout << "HumanB()   | " << this->name << " died a gruesome death" << std::endl;
 }
 
-void HumanB::setWeapon(Weapon *weapon_)
+void HumanB::setWeapon(Weapon &weapon_)
 {
-	std::cout << "setWeapon()| " << this->name << " picked up a " << weapon_->getType() << std::endl;
-	this->weapon = weapon_;
+	std::cout << "setWeapon()| " << this->name << " picked up a " << weapon_.getType() << std::endl;
+	this->weapon = &weapon_;
 }
 
 void HumanB::attack() const

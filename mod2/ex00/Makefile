@@ -61,6 +61,7 @@ DEFAULT_GOAL: all
 CFLAGS	=	-Wall -Werror -Wextra -std=c++98 $(XFLAGS)
 LFLAGS	=	-atExit
 VFLAGS	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
+# add "--suppressions=include/supp" to use the supression file
 
 # Comment the line bellow to have verbose cmds:
 HIDE	=	@
@@ -83,11 +84,12 @@ MKDR	=	mkdir -p
 INCLUDE =	-I include
 
 # Creates file paths
-SRCS	=	$(addprefix $(SRCDIR), $(addsuffix .cpp, $(FILES)))
-OBJS	=	$(addprefix $(OBJDIR), $(addsuffix .o, $(FILES)))
+SRCS	=	$(wildcard $(SRCDIR)*.cpp)
+OBJS	=	$(wildcard $(OBJDIR)*.o)	#doesn't work
+HDRS	=	$(wildcard $(HDRDIR)*.hpp)
 
 # Command to call when using make run or make leaks
-CMD			=	./$(NAME) $(ARGS)
+CMD		=	./$(NAME) $(ARGS)
 
 #------------------------------------------------------------------------------#
 #                                 BASE TARGETS                                 #
@@ -101,6 +103,7 @@ all: $(NAME)
 
 # Compiles all files into an executable
 $(NAME): $(OBJS)
+	@echo "$(SRCS) $(OBJS) $(HDRS)"
 	@echo "$(GREEN)Files compiled with flags : $(CFLAGS)$(DEFCOL)"
 	@echo "$(DEFCOL)"
 	$(HIDE) $(CC) $(MODE) $(CFLAGS) -o $@ $^ $(INCLUDE) $(LIBS) $(LIBX)
@@ -167,7 +170,7 @@ revleaks: re vleaks
 vleaks: all
 	@echo "$(YELLOW)Launching command : valgrind $(VFLAGS) $(CMD) $(DEFCOL)"
 	@echo "$(RED)"
-	$(HIDE) valgrind $(VFLAGS) --suppressions=include/supp $(CMD) || true
+	$(HIDE) valgrind $(VFLAGS) $(CMD) || true
 	@echo "$(DEFCOL)"
 	@echo "$(GREEN)Exited normally! $(DEFCOL)"
 	@echo "$(DEFCOL)"
