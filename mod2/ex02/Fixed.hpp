@@ -19,7 +19,7 @@ class Fixed
 
 		// Operators
 		Fixed &operator= (const Fixed &other);
-			// Arithmetic
+			// Arithmetics
 		Fixed operator+ (const Fixed &other);
 		Fixed operator- (const Fixed &other);
 		Fixed operator* (const Fixed &other);
@@ -28,14 +28,14 @@ class Fixed
 		Fixed &operator-= (const Fixed &other);
 		Fixed &operator*= (const Fixed &other);
 		Fixed &operator/= (const Fixed &other);
-			// Comparison
+			// Comparisons
 		bool operator!= (const Fixed &other);
 		bool operator> (const Fixed &other);
 		bool operator>= (const Fixed &other);
 		bool operator== (const Fixed &other);
 		bool operator<= (const Fixed &other);
 		bool operator< (const Fixed &other);
-			// Incrementation
+			// Incrementations
 		Fixed &operator++ ();
 		Fixed &operator-- ();
 		Fixed operator++ (int);
@@ -48,6 +48,7 @@ class Fixed
 		void setRawBits(int raw_value);
 		float toFloat() const;
 		int toInt() const;
+		int getFracBit() const;
 
 };
 
