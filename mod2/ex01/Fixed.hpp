@@ -19,14 +19,14 @@ class Fixed
 
 		// Operators
 		Fixed &operator= (const Fixed &other);
-		friend std::ostream &operator<< (std::ostream &out, const Fixed &fpn);
 
-		// Other
+		// Others
 		int getRawBits() const;
 		void setRawBits(int raw_value);
 		float toFloat(void) const;
 		int toInt(void) const;
-
 };
+
+std::ostream &operator<< (std::ostream &out, const Fixed &fpn);
 
 #endif

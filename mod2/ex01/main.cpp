@@ -5,14 +5,24 @@ int main(void)
 {
 	Fixed a;
 	a.setRawBits(42 * 8);
+	std::cout << std::endl;
 
 	Fixed b(42);
+	std::cout << std::endl;
 
 	Fixed c(42.5f);
+	std::cout << std::endl;
 
-	Fixed d = Fixed(42.25f);
+	Fixed d;
+	d = Fixed(42.25f);
+	std::cout << std::endl;
+
 	Fixed e(b);
-	Fixed f = c;
+	std::cout << std::endl;
+
+	Fixed f;
+	f = c;
+	std::cout << std::endl << std::endl;
 
 	std::cout << "int value of A : " << a.toInt() << std::endl;
 	std::cout << "int value of B : " << b.toInt() << std::endl;

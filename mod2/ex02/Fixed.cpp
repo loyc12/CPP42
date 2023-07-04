@@ -35,26 +35,33 @@ Fixed &Fixed::operator= (const Fixed &other)
 	std::cout << "[ operator constructor called ] ";
 	return *this;
 }
+// function cannot be member of Fixed cause it needs to be a member of ostream
+// this is because the ostream instance is the first argument of the "<<" operator
+std::ostream &operator<< (std::ostream &out, const Fixed &fpn)
+{
+	out << fpn.toFloat();
+	return (out);
+}
 
-Fixed Fixed::operator+ (const Fixed &other)
+Fixed Fixed::operator+ (const Fixed &other) const
 {
 	Fixed tmp;
 	tmp.setRawBits(this->getRawBits() + other.getRawBits());
 	return (tmp);
 }
-Fixed Fixed::operator- (const Fixed &other)
+Fixed Fixed::operator- (const Fixed &other) const
 {
 	Fixed tmp;
 	tmp.setRawBits(this->getRawBits() - other.getRawBits());
 	return (tmp);
 }
-Fixed Fixed::operator* (const Fixed &other)
+Fixed Fixed::operator* (const Fixed &other) const
 {
 	Fixed tmp;
 	tmp.setRawBits((this->getRawBits() * other.getRawBits()) / this->_frac_bit);
 	return (tmp);
 }
-Fixed Fixed::operator/ (const Fixed &other)
+Fixed Fixed::operator/ (const Fixed &other) const
 {
 	Fixed tmp;
 	tmp.setRawBits((this->getRawBits() * this->_frac_bit) / other.getRawBits());
@@ -82,27 +89,27 @@ Fixed &Fixed::operator/= (const Fixed &other)
 }
 
 
-bool Fixed::operator!= (const Fixed &other)
+bool Fixed::operator!= (const Fixed &other) const
 {
 	return (this->getRawBits() != other.getRawBits());
 }
-bool Fixed::operator> (const Fixed &other)
+bool Fixed::operator> (const Fixed &other) const
 {
 	return (this->getRawBits() > other.getRawBits());
 }
-bool Fixed::operator>= (const Fixed &other)
+bool Fixed::operator>= (const Fixed &other) const
 {
 	return (this->getRawBits() >= other.getRawBits());
 }
-bool Fixed::operator== (const Fixed &other)
+bool Fixed::operator== (const Fixed &other) const
 {
 	return (this->getRawBits() == other.getRawBits());
 }
-bool Fixed::operator<= (const Fixed &other)
+bool Fixed::operator<= (const Fixed &other) const
 {
 	return (this->getRawBits() <= other.getRawBits());
 }
-bool Fixed::operator< (const Fixed &other)
+bool Fixed::operator< (const Fixed &other) const
 {
 	return (this->getRawBits() < other.getRawBits());
 }
@@ -137,15 +144,38 @@ Fixed Fixed::operator-- (int)
 	return (tmp);
 }
 
-// "friend" keyword allows us to create/override non-member functions
-// function cannot be member of Fixed cause it needs to be a member of ostream
-// this is because the ostream instance if the first argument of the "<<" operator
-std::ostream &operator<< (std::ostream &out, const Fixed &fpn)
+// Min/Max
+// static member functions have no 'this' to use
+Fixed &Fixed::min(Fixed &fpn1, Fixed &fpn2)
 {
-	out << fpn.toFloat();
-	return (out);
+	if (fpn1 > fpn2)
+		return (fpn2);
+	else
+		return (fpn1);
 }
-
+Fixed &Fixed::max(Fixed &fpn1, Fixed &fpn2)
+{
+	if (fpn1 > fpn2)
+		return (fpn1);
+	else
+		return (fpn2);
+}
+// function's return has to be const to be able to return a const var
+const Fixed &Fixed::min(const Fixed &fpn1, const Fixed &fpn2)
+{
+	if (fpn1 > fpn2)
+		return (fpn2);
+	else
+		return (fpn1);
+}
+// function's return has to be const to be able to return a const var
+const Fixed &Fixed::max(const Fixed &fpn1, const Fixed &fpn2)
+{
+	if (fpn1 > fpn2)
+		return (fpn1);
+	else
+		return (fpn2);
+}
 
 // Others
 int Fixed::getRawBits() const
