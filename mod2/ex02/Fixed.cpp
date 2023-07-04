@@ -32,7 +32,7 @@ Fixed::~Fixed()
 Fixed &Fixed::operator= (const Fixed &other)
 {
 	this->setRawBits(other.getRawBits());
-	std::cout << "[operator constructor called ] ";
+	std::cout << "[ operator constructor called ] ";
 	return *this;
 }
 
