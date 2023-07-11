@@ -8,6 +8,7 @@ NAME		=	ClapTrap
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
 				ClapTrap \
+				ScavTrap \
 
 # Directory names
 SRCDIR		=

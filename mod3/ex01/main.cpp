@@ -3,29 +3,35 @@
 
 int	main(void)
 {
-	ScavTrap Scaver;
+	{
+		ClapTrap Clapper;
 
-	std::cout << std::endl << std::endl;
+		std::cout << std::endl << std::endl;
 
-	Scaver.showStats();
+		Clapper.showStats();
 
-	Scaver.attack("TRAPPER");
-	Scaver.takeDamage(5);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.beRepaired(1);
-	Scaver.takeDamage(20);
-	Scaver.beRepaired(1);
-	Scaver.takeDamage(20);
+		Clapper.attack("TRAPPER");
+		Clapper.takeDamage(5);
+		Clapper.beRepaired(1);
 
-	Scaver.showStats();
+		Clapper.showStats();
+	}
+	std::cout << std::endl;
+	{
+		std::cout << std::endl << std::endl;
 
+		ScavTrap Scaver("Bobby");
+
+		std::cout << std::endl << std::endl;
+
+		Scaver.showStats();
+
+		Scaver.attack("TRAPPER");
+		Scaver.takeDamage(5);
+		Scaver.beRepaired(1);
+		Scaver.guardGate();
+
+		Scaver.showStats();
+	}
 	std::cout << std::endl;
 }

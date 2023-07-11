@@ -5,10 +5,11 @@
 
 class ClapTrap
 {
-	private:
+	protected:
 		int HP;
 		int EP;
 		int AD;
+		std::string	Name;
 
 	public:
 		// Constructors / Destructor

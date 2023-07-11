@@ -2,24 +2,19 @@
 # define SCAVTRAP_HPP
 
 # include <iostream>
+# include "ClapTrap.hpp"
 
 class ScavTrap : public ClapTrap
 {
-	private:
-		int HP;
-		int EP;
-		int AD;
-		string	Name;
-
 	public:
 		// Constructors / Destructor
-		ScavTrap(string _name);
-		ScavTrap(const ClapTrap &other);
-		ScavTrap &operator= (const ClapTrap &other);
+		ScavTrap(std::string _name);
+		ScavTrap(const ScavTrap &other);
+		ScavTrap &operator= (const ScavTrap &other);
 		~ScavTrap();
 
 		// Others
-
+		void guardGate();
 };
 
 #endif // SCAVTRAP

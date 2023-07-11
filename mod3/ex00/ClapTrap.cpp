@@ -38,7 +38,6 @@ void ClapTrap::attack(const std::string& target)
 		this->EP -= 1;
 		std::cout << "a wild " << target << " appeared!" << std::endl;
 		std::cout << "CLAPTRAP uses 'GENERIC_ATTACK'" << std::endl;
-		std::cout << "..." << std::endl;
 		if (this->AD > 0)
 			std::cout << "it was super effective (-" << this->AD << " HP)" << std::endl;
 		else if (this->AD == 0)
@@ -78,9 +77,9 @@ bool ClapTrap::canAct(void)
 	if (this->HP > 0 && this->EP > 0)
 		return (true);
 	else if (this->HP <= 0)
-		std::cout << "ClapTrap is too dead to act..." << std::endl << "| HP : " << this->HP;
+		std::cout << "CLAPTRAP is too dead to act..." << std::endl << "| HP : " << this->HP;
 	else if (this->EP <= 0)
-		std::cout << "ClapTrap is too tired to act..." << std::endl << "| EP : " << this->HP;
+		std::cout << "CLAPTRAP is too tired to act..." << std::endl << "| EP : " << this->HP;
 	else
 		std::cout << "Huh???";
 	std::cout << std::endl << std::endl;
@@ -88,7 +87,7 @@ bool ClapTrap::canAct(void)
 }
 bool ClapTrap::showStats(void)
 {
-	std::cout << "o-< CLATRAP STATS >-o" << std::endl;
+	std::cout << "o-< CLAPTRAP STATS >-o" << std::endl;
 	std::cout << "| HP : " << this->HP << std::endl;
 	std::cout << "| EP : " << this->EP << std::endl;
 	std::cout << "| AD : " << this->AD << std::endl << std::endl;
