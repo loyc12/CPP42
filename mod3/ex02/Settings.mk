@@ -9,6 +9,7 @@ NAME		=	ClapTrap
 FILES		=	main \
 				ClapTrap \
 				ScavTrap \
+				FragTrap \
 
 # Directory names
 SRCDIR		=

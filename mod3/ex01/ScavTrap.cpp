@@ -8,7 +8,7 @@ ScavTrap::ScavTrap(std::string _name)
 	this->EP = 50;
 	this->AD = 20;
 	this->Name = _name;
-	std::cout << "[ default constructor called (" << this->Name << ") ] ";
+	std::cout << "[ default constructor called (SCAVTRAP : " << this->Name << ") ] ";
 }
 ScavTrap::ScavTrap(const ScavTrap &other)
 {
@@ -16,7 +16,7 @@ ScavTrap::ScavTrap(const ScavTrap &other)
 	this->EP = other.EP;
 	this->AD = other.AD;
 	this->Name = other.Name;
-	std::cout << "[ copy constructor called (" << this->Name << ") ] ";
+	std::cout << "[ copy constructor called (SCAVTRAP : " << this->Name << ") ] ";
 }
 ScavTrap &ScavTrap::operator= (const ScavTrap &other)
 {
@@ -24,16 +24,16 @@ ScavTrap &ScavTrap::operator= (const ScavTrap &other)
 	this->EP = other.EP;
 	this->AD = other.AD;
 	this->Name = other.Name;
-	std::cout << "[ operator constructor called (" << this->Name << ") ] ";
+	std::cout << "[ operator constructor called (SCAVTRAP : " << this->Name << ") ] ";
 	return *this;
 }
 ScavTrap::~ScavTrap()
 {
-	std::cout << "[ destructor called (" << this->Name << ") ] ";
+	std::cout << "[ destructor called (SCAVTRAP : " << this->Name << ") ] ";
 }
 
 //	Others
 void ScavTrap::guardGate(void)
 {
-	std::cout << "> " << this->Name << " enters 'GUARD KEEPER' mode" << std::endl << std::endl;
+	std::cout << "> " << this->Name << " enters 'GUARD_KEEPER' mode" << std::endl << std::endl;
 }

@@ -1,10 +1,10 @@
 #include "ClapTrap.hpp"
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int	main(void)
 {
 	{
-		ClapTrap Clapper;
+		ClapTrap Clapper("CLAPPER");
 
 		std::cout << std::endl << std::endl;
 
@@ -20,18 +20,18 @@ int	main(void)
 	{
 		std::cout << std::endl << std::endl;
 
-		ScavTrap Scaver("Bobby");
+		FragTrap Fragger("FRAGGER");
 
 		std::cout << std::endl << std::endl;
 
-		Scaver.showStats();
+		Fragger.showStats();
 
-		Scaver.attack("TRAPPER");
-		Scaver.takeDamage(5);
-		Scaver.beRepaired(1);
-		Scaver.guardGate();
+		Fragger.attack("TRAPPER");
+		Fragger.takeDamage(5);
+		Fragger.beRepaired(1);
+		Fragger.hiFiveGuys();
 
-		Scaver.showStats();
+		Fragger.showStats();
 	}
 	std::cout << std::endl;
 }

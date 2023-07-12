@@ -6,6 +6,7 @@
 class ClapTrap
 {
 	private:
+		std::string	Name;
 		int HP;
 		int EP;
 		int AD;
@@ -13,6 +14,7 @@ class ClapTrap
 	public:
 		// Constructors / Destructor
 		ClapTrap();
+		ClapTrap(std::string _name);
 		ClapTrap(const ClapTrap &other);
 		ClapTrap &operator= (const ClapTrap &other);
 		~ClapTrap();

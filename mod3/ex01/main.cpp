@@ -4,7 +4,7 @@
 int	main(void)
 {
 	{
-		ClapTrap Clapper;
+		ClapTrap Clapper("CLAPPER");
 
 		std::cout << std::endl << std::endl;
 
@@ -20,7 +20,7 @@ int	main(void)
 	{
 		std::cout << std::endl << std::endl;
 
-		ScavTrap Scaver("Bobby");
+		ScavTrap Scaver("SCAVER");
 
 		std::cout << std::endl << std::endl;
 

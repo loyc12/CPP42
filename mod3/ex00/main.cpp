@@ -2,7 +2,7 @@
 
 int	main(void)
 {
-	ClapTrap Clapper;
+	ClapTrap Clapper("CLAPPER");
 
 	std::cout << std::endl << std::endl;
 
