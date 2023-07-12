@@ -2,6 +2,7 @@
 
 Contact::Contact()
 {
+
 	this->first_name = "UNINITIALIZED";
 	this->last_name = "UNINITIALIZED";
 	this->nick_name = "UNINITIALIZED";
