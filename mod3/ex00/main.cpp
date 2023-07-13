@@ -2,29 +2,33 @@
 
 int	main(void)
 {
-	ClapTrap Clapper("CLAPPER");
+	std::cout << std::endl << "O================================================================O";
+	{
+		std::cout << std::endl << std::endl;
 
-	std::cout << std::endl << std::endl;
+		ClapTrap Clapper("CLAPPER");
 
-	Clapper.showStats();
+		std::cout << std::endl << std::endl;
 
-	Clapper.attack("TRAPPER");
-	Clapper.takeDamage(5);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.beRepaired(1);
-	Clapper.takeDamage(20);
-	Clapper.beRepaired(1);
-	Clapper.takeDamage(20);
+		Clapper.showStats();
 
-	Clapper.showStats();
+		Clapper.attack("TRAPPER");
+		Clapper.takeDamage(3);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.beRepaired(1);
+		Clapper.takeDamage(16);
+		Clapper.beRepaired(1);
+		Clapper.takeDamage(42);
 
-	std::cout << std::endl;
+		Clapper.showStats();
+	}
+	std::cout << std::endl << std::endl << "O================================================================O" << std::endl;
 }

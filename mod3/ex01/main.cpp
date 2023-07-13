@@ -3,7 +3,10 @@
 
 int	main(void)
 {
+	std::cout << std::endl << "O================================================================O";
 	{
+		std::cout << std::endl << std::endl;
+
 		ClapTrap Clapper("CLAPPER");
 
 		std::cout << std::endl << std::endl;
@@ -16,7 +19,7 @@ int	main(void)
 
 		Clapper.showStats();
 	}
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -33,5 +36,5 @@ int	main(void)
 
 		Scaver.showStats();
 	}
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl << "O================================================================O" << std::endl;
 }

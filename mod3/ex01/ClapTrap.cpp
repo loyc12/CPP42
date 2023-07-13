@@ -45,14 +45,14 @@ void ClapTrap::attack(const std::string& target)
 	if (canAct())
 	{
 		this->EP -= 1;
-		std::cout << "a wild " << target << " appeared!" << std::endl;
-		std::cout << "> " << this->Name << " uses 'GENERIC_ATTACK' on " << target << std::endl;
+		std::cout << "> a wild " << target << " appeared!" << std::endl;
+		std::cout << this->Name << " uses 'GENERIC_ATTACK' on " << target << std::endl;
 		if (this->AD > 0)
-			std::cout << "it was super effective (-" << this->AD << " HP)" << std::endl;
+			std::cout << "> it was super effective (-" << this->AD << " HP)" << std::endl;
 		else if (this->AD == 0)
-			std::cout << "it wasn't very effective (-0 HP)" << std::endl;
+			std::cout << "> it wasn't very effective (-0 HP)" << std::endl;
 		else
-			std::cout << "you're just healing it now... (+" << -this->AD << " HP)" << std::endl;
+			std::cout << "> you're just healing it now... (+" << -this->AD << " HP)" << std::endl;
 //  	deal actual damage here
 //		std::cout << target << " now has N/A HP" << std::endl << std::endl;
 		std::cout << "| EP : " << this->EP << " (-1)" << std::endl << std::endl;
@@ -61,9 +61,9 @@ void ClapTrap::attack(const std::string& target)
 void ClapTrap::takeDamage(unsigned int amount)
 {
 	if (this->HP > 0)
-		std::cout << "" << this->Name << " is hit by GENERIC_ATTACK" << std::endl;
+		std::cout << "" << this->Name << " is hit by 'GENERIC_ATTACK'" << std::endl;
 	else
-		std::cout << "" << this->Name << "'s lifeless carcass is hit by GENERIC_ATTACK" << std::endl;
+		std::cout << "" << this->Name << "'s lifeless carcass is hit by 'GENERIC_ATTACK'" << std::endl;
 	this->HP -= amount;
 	std::cout << "| HP : " << this->HP << " (-" << amount << ")" << std::endl << std::endl;
 }

@@ -8,6 +8,7 @@ class FragTrap : public ClapTrap
 {
 	public:
 		// Constructors / Destructor
+		FragTrap();
 		FragTrap(std::string _name);
 		FragTrap(const FragTrap &other);
 		FragTrap &operator= (const FragTrap &other);

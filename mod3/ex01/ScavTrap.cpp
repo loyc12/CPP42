@@ -2,6 +2,14 @@
 
 // Constructors / Destructor
 
+ScavTrap::ScavTrap()
+{
+	this->HP = 100;
+	this->EP = 50;
+	this->AD = 20;
+	this->Name = "UNINITIALIZED";
+	std::cout << "[ default constructor called (SCAVTRAP : " << this->Name << ") ] ";
+}
 ScavTrap::ScavTrap(std::string _name)
 {
 	this->HP = 100;
@@ -35,5 +43,5 @@ ScavTrap::~ScavTrap()
 //	Others
 void ScavTrap::guardGate(void)
 {
-	std::cout << "> " << this->Name << " enters 'GUARD_KEEPER' mode" << std::endl << std::endl;
+	std::cout << this->Name << " enters 'GUARD_KEEPER' mode" << std::endl << std::endl;
 }

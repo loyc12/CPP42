@@ -2,6 +2,14 @@
 
 // Constructors / Destructor
 
+FragTrap::FragTrap()
+{
+	this->HP = 100;
+	this->EP = 100;
+	this->AD = 30;
+	this->Name = "UNINITIALIZED";
+	std::cout << "[ default constructor called (FRAGTRAP : " << this->Name << ") ] ";
+}
 FragTrap::FragTrap(std::string _name)
 {
 	this->HP = 100;
@@ -35,5 +43,5 @@ FragTrap::~FragTrap()
 //	Others
 void FragTrap::hiFiveGuys(void)
 {
-	std::cout << "> " << this->Name << " uses 'HI_FIVE' on GUYS" << std::endl << std::endl;
+	std::cout << this->Name << " uses 'HI_FIVE' on GUYS" << std::endl << std::endl;
 }
