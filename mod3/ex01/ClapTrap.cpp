@@ -88,7 +88,7 @@ bool ClapTrap::canAct(void)
 	else if (this->HP <= 0)
 		std::cout << "" << this->Name << " is too dead to act..." << std::endl << "| HP : " << this->HP;
 	else if (this->EP <= 0)
-		std::cout << "" << this->Name << " is too tired to act..." << std::endl << "| EP : " << this->HP;
+		std::cout << "" << this->Name << " is too tired to act..." << std::endl << "| EP : " << this->EP;
 	else
 		std::cout << "Huh???";
 	std::cout << std::endl << std::endl;
