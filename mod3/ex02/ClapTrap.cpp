@@ -46,7 +46,7 @@ void ClapTrap::attack(const std::string& target)
 	{
 		this->EP -= 1;
 		std::cout << "> a wild " << target << " appeared!" << std::endl;
-		std::cout << this->Name << " uses 'GENERIC_ATTACK' on " << target << std::endl;
+		std::cout << this->Name << " uses 'CLAP_ATTACK' on " << target << std::endl;
 		if (this->AD > 0)
 			std::cout << "> it was super effective (-" << this->AD << " HP)" << std::endl;
 		else if (this->AD == 0)

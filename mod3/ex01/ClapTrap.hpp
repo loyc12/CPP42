@@ -11,6 +11,8 @@ class ClapTrap
 		int EP;
 		int AD;
 
+		bool canAct(void);
+
 	public:
 		// Constructors / Destructor
 		ClapTrap();
@@ -24,7 +26,6 @@ class ClapTrap
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);
 
-		bool canAct(void);
 		bool showStats(void);
 };
 
