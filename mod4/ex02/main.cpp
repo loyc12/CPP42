@@ -8,6 +8,42 @@
 int	main(void)
 {
 	std::cout << "O================================================================O";
+	/* {
+	 	std::cout << std::endl << std::endl;
+
+	 	Animal beingFromTheDeepBellow;
+
+	 	std::cout << std::endl << std::endl;
+
+		beingFromTheDeepBellow.makeSound();
+
+		std::cout << std::endl;
+	}
+	std::cout << std::endl << std::endl << "O================================================================O"; */
+	{
+		std::cout << std::endl << std::endl;
+
+		Cat princess;
+
+		std::cout << std::endl << std::endl;
+
+		princess.makeSound();
+
+		std::cout << std::endl;
+	}
+	std::cout << std::endl << std::endl << "O================================================================O";
+	{
+		std::cout << std::endl << std::endl;
+
+		Dog peanut;
+
+		std::cout << std::endl << std::endl;
+
+		peanut.makeSound();
+
+		std::cout << std::endl;
+	}
+	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -50,12 +86,14 @@ int	main(void)
 	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
-
 		const Animal* sally = new Dog();
+
 		std::cout << std::endl;
 		const Animal* hop = new Cat();
+
 		std::cout << std::endl << std::endl;
 		delete sally;//should not create a leak
+
 		std::cout << std::endl;
 		delete hop;
 	}
