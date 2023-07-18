@@ -111,13 +111,13 @@ int	main(void)
 	{
 		std::cout << std::endl << std::endl;
 
-		const Animal* j = new Dog();
+		const Animal* sally = new Dog();
 		std::cout << std::endl;
-		const Animal* i = new Cat();
+		const Animal* hop = new Cat();
 		std::cout << std::endl << std::endl;
-		delete j;//should not create a leak
+		delete sally;//should not create a leak
 		std::cout << std::endl;
-		delete i;
+		delete hop;
 	}
 	std::cout << std::endl << std::endl << "O================================================================O" << std::endl << std::endl;
 }
