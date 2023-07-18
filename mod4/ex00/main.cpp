@@ -67,5 +67,5 @@ int	main(void)
 
 		std::cout << std::endl;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O" << std::endl;
+	std::cout << std::endl << std::endl << "O================================================================O" << std::endl << std::endl;
 }

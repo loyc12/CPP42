@@ -12,6 +12,7 @@ FILES		=	main \
 				Dog \
 				WrongAnimal \
 				WrongCat \
+				Brain \
 
 # Directory names
 SRCDIR		=

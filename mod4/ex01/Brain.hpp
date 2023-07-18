@@ -8,6 +8,7 @@ class Brain
 {
 	protected:
 		std::string	ideas[BRAIN_SIZE];
+		int	ideaCount;
 
 	public:
 		// Constructors / Destructor
@@ -17,7 +18,8 @@ class Brain
 		~Brain();
 
 		// Others
-		void makeSound(void);
+		void addIdea(std::string idea);
+		std::string	getIdea(int index);
 };
 
 #endif //BRAIN
