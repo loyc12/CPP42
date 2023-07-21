@@ -80,7 +80,7 @@ int	main(void)
 	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
-		const Animal* meta = new Animal();
+		const Animal* meta = new Animal(); //						ABSTRACT CLASS CAN'T BE INSTANTIATED
 
 		std::cout << std::endl;
 		const Animal* j = new Dog();
@@ -97,7 +97,7 @@ int	main(void)
 		i->makeSound(); //		will output the cat sound!
 		j->makeSound();
 
-		std::cout << std::endl << std::endl;
+		std::cout << std::endl;
 		delete meta;
 
 		std::cout << std::endl;

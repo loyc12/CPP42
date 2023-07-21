@@ -104,7 +104,7 @@ int	main(void)
 		i->makeSound(); //		will output the cat sound!
 		j->makeSound();
 
-	//	std::cout << std::endl << std::endl;
+	//	std::cout << std::endl;
 	//	delete meta;
 
 		std::cout << std::endl;
@@ -112,7 +112,6 @@ int	main(void)
 
 		std::cout << std::endl;
 		delete j;
-		std::cout << std::endl;
 	}
 	std::cout << std::endl << "O================================================================O" << std::endl << std::endl;
 }
