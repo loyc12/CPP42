@@ -25,7 +25,12 @@ Animal::~Animal()
 
 // Others
 
-void	Animal::makeSound(void)
+void	Animal::makeSound(void) const
 {
 	std::cout << "* sounds beyond the mere scope of human comprehension, damning the pityful soul of whomever is unfortunate enough to heard them *" << std::endl;
+}
+
+std::string	Animal::getType(void) const
+{
+	return (this->type);
 }

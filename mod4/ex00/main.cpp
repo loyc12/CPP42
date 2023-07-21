@@ -11,61 +11,100 @@ int	main(void)
 	{
 		std::cout << std::endl << std::endl;
 
-		WrongAnimal beingFromTheDeepBellow;
+		WrongAnimal *beingFromTheDeepBellow = new WrongAnimal();
 
 		std::cout << std::endl << std::endl;
 
-		beingFromTheDeepBellow.makeSound();
+		beingFromTheDeepBellow->makeSound();
 
 		std::cout << std::endl;
+
+		delete beingFromTheDeepBellow;
 	}
 	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
-		WrongCat mittens;
+		WrongAnimal *mittens = new WrongCat();
 
 		std::cout << std::endl << std::endl;
 
-		mittens.makeSound();
+		mittens->makeSound();
 
 		std::cout << std::endl;
+
+		delete mittens;
 	}
 	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
-		Animal beingFromTheDeepBellow;
+		Animal *beingFromTheDeepBellow = new Animal();
 
 		std::cout << std::endl << std::endl;
 
-		beingFromTheDeepBellow.makeSound();
+		beingFromTheDeepBellow->makeSound();
 
 		std::cout << std::endl;
+
+		delete beingFromTheDeepBellow;
 	}
 	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
-		Cat princess;
+		Animal *princess = new Cat();
 
 		std::cout << std::endl << std::endl;
 
-		princess.makeSound();
+		princess->makeSound();
 
 		std::cout << std::endl;
+
+		delete princess;
 	}
 	std::cout << std::endl << std::endl << "O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
-		Dog peanut;
+		Animal *peanut = new Dog();
 
 		std::cout << std::endl << std::endl;
 
-		peanut.makeSound();
+		peanut->makeSound();
 
 		std::cout << std::endl;
+
+		delete peanut;
+	}
+	std::cout << std::endl << std::endl << "O================================================================O";
+	{
+		std::cout << std::endl << std::endl;
+		const Animal* meta = new Animal();
+
+		std::cout << std::endl;
+		const Animal* j = new Dog();
+
+		std::cout << std::endl;
+		const Animal* i = new Cat();
+
+		std::cout << std::endl << std::endl;
+		std::cout << meta->getType() << " " << std::endl;
+		std::cout << j->getType() << " " << std::endl;
+		std::cout << i->getType() << " " << std::endl << std::endl;
+
+		meta->makeSound();
+		i->makeSound(); //		will output the cat sound!
+		j->makeSound();
+
+		std::cout << std::endl << std::endl;
+		delete meta;
+
+		std::cout << std::endl;
+		delete i;
+
+		std::cout << std::endl;
+		delete j;
 	}
 	std::cout << std::endl << std::endl << "O================================================================O" << std::endl << std::endl;
 }

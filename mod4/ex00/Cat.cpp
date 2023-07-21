@@ -25,7 +25,7 @@ Cat::~Cat()
 
 // Others
 
-void	Cat::makeSound(void)
+void	Cat::makeSound(void) const
 {
 	std::cout << "> meeeeeoowwwwwwwwwwwwwww ~" << std::endl;
 }

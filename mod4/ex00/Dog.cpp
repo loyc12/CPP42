@@ -25,7 +25,7 @@ Dog::~Dog()
 
 // Others
 
-void	Dog::makeSound(void)
+void	Dog::makeSound(void) const
 {
 	std::cout << "> WOOF !" << std::endl;
 }

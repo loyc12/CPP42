@@ -13,10 +13,11 @@ class Animal
 		Animal();
 		Animal(const Animal &other);
 		Animal &operator= (const Animal &other);
-		virtual ~Animal(); //						VIRTUAL keywords forces destructin to use child's destructor
+		virtual ~Animal();
 
 		// Others
-		void makeSound(void);
+		virtual void makeSound(void) const;
+		std::string	getType(void) const;
 };
 
 #endif //ANIMAL

@@ -16,7 +16,7 @@ class WrongAnimal
 		~WrongAnimal();
 
 		// Others
-		void makeSound(void);
+		void makeSound(void) const;
 };
 
 #endif //WRONGANIMAL

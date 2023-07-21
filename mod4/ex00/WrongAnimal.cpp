@@ -25,7 +25,7 @@ WrongAnimal::~WrongAnimal()
 
 // Others
 
-void	WrongAnimal::makeSound(void)
+void	WrongAnimal::makeSound(void) const
 {
 	std::cout << "* sounds beyond the mere scope of human comprehension, damning the pityful soul of whomever is unfortunate enough to heard them *" << std::endl;
 }
