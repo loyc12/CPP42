@@ -16,7 +16,7 @@ class Animal
 		virtual ~Animal() = 0;
 
 		// Others
-		virtual void makeSound(void) const = 0;
+		virtual void makeSound(void) const = 0; //		= 0 makes the class abstract (cannot be instantiated)
 		std::string	getType(void) const;
 };
 

@@ -29,3 +29,8 @@ void	WrongAnimal::makeSound(void) const
 {
 	std::cout << "* sounds beyond the mere scope of human comprehension, damning the pityful soul of whomever is unfortunate enough to heard them *" << std::endl;
 }
+
+std::string	WrongAnimal::getType(void) const
+{
+	return (this->type);
+}

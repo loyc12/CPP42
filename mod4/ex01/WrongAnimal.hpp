@@ -17,6 +17,7 @@ class WrongAnimal
 
 		// Others
 		void makeSound(void) const;
+		std::string	getType(void) const;
 };
 
 #endif //WRONGANIMAL
