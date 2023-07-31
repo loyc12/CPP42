@@ -7,7 +7,7 @@
 
 int	main(void)
 {
-	std::cout << "O================================================================O";
+	std::cout << "1 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -21,7 +21,7 @@ int	main(void)
 
 		delete beingFromTheDeepBellow;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "2 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -35,7 +35,7 @@ int	main(void)
 
 		delete mittens;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "3 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -49,7 +49,7 @@ int	main(void)
 
 		delete beingFromTheDeepBellow;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "4 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -63,7 +63,7 @@ int	main(void)
 
 		delete princess;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "5 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -77,7 +77,7 @@ int	main(void)
 
 		delete peanut;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "6 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 		const Animal* meta = new Animal(); //						ABSTRACT CLASS CAN'T BE INSTANTIATED
@@ -106,5 +106,5 @@ int	main(void)
 		std::cout << std::endl;
 		delete j;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O" << std::endl << std::endl;
+	std::cout << std::endl << std::endl << "7 O================================================================O" << std::endl << std::endl;
 }

@@ -7,7 +7,7 @@
 
 int	main(void)
 {
-	std::cout << "O================================================================O";
+	std::cout << "1 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -16,18 +16,33 @@ int	main(void)
 		std::cout << std::endl;
 		{
 			Cat neige;
-
 			neige.addIdea("I wanna throw this off the table");
 
 			std::cout << std::endl << std::endl << "> neige : '" << neige.getIdea(0) << "'" << std::endl << std::endl;
 
-			blanche = neige;
-
+			blanche = neige; //						either this leaks
 			std::cout << std::endl;
 		}
 		std::cout << std::endl << std::endl << "> blanche : '" << blanche.getIdea(0) << "'" << std::endl << std::endl;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "2 O================================================================O";
+	{
+		std::cout << std::endl << std::endl;
+
+		Cat blanche;
+		blanche.addIdea("I wanna throw this off the table");
+
+		std::cout << std::endl;
+		{
+			Cat neige(blanche);
+			std::cout << std::endl << std::endl << "> neige : '" << neige.getIdea(0) << "'" << std::endl << std::endl;
+
+//			Cat caramel = blanche; //				or this segfaults
+//			std::cout << "> caramel : '" << caramel.getIdea(0) << "'" << std::endl << std::endl;
+		}
+		std::cout << std::endl << std::endl << "> blanche : '" << blanche.getIdea(0) << "'" << std::endl << std::endl;
+	}
+	std::cout << std::endl << std::endl << "3 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 
@@ -36,18 +51,33 @@ int	main(void)
 		std::cout << std::endl;
 		{
 			Dog butter;
-
 			butter.addIdea("Is this a CROSSOVER episode !");
 
 			std::cout << std::endl << std::endl << "> butter : '" << butter.getIdea(0) << "'" << std::endl << std::endl;
 
-			peanut = butter;
-
+			peanut = butter; //						either this leaks
 			std::cout << std::endl;
 		}
 		std::cout << std::endl << std::endl << "> peanut : '" << peanut.getIdea(0) << "'" << std::endl << std::endl;
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "4 O================================================================O";
+	{
+		std::cout << std::endl << std::endl;
+
+		Dog peanut;
+		peanut.addIdea("Is this a CROSSOVER episode !");
+
+		std::cout << std::endl;
+		{
+			Dog butter(peanut);
+			std::cout << std::endl << std::endl << "> butter : '" << butter.getIdea(0) << "'" << std::endl << std::endl;
+
+//			Dog bean = peanut;; //					or this segfaults
+//			std::cout << "> bean : '" << bean.getIdea(0) << "'" << std::endl << std::endl;
+		}
+		std::cout << std::endl << std::endl << "> peanut : '" << peanut.getIdea(0) << "'" << std::endl << std::endl;
+	}
+	std::cout << std::endl << std::endl << "5 O================================================================O";
 	{
 		std::cout << std::endl << std::endl;
 		const Animal* sally = new Dog();
@@ -61,7 +91,7 @@ int	main(void)
 		std::cout << std::endl;
 		delete hop; //	should not create a leak
 	}
-	std::cout << std::endl << std::endl << "O================================================================O";
+	std::cout << std::endl << std::endl << "6 O================================================================O";
 	{
 		std::cout << std::endl;
 		const Animal *Manymals[6];
@@ -82,5 +112,11 @@ int	main(void)
 			std::cout << std::endl;
 		}
 	}
-	std::cout << std::endl << "O================================================================O" << std::endl << std::endl;
+	std::cout << std::endl << "7 O================================================================O" << std::endl << std::endl;
 }
+
+/*
+
+fix segfault due to uninitialized values when passing through wrong constructor for brain
+
+*/

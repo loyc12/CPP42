@@ -147,29 +147,26 @@ re: fclean all
 rerun: re run
 run: all
 	@echo "$(YELLOW)Launching command : $(CMD) $(DEFCOL)"
-	@echo "$(RED)"
+	@echo "$(GREEN)"
 	$(HIDE) $(CMD) || true
-	@echo "$(DEFCOL)"
 	@echo "$(GREEN)Exited normally! $(DEFCOL)"
 	@echo "$(DEFCOL)"
 
 # Runs the program with leaks
 releaks: re leaks
 leaks: all
-	@echo "$(YELLOW)Launching command : leaks $(LFLAGS) -- $(CMD) $(DEFCOL)"
-	@echo "$(RED)"
+	@echo "$(RED)Launching command : leaks $(LFLAGS) -- $(CMD) $(DEFCOL)"
+	@echo "$(YELLOW)"
 	$(HIDE) leaks $(LFLAGS) -- $(CMD) || true
-	@echo "$(DEFCOL)"
 	@echo "$(GREEN)Exited normally! $(DEFCOL)"
 	@echo "$(DEFCOL)"
 
 # Runs the program with valgrind
 revleaks: re vleaks
 vleaks: all
-	@echo "$(YELLOW)Launching command : valgrind $(VFLAGS) $(CMD) $(DEFCOL)"
-	@echo "$(RED)"
-	$(HIDE) valgrind $(VFLAGS) $(CMD) || true
-	@echo "$(DEFCOL)"
+	@echo "$(RED)Launching command : valgrind $(VFLAGS) $(CMD) $(DEFCOL)"
+	@echo "$(YELLOW)"
+	$(HIDE) valgrind $(VFLAGS) $(CMD) || true 
 	@echo "$(GREEN)Exited normally! $(DEFCOL)"
 	@echo "$(DEFCOL)"
 

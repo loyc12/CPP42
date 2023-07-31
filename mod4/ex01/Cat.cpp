@@ -11,17 +11,21 @@ Cat::Cat()
 }
 Cat::Cat(const Cat &other)
 {
+	this->brain = new Brain(*other.brain);
 	this->type = other.type;
-	*this->brain = *other.brain;
 
 	std::cout << "[ copy constructor called (CAT) ] ";
 }
 Cat &Cat::operator= (const Cat &other)
 {
-	this->type = other.type;
-	*this->brain = *other.brain;
-
-	std::cout << "[ operator constructor called (CAT) ] ";
+	if (this != &other)
+	{
+		*this->brain = *other.brain;
+		this->type = other.type;
+		std::cout << "[ operator constructor called (CAT) ] ";
+	}
+	else
+		std::cout << "[ operator constructor cannot be called on itself (CAT) ] ";
 	return *this;
 }
 Cat::~Cat()

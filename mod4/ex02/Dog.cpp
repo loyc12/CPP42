@@ -11,17 +11,22 @@ Dog::Dog()
 }
 Dog::Dog(const Dog &other)
 {
+	this->brain = new Brain(*other.brain);
 	this->type = other.type;
-	*this->brain = *other.brain;
 
 	std::cout << "[ copy constructor called (DOG) ] ";
 }
 Dog &Dog::operator= (const Dog &other)
 {
-	this->type = other.type;
-	*this->brain = *other.brain;
+	if (this != &other)
+	{
+		*this->brain = *other.brain;
+		this->type = other.type;
+		std::cout << "[ operator constructor called (DOG) ] ";
+	}
+	else
+		std::cout << "[ operator constructor cannot be called on itself (DOG) ] ";
 
-	std::cout << "[ operator constructor called (DOG) ] ";
 	return *this;
 }
 Dog::~Dog()
