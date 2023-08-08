@@ -154,42 +154,7 @@ int	main(void)
 
 		delete peanut;
 	}
-	std::cout << std::endl << std::endl << "10 O================================================================O";
-	{
-		std::cout << std::endl << std::endl;
-		const Animal* sally = new Dog();
-
-		std::cout << std::endl;
-		const Animal* hop = new Cat();
-
-		std::cout << std::endl << std::endl;
-		delete sally; //	should not create a leak
-
-		std::cout << std::endl;
-		delete hop; //	should not create a leak
-	}
-	std::cout << std::endl << std::endl << "11 O================================================================O";
-	{
-		std::cout << std::endl;
-		const Animal *Manymals[6];
-
-		std::cout << std::endl;
-		for (int i = 0; i < 6; i++)
-		{
-			if (i % 2)
-				Manymals[i] = new Cat;
-			else
-				Manymals[i] = new Dog;
-			std::cout << std::endl;
-		}
-		std::cout << std::endl;
-		for (int i = 0; i < 6; i++)
-		{
-			delete Manymals[i];
-			std::cout << std::endl;
-		}
-	}
-	std::cout << std::endl << "12 O================================================================O";
+	std::cout << std::endl << "10 O================================================================O";
 	{
 	//	std::cout << std::endl << std::endl;
 	//	const Animal* meta = new Animal(); //						ABSTRACT CLASS CAN'T BE INSTANTIATED
@@ -220,5 +185,5 @@ int	main(void)
 
 		std::cout << std::endl;
 	}
-	std::cout << std::endl << "13 O================================================================O" << std::endl << std::endl;
+	std::cout << std::endl << "11 O================================================================O" << std::endl << std::endl;
 }
