@@ -8,6 +8,7 @@ NAME		=	AnimalFarm
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
 				Bureaucrat \
+				Form \
 
 # Directory names
 SRCDIR		=

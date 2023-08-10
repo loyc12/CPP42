@@ -28,8 +28,8 @@ Bureaucrat::Bureaucrat(const Bureaucrat &other)
 	std::cout << "Called copy constructor (BUREAUCRAT)" << std::endl;
 
 	this->grade = 150;
-	this->name = other.name;
-	this->setGrade(other.grade);
+	this->name = other.getName();
+	this->setGrade(other.getGrade());
 
 	std::cout << "Copied bureaucrat : " << this->name << " ( grade " << this->grade << " )" << std::endl;
 }
@@ -38,8 +38,8 @@ Bureaucrat &Bureaucrat::operator= (const Bureaucrat &other)
 {
 	std::cout << "Called assignment operator (BUREAUCRAT)" << std::endl;
 
-	this->name = other.name;
-	this->setGrade(other.grade);
+	this->name = other.getName();
+	this->setGrade(other.getGrade());
 
 	std::cout << "Copied bureaucrat : " << this->name << " ( grade " << this->grade << " )" << std::endl;
 

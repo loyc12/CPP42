@@ -28,8 +28,8 @@ Bureaucrat::Bureaucrat(const Bureaucrat &other)
 	std::cout << "Called copy constructor (BUREAUCRAT)" << std::endl;
 
 	this->grade = 150;
-	this->name = other.name;
-	this->setGrade(other.grade);
+	this->name = other.getName();
+	this->setGrade(other.getGrade());
 
 	std::cout << "Copied bureaucrat : " << this->name << " ( grade " << this->grade << " )" << std::endl;
 }
@@ -38,8 +38,8 @@ Bureaucrat &Bureaucrat::operator= (const Bureaucrat &other)
 {
 	std::cout << "Called assignment operator (BUREAUCRAT)" << std::endl;
 
-	this->name = other.name;
-	this->setGrade(other.grade);
+	this->name = other.getName();
+	this->setGrade(other.getGrade());
 
 	std::cout << "Copied bureaucrat : " << this->name << " ( grade " << this->grade << " )" << std::endl;
 
@@ -94,6 +94,20 @@ void	Bureaucrat::demote(void)
 }
 
 // Others
+
+void	signForm(Form f)
+{
+	try
+	{
+		f.beSigned(this);
+		std::cout << "Bureaucrat " << this.getName() << " signed the form " << f.getName() << " successfully" << std::endl;
+	}
+	catch (const char *msg)
+	{
+		std::cout << "Bureaucrat " << this.getName() << " couldn't sign the form " << f.getName();
+		std::cout << " because their grade is too low ( > " << f.getSignGrade() << " )" << std::endl;
+	}
+}
 
 std::ostream &operator<< (std::ostream &out, const Bureaucrat &rhs)
 {

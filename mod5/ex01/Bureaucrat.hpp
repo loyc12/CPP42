@@ -2,6 +2,7 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream>
+# include "Form.hpp"
 
 class Bureaucrat
 {
@@ -31,6 +32,9 @@ class Bureaucrat
 		std::string	getName(void) const;
 		void		promote(void);
 		void		demote(void);
+
+		// Others
+		void		signForm(Form f);
 };
 
 std::ostream &operator<< (std::ostream &out, const Bureaucrat &rhs);
