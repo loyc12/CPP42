@@ -4,6 +4,8 @@
 # include <iostream>
 # include "Form.hpp"
 
+class Form;
+
 class Bureaucrat
 {
 	private:
@@ -34,7 +36,7 @@ class Bureaucrat
 		void		demote(void);
 
 		// Others
-		void		signForm(Form f);
+		void	signForm(Form *f);
 };
 
 std::ostream &operator<< (std::ostream &out, const Bureaucrat &rhs);

@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 
 # Executable name
-NAME		=	AnimalFarm
+NAME		=	Office
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \

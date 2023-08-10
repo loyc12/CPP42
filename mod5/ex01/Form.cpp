@@ -8,7 +8,7 @@ Form::Form()
 
 	std::cout << "Called default constructor (FORM)" << std::endl;
 
-	this.isSigned = false;
+	this->isSigned = false;
 	this->signGrade = 150;
 	this->execGrade = 150;
 	this->name = "UNINITIALIZED";
@@ -19,11 +19,11 @@ Form::Form(std::string _name, int _signGrade, int _execGrade)
 {
 	std::cout << "Called parameterized constructor (FORM)" << std::endl;
 
-	this.isSigned = false;
+	this->isSigned = false;
 	this->signGrade = 150;
 	this->execGrade = 150;
-	this->setSignGrade(_signGrade)
-	this->setGrade(_execGrade);
+	this->setSignGrade(_signGrade);
+	this->setExecGrade(_execGrade);
 	this->name = _name;
 
 	std::cout << "Constructed form : " << this->name << std::endl;
@@ -32,11 +32,11 @@ Form::Form(const Form &other)
 {
 	std::cout << "Called copy constructor (FORM)" << std::endl;
 
-	this.isSigned = false;
+	this->isSigned = false;
 	this->signGrade = 150;
 	this->execGrade = 150;
-	this->setSignGrade(other.getSignGrade())
-	this->setGrade(other.getExecGrade());
+	this->setSignGrade(other.getSignGrade());
+	this->setExecGrade(other.getExecGrade());
 	this->name = other.getName();
 
 	std::cout << "Copied form : " << this->name << std::endl;
@@ -46,8 +46,8 @@ Form &Form::operator= (const Form &other)
 {
 	std::cout << "Called assignment operator (FORM)" << std::endl;
 
-	this->setSignGrade(other.getSignGrade())
-	this->setGrade(other.getExecGrade());
+	this->setSignGrade(other.getSignGrade());
+	this->setExecGrade(other.getExecGrade());
 	this->name = other.getName();
 
 	std::cout << "Copied form : " << this->name << std::endl;
@@ -93,11 +93,11 @@ void	Form::setExecGrade(int value)
 }
 int	Form::getSignGrade(void) const
 {
-	return (this->grade);
+	return (this->signGrade);
 }
 int	Form::getExecGrade(void) const
 {
-	return (this->grade);
+	return (this->execGrade);
 }
 std::string	Form::getName(void) const
 {
@@ -106,12 +106,12 @@ std::string	Form::getName(void) const
 
 // Others
 
-void	beSigned(Bureaucrat b)
+void	Form::beSigned(Bureaucrat *b)
 {
-	if (this.getSignGrade() < b.getGrade())
+	if (this->getSignGrade() < b->getGrade())
 		this->GradeTooLowException();
 	else
-		this.isSigned = true;
+		this->isSigned = true;
 }
 
 std::ostream &operator<< (std::ostream &out, const Form &rhs)
