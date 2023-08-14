@@ -96,3 +96,25 @@ int	main(void)
 	}
 	std::cout << std::endl << "E O================================================================O" << std::endl << std::endl;
 }
+
+/*
+
+#include <iostream>
+using namespace std;
+
+class MyCustomException : public std::exception {
+    public:
+char * what () {
+        return "Custom C++ Exception";
+    }
+};
+
+int main() {
+    try {
+        throw MyCustomException();
+    } catch (std::exception &e) {
+        std::cerr << "Error : " << e.what() << std::endl;
+    }
+}
+
+*/
