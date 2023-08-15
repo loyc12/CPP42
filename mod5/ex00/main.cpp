@@ -14,9 +14,9 @@ int	main(void)
 		{
 			b.promote();
 		}
-		catch (const char *msg)
+		catch (std::exception &e)
 		{
-			std::cerr << "Error : " << msg << std::endl;
+			std::cerr << "Error : " << e.what() << std::endl;
 		}
 		std::cout << std::endl << " > " << b << std::endl << std::endl;
 	}
@@ -31,9 +31,9 @@ int	main(void)
 		{
 			b.demote();
 		}
-		catch (const char *msg)
+		catch (std::exception &e)
 		{
-			std::cerr << "Error : " << msg << std::endl;
+			std::cerr << "Error : " << e.what() << std::endl;
 		}
 		std::cout << std::endl;
 	}
@@ -43,9 +43,9 @@ int	main(void)
 		{
 			Bureaucrat b("Timmy", 1234);
 		}
-		catch (const char *msg)
+		catch (std::exception &e)
 		{
-			std::cerr << "Error : " << msg << std::endl;
+			std::cerr << "Error : " << e.what() << std::endl;
 		}
 	}
 	std::cout << std::endl << "4 O================================================================O" << std::endl << std::endl;
@@ -57,9 +57,9 @@ int	main(void)
 		{
 			b1.promote();
 		}
-		catch (const char *msg)
+		catch (std::exception &e)
 		{
-			std::cerr << "Error : " << msg << std::endl;
+			std::cerr << "Error : " << e.what() << std::endl;
 		}
 		std::cout << std::endl;
 
@@ -70,9 +70,9 @@ int	main(void)
 			b2 = b1;
 			b1.demote();
 		}
-		catch (const char *msg)
+		catch (std::exception &e)
 		{
-			std::cerr << "Error : " << msg << std::endl;
+			std::cerr << "Error : " << e.what() << std::endl;
 		}
 		std::cout << std::endl;
 	}
@@ -87,10 +87,10 @@ int	main(void)
 			{
 				b.promote();
 			}
-			catch (const char *msg)
-			{
-				std::cerr << "Error : " << msg << std::endl;
-			}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error : " << e.what() << std::endl;
+		}
 		}
 		std::cout << std::endl;
 	}
@@ -100,7 +100,6 @@ int	main(void)
 /*
 
 #include <iostream>
-using namespace std;
 
 class MyCustomException : public std::exception {
     public:
