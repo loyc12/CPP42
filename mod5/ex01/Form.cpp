@@ -15,7 +15,7 @@ Form::Form()
 
 	std::cout << "Constructed form : " << this->name << " ( grade " << this->signGrade << "/" << this->execGrade << " )" << std::endl;
 }
-Form::Form(const std::string _name, int _signGrade, int _execGrade)
+Form::Form(const std::string _name, const int _signGrade, const int _execGrade)
 {
 	std::cout << "Called parameterized constructor (FORM)" << std::endl;
 
@@ -73,7 +73,7 @@ void Form::GradeTooLowException(void) const
 
 // Setters - Getters
 
-void	Form::setSignGrade(int value)
+void	Form::setSignGrade(const int value)
 {
 	if (value < 1)
 		this->GradeTooHighException();
@@ -82,7 +82,7 @@ void	Form::setSignGrade(int value)
 	else
 		this->signGrade = value;
 }
-void	Form::setExecGrade(int value)
+void	Form::setExecGrade(const int value)
 {
 	if (value < 1)
 		this->GradeTooHighException();

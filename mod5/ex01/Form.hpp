@@ -22,12 +22,12 @@ class Form
 		void	GradeTooLowException(void) const;
 
 		// Setters
-		void	setSignGrade(int value);
-		void	setExecGrade(int value);
+		void	setSignGrade(const int value);
+		void	setExecGrade(const int value);
 
 	public:
 		// Constructors - Destructor
-		Form(const std::string _name, int _signGrade, int _execGrade);
+		Form(const std::string _name, const int _signGrade, const int _execGrade);
 		Form(const Form &other);
 		Form &operator= (const Form &other);
 		~Form();
