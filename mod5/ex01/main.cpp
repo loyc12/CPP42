@@ -1,96 +1,105 @@
 #include "Bureaucrat.hpp"
-
+#include "Form.hpp"
 
 int	main(void)
 {
 	std::cout << "1 O================================================================O" << std::endl << std::endl;
 	{
-		Bureaucrat b("Gravy", 2);
+		Bureaucrat b("Gravy", 1);
 		std::cout << std::endl;
 
-		b.promote();
+		Form f("Artillery only", 2, 1);
+		std::cout << std::endl;
 
 		try
 		{
-			b.promote();
+			b.signForm(&f);
 		}
 		catch (std::exception &e)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
-		std::cout << std::endl << " > " << b << std::endl << std::endl;
+		std::cout << std::endl << " > " << f << std::endl << std::endl;
 	}
 	std::cout << std::endl << "2 O================================================================O" << std::endl << std::endl;
-	{
-		Bureaucrat b("Timmy", 149);
-		std::cout << std::endl;
-
-		b.demote();
-
-		try
-		{
-			b.demote();
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl << "3 O================================================================O" << std::endl << std::endl;
-	{
-		try
-		{
-			Bureaucrat b("Timmy", 1234);
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
-	}
-	std::cout << std::endl << "4 O================================================================O" << std::endl << std::endl;
-	{
-		Bureaucrat b1("Gravy", 1);
-		std::cout << std::endl;
-
-		try
-		{
-			b1.promote();
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
-		std::cout << std::endl;
-
-		try
-		{
-			Bureaucrat b2(b1);
-			b1.demote();
-			b2 = b1;
-			b1.demote();
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl << "5 O================================================================O" << std::endl << std::endl;
 	{
 		Bureaucrat b("Timmy", 2);
 		std::cout << std::endl;
 
-		for (int i = 0; i < 5; i++)
+		Form f("Megacampaign", 2, 1);
+		std::cout << std::endl;
+
+		try
 		{
-			try
-			{
-				b.promote();
-			}
-			catch (std::exception &e)
-			{
-				std::cerr << "Error : " << e.what() << std::endl;
-			}
+			b.signForm(&f);
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error : " << e.what() << std::endl;
+		}
+		std::cout << std::endl << " > " << f << std::endl << std::endl;
+	}
+	std::cout << std::endl << "3 O================================================================O" << std::endl << std::endl;
+	{
+		Bureaucrat b("Baby", 3);
+		std::cout << std::endl;
+
+		Form f("Ck3 A to Z", 2, 1);
+		std::cout << std::endl;
+
+		try
+		{
+			b.signForm(&f);
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error : " << e.what() << std::endl;
+		}
+		std::cout << std::endl << " > " << f << std::endl << std::endl;
+	}
+	std::cout << std::endl << "4 O================================================================O" << std::endl << std::endl;
+	{
+		try
+		{
+			Form f("All achievements", 1234, 1);
+			std::cout << std::endl << " > " << f << std::endl << std::endl;
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error : " << e.what() << std::endl;
+		}
+
+	}
+	std::cout << std::endl << "5 O================================================================O" << std::endl << std::endl;
+	{
+		Form f1("A", 2, 1);
+		std::cout << std::endl;
+
+		try
+		{
+			Form f2("Z", 4, 3);
+			f2 = f1;
+			std::cout << std::endl << " > " << f2 << std::endl << std::endl;
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error : " << e.what() << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl << "6 O================================================================O" << std::endl << std::endl;
+	{
+		Form f1("Tank only", 2, 1);
+		std::cout << std::endl;
+
+		try
+		{
+			Form f2(f1);
+			std::cout << std::endl << " > " << f2 << std::endl << std::endl;
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error : " << e.what() << std::endl;
 		}
 		std::cout << std::endl;
 	}

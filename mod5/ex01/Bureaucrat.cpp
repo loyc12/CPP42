@@ -102,10 +102,10 @@ void	Bureaucrat::signForm(Form *f)
 		f->beSigned(this);
 		std::cout << "Bureaucrat " << this->getName() << " signed the form " << f->getName() << " successfully" << std::endl;
 	}
-	catch (const char *msg)
+	catch (std::exception &e)
 	{
 		std::cout << "Bureaucrat " << this->getName() << " couldn't sign the form " << f->getName();
-		std::cout << " because their grade is too low ( > " << f->getSignGrade() << " )" << std::endl;
+		std::cout << " because their grade is too low ( grade < " << f->getSignGrade() << " )" << std::endl;
 	}
 }
 

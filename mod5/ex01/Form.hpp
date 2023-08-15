@@ -27,19 +27,36 @@ class Form
 
 	public:
 		// Constructors - Destructor
-		Form(std::string _name, int _signGrade, int _execGrade);
+		Form(const std::string _name, int _signGrade, int _execGrade);
 		Form(const Form &other);
 		Form &operator= (const Form &other);
 		~Form();
 
 		// Setters - Getters
-		int			getSignGrade(void) const;
-		int			getExecGrade(void) const;
-		std::string	getName(void) const;
+		int					getSignGrade(void) const;
+		int					getExecGrade(void) const;
+		const std::string	getName(void) const;
 
 		// Others
-
 		void	beSigned(Bureaucrat *b);
+
+		// Nested Classes
+		class GradeTooHigh : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return "invalid grade : too high ( > sign\\exec grade )";
+				}
+		};
+		class GradeTooLow : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return "invalid grade : too low ( > sign\\exec grade )";
+				}
+		};
 };
 
 std::ostream &operator<< (std::ostream &out, const Form &rhs);

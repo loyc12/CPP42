@@ -13,9 +13,9 @@ Form::Form()
 	this->execGrade = 150;
 	this->name = "UNINITIALIZED";
 
-	std::cout << "Constructed form : " << this->name << std::endl;
+	std::cout << "Constructed form : " << this->name << " ( grade " << this->signGrade << "/" << this->execGrade << " )" << std::endl;
 }
-Form::Form(std::string _name, int _signGrade, int _execGrade)
+Form::Form(const std::string _name, int _signGrade, int _execGrade)
 {
 	std::cout << "Called parameterized constructor (FORM)" << std::endl;
 
@@ -26,7 +26,7 @@ Form::Form(std::string _name, int _signGrade, int _execGrade)
 	this->setExecGrade(_execGrade);
 	this->name = _name;
 
-	std::cout << "Constructed form : " << this->name << std::endl;
+	std::cout << "Constructed form : " << this->name << " ( grade " << this->signGrade << "/" << this->execGrade << " )" << std::endl;
 }
 Form::Form(const Form &other)
 {
@@ -39,7 +39,7 @@ Form::Form(const Form &other)
 	this->setExecGrade(other.getExecGrade());
 	this->name = other.getName();
 
-	std::cout << "Copied form : " << this->name << std::endl;
+	std::cout << "Copied form : " << this->name << " ( grade " << this->signGrade << "/" << this->execGrade << " )" << std::endl;
 }
 
 Form &Form::operator= (const Form &other)
@@ -50,25 +50,25 @@ Form &Form::operator= (const Form &other)
 	this->setExecGrade(other.getExecGrade());
 	this->name = other.getName();
 
-	std::cout << "Copied form : " << this->name << std::endl;
+	std::cout << "Copied form : " << this->name << " ( grade " << this->signGrade << "/" << this->execGrade << " )" << std::endl;
 
 	return *this;
 }
 
 Form::~Form()
 {
-	std::cout << "Destroying form : " << this->name << std::endl;
+	std::cout << "Destroying form : " << this->name << " ( grade " << this->signGrade << "/" << this->execGrade << " )" << std::endl;
 }
 
 // Exceptions
 
 void Form::GradeTooHighException(void) const
 {
-	throw "invalid grade : too high ( < 1 )";
+	throw GradeTooHigh();
 }
 void Form::GradeTooLowException(void) const
 {
-	throw "invalid grade : too low ( > 150 )";
+	throw GradeTooLow();
 }
 
 // Setters - Getters
@@ -89,7 +89,7 @@ void	Form::setExecGrade(int value)
 	else if (value > 150)
 		this->GradeTooLowException();
 	else
-		this->signGrade = value;
+		this->execGrade = value;
 }
 int	Form::getSignGrade(void) const
 {
@@ -99,7 +99,7 @@ int	Form::getExecGrade(void) const
 {
 	return (this->execGrade);
 }
-std::string	Form::getName(void) const
+const std::string	Form::getName(void) const
 {
 	return (this->name);
 }
@@ -116,6 +116,6 @@ void	Form::beSigned(Bureaucrat *b)
 
 std::ostream &operator<< (std::ostream &out, const Form &rhs)
 {
-	out << rhs.getName() << " ( sign/exec Grade " << rhs.getSignGrade()<< "/" << rhs.getSignGrade() << " form )";
+	out << rhs.getName() << " ( sign/exec form of grade " << rhs.getSignGrade()<< "/" << rhs.getExecGrade() << " )";
 	return (out);
 }
