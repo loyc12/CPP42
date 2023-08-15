@@ -87,33 +87,12 @@ int	main(void)
 			{
 				b.promote();
 			}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
+			catch (std::exception &e)
+			{
+				std::cerr << "Error : " << e.what() << std::endl;
+			}
 		}
 		std::cout << std::endl;
 	}
 	std::cout << std::endl << "E O================================================================O" << std::endl << std::endl;
 }
-
-/*
-
-#include <iostream>
-
-class MyCustomException : public std::exception {
-    public:
-char * what () {
-        return "Custom C++ Exception";
-    }
-};
-
-int main() {
-    try {
-        throw MyCustomException();
-    } catch (std::exception &e) {
-        std::cerr << "Error : " << e.what() << std::endl;
-    }
-}
-
-*/

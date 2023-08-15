@@ -55,13 +55,11 @@ Bureaucrat::~Bureaucrat()
 
 void Bureaucrat::GradeTooHighException(void) const
 {
-	//TODO : CREATE A SUBCLASS OF std::exception WHERE what() RETURNS THIS STRING :
-	throw "invalid grade : too high ( < 1 )";
+	throw GradeTooHigh();
 }
 void Bureaucrat::GradeTooLowException(void) const
 {
-	//TODO : CREATE A SUBCLASS OF std::exception WHERE what() RETURNS THIS STRING :
-	throw "invalid grade : too low ( > 150 )";
+	throw GradeTooLow();
 }
 
 // Setters - Getters
@@ -79,7 +77,7 @@ int	Bureaucrat::getGrade(void) const
 {
 	return (this->grade);
 }
-std::string	Bureaucrat::getName(void) const
+const std::string	Bureaucrat::getName(void) const
 {
 	return (this->name);
 }

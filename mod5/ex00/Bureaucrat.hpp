@@ -22,16 +22,16 @@ class Bureaucrat
 
 	public:
 		// Constructors - Destructor
-		Bureaucrat(std::string _name, int _grade); //		const string????
+		Bureaucrat(const std::string _name, int _grade);
 		Bureaucrat(const Bureaucrat &other);
 		Bureaucrat &operator= (const Bureaucrat &other);
 		~Bureaucrat();
 
 		// Setters - Getters
-		int			getGrade(void) const;
-		std::string	getName(void) const; //					const string????
-		void		promote(void);
-		void		demote(void);
+		int					getGrade(void) const;
+		const std::string	getName(void) const;
+		void				promote(void);
+		void				demote(void);
 
 		// Nested Classes
 		class GradeTooHigh : public std::exception

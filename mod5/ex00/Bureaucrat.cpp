@@ -13,7 +13,7 @@ Bureaucrat::Bureaucrat()
 
 	std::cout << "Constructed bureaucrat : " << this->name << " ( grade " << this->grade << " )" << std::endl;
 }
-Bureaucrat::Bureaucrat(std::string _name, int _grade)
+Bureaucrat::Bureaucrat(const std::string _name, int _grade)
 {
 	std::cout << "Called parameterized constructor (BUREAUCRAT)" << std::endl;
 
@@ -55,12 +55,10 @@ Bureaucrat::~Bureaucrat()
 
 void Bureaucrat::GradeTooHighException(void) const
 {
-	//TODO : CREATE A SUBCLASS OF std::exception WHERE what() RETURNS THIS STRING :
 	throw GradeTooHigh();
 }
 void Bureaucrat::GradeTooLowException(void) const
 {
-	//TODO : CREATE A SUBCLASS OF std::exception WHERE what() RETURNS THIS STRING :
 	throw GradeTooLow();
 }
 
@@ -79,7 +77,7 @@ int	Bureaucrat::getGrade(void) const
 {
 	return (this->grade);
 }
-std::string	Bureaucrat::getName(void) const
+const std::string	Bureaucrat::getName(void) const
 {
 	return (this->name);
 }
