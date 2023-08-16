@@ -108,19 +108,6 @@ void	Bureaucrat::signForm(Form &f)
 		std::cout << " because their grade is too low ( grade < " << f.getSignGrade() << " )" << std::endl;
 	}
 }
-void	Bureaucrat::executeForm(Form const &f)
-{
-	try
-	{
-		f.beExecuted(*this);
-		std::cout << "Bureaucrat " << this->getName() << " Executed the form " << f.getName() << " successfully" << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "Bureaucrat " << this->getName() << " couldn't execute the form " << f.getName();
-		std::cout << " because their grade is too low ( grade < " << f.getExecGrade() << " )" << std::endl;
-	}
-}
 
 std::ostream &operator<< (std::ostream &out, const Bureaucrat &rhs)
 {

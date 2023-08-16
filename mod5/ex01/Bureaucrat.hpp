@@ -36,7 +36,7 @@ class Bureaucrat
 		void				demote(void);
 
 		// Others
-		void	signForm(Form *f);
+		void	signForm(Form &f);
 
 		// Nested Classes
 		class GradeTooHigh : public std::exception

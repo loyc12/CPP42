@@ -38,7 +38,7 @@ class Form
 		const std::string	getName(void) const;
 
 		// Others
-		void	beSigned(Bureaucrat *b);
+		void	beSigned(Bureaucrat const &b);
 
 		// Nested Classes
 		class GradeTooHigh : public std::exception

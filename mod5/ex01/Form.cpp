@@ -106,9 +106,9 @@ const std::string	Form::getName(void) const
 
 // Others
 
-void	Form::beSigned(Bureaucrat *b)
+void	Form::beSigned(Bureaucrat const &b)
 {
-	if (this->getSignGrade() < b->getGrade())
+	if (this->getSignGrade() < b.getGrade())
 		this->GradeTooLowException();
 	else
 		this->isSigned = true;

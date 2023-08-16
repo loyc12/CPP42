@@ -13,7 +13,7 @@ int	main(void)
 
 		try
 		{
-			b.signForm(&f);
+			b.signForm(f);
 		}
 		catch (std::exception &e)
 		{
@@ -31,7 +31,7 @@ int	main(void)
 
 		try
 		{
-			b.signForm(&f);
+			b.signForm(f);
 		}
 		catch (std::exception &e)
 		{
@@ -49,7 +49,7 @@ int	main(void)
 
 		try
 		{
-			b.signForm(&f);
+			b.signForm(f);
 		}
 		catch (std::exception &e)
 		{

@@ -95,17 +95,17 @@ void	Bureaucrat::demote(void)
 
 // Others
 
-void	Bureaucrat::signForm(Form *f)
+void	Bureaucrat::signForm(Form &f)
 {
 	try
 	{
-		f->beSigned(this);
-		std::cout << "Bureaucrat " << this->getName() << " signed the form " << f->getName() << " successfully" << std::endl;
+		f.beSigned(*this);
+		std::cout << "Bureaucrat " << this->getName() << " signed the form " << f.getName() << " successfully" << std::endl;
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "Bureaucrat " << this->getName() << " couldn't sign the form " << f->getName();
-		std::cout << " because their grade is too low ( grade < " << f->getSignGrade() << " )" << std::endl;
+		std::cout << "Bureaucrat " << this->getName() << " couldn't sign the form " << f.getName();
+		std::cout << " because their grade is too low ( grade < " << f.getSignGrade() << " )" << std::endl;
 	}
 }
 
