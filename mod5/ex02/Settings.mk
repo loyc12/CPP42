@@ -11,6 +11,8 @@ FILES		=	main \
 				AForm \
 				PresidentialPardonForm \
 				RobotomyRequestForm \
+				ShrubberyCreationForm \
+#				Shrub \
 
 # Directory names
 SRCDIR		=

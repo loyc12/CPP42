@@ -1,7 +1,8 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int	main(void)
 {
@@ -172,6 +173,24 @@ int	main(void)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
+
+		std::cout << std::endl << " > " << f << std::endl << " > " << b << std::endl << std::endl;
+	}
+	std::cout << std::endl << "9 O================================================================O" << std::endl << std::endl;
+	{
+		Bureaucrat b("Loyc", 1);
+		std::cout << std::endl;
+
+		ShrubberyCreationForm f("Garden");
+		std::cout << std::endl;
+
+		b.signForm(f);
+		std::cout << std::endl;
+
+		b.executeForm(f);
+		std::cout << std::endl;
+
+		f.testShrub();
 
 		std::cout << std::endl << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
