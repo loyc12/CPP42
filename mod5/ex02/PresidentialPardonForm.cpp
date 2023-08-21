@@ -66,5 +66,5 @@ void	PresidentialPardonForm::beExecuted(Bureaucrat const &b) const
 	else if (this->getExecGrade() < b.getGrade())
 		throw GradeTooLow();
 	else
-		std::cout << this->target << " has been pardoner by " << b.getName() << " (*sigh*)" << std::endl;
+		std::cout << b.getName() << " has pardonned " << this->target << " (*sigh*)" << std::endl;
 }

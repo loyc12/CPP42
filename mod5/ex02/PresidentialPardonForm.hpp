@@ -9,7 +9,7 @@ class Bureaucrat;
 
 class PresidentialPardonForm : public AForm
 {
-	private :
+	private:
 		std::string	target;
 
 	protected:

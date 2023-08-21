@@ -47,25 +47,14 @@ Bureaucrat::~Bureaucrat()
 	std::cout << "Destroying bureaucrat : " << this->name << " ( grade " << this->grade << " )" << std::endl;
 }
 
-// Exceptions
-
-void Bureaucrat::GradeTooHighException(void) const
-{
-	throw GradeTooHigh();
-}
-void Bureaucrat::GradeTooLowException(void) const
-{
-	throw GradeTooLow();
-}
-
 // Setters - Getters
 
 void	Bureaucrat::setGrade(int value)
 {
 	if (value < 1)
-		this->GradeTooHighException();
+		throw GradeTooHigh();
 	else if (value > 150)
-		this->GradeTooLowException();
+		throw GradeTooLow();
 	else
 		this->grade = value;
 }

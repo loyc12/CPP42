@@ -10,6 +10,7 @@ FILES		=	main \
 				Bureaucrat \
 				AForm \
 				PresidentialPardonForm \
+				RobotomyRequestForm \
 
 # Directory names
 SRCDIR		=

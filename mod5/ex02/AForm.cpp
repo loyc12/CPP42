@@ -4,7 +4,7 @@
 
 AForm::AForm()
 {
-	std::cout << "Called default constructor (FORM) ";
+	std::cout << "Called default constructor (AFORM) ";
 
 	this->isSigned = false;
 	this->signGrade = 150;
@@ -13,7 +13,7 @@ AForm::AForm()
 }
 AForm::AForm(const std::string _name, const int _signGrade, const int _execGrade)
 {
-	std::cout << "Called parameterized constructor (FORM) ";
+	std::cout << "Called parameterized constructor (AFORM) ";
 
 	this->isSigned = false;
 	this->signGrade = 150;
@@ -26,7 +26,7 @@ AForm::AForm(const std::string _name, const int _signGrade, const int _execGrade
 }
 AForm::AForm(const AForm &other)
 {
-	std::cout << "Called copy constructor (FORM) ";
+	std::cout << "Called copy constructor (AFORM) ";
 
 	this->isSigned = false;
 	this->signGrade = 150;
@@ -40,7 +40,7 @@ AForm::AForm(const AForm &other)
 
 AForm &AForm::operator= (const AForm &other)
 {
-	std::cout << "Called assignment operator (FORM) ";
+	std::cout << "Called assignment operator (AFORM) ";
 
 	this->setSignGrade(other.getSignGrade());
 	this->setExecGrade(other.getExecGrade());
