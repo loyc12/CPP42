@@ -1,12 +1,12 @@
-#ifndef FORM_HPP
-# define FORM_HPP
+#ifndef AFORM_HPP
+# define AFORM_HPP
 
 # include <iostream>
 # include "Bureaucrat.hpp"
 
 class Bureaucrat;
 
-class Form
+class AForm
 {
 	private:
 		std::string	name;
@@ -14,32 +14,31 @@ class Form
 		int			signGrade;
 		int			execGrade;
 
+	protected:
 		// Constructors
-		Form();
-
-		// Exceptions
-		void	GradeTooHighException(void) const;
-		void	GradeTooLowException(void) const;
+		AForm();
 
 		// Setters
 		void	setSignGrade(const int value);
 		void	setExecGrade(const int value);
+		void	setName(const std::string _name);
 
 	public:
 		// Constructors - Destructor
-		Form(const std::string _name, const int _signGrade, const int _execGrade);
-		Form(const Form &other);
-		Form &operator= (const Form &other);
-		~Form();
+		AForm(const std::string _name, const int _signGrade, const int _execGrade);
+		AForm(const AForm &other);
+		AForm &operator= (const AForm &other);
+		virtual ~AForm() = 0;
 
 		// Setters - Getters
 		int					getSignGrade(void) const;
 		int					getExecGrade(void) const;
 		const std::string	getName(void) const;
+		bool				canBeExec(void) const;
 
 		// Others
-		void	beSigned(Bureaucrat const &b);
-		void	beExecuted(Bureaucrat const &b) const;
+		void			beSigned(Bureaucrat const &b);
+		virtual void	beExecuted(Bureaucrat const &b) const;
 
 		// Nested Classes
 		class GradeTooHigh : public std::exception
@@ -58,8 +57,16 @@ class Form
 					return "invalid grade : too low ( > sign\\exec grade )";
 				}
 		};
+		class FormUnsigned : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return "invalid status : form unsigned";
+				}
+		};
 };
 
-std::ostream &operator<< (std::ostream &out, const Form &rhs);
+std::ostream &operator<< (std::ostream &out, const AForm &rhs);
 
-#endif //FORM
+#endif //AFORM

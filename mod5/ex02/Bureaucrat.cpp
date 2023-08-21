@@ -4,18 +4,14 @@
 
 Bureaucrat::Bureaucrat()
 {
-	//throw "invalid call : default bureaucrat constructor"; //	alternative to implementing this constructor in private
-
-	std::cout << "Called default constructor (BUREAUCRAT)" << std::endl;
+	std::cout << "Called default constructor (BUREAUCRAT) ";
 
 	this->grade = 150;
 	this->name = "UNINITIALIZED";
-
-	std::cout << "Constructed bureaucrat : " << this->name << " ( grade " << this->grade << " )" << std::endl;
 }
 Bureaucrat::Bureaucrat(std::string _name, int _grade)
 {
-	std::cout << "Called parameterized constructor (BUREAUCRAT)" << std::endl;
+	std::cout << "Called parameterized constructor (BUREAUCRAT) ";
 
 	this->grade = 150;
 	this->name = _name;
@@ -25,7 +21,7 @@ Bureaucrat::Bureaucrat(std::string _name, int _grade)
 }
 Bureaucrat::Bureaucrat(const Bureaucrat &other)
 {
-	std::cout << "Called copy constructor (BUREAUCRAT)" << std::endl;
+	std::cout << "Called copy constructor (BUREAUCRAT) ";
 
 	this->grade = 150;
 	this->name = other.getName();
@@ -36,7 +32,7 @@ Bureaucrat::Bureaucrat(const Bureaucrat &other)
 
 Bureaucrat &Bureaucrat::operator= (const Bureaucrat &other)
 {
-	std::cout << "Called assignment operator (BUREAUCRAT)" << std::endl;
+	std::cout << "Called assignment operator (BUREAUCRAT) ";
 
 	this->name = other.getName();
 	this->setGrade(other.getGrade());
@@ -95,7 +91,7 @@ void	Bureaucrat::demote(void)
 
 // Others
 
-void	Bureaucrat::signForm(Form &f)
+void	Bureaucrat::signForm(AForm &f)
 {
 	try
 	{
@@ -104,8 +100,19 @@ void	Bureaucrat::signForm(Form &f)
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "Bureaucrat " << this->getName() << " couldn't sign the form " << f.getName();
-		std::cout << " because their grade is too low ( grade < " << f.getSignGrade() << " )" << std::endl;
+		std::cout << "Bureaucrat " << this->getName() << " couldn't sign the form " << f.getName() << " because of error : " << e.what() << std::endl;
+	}
+}
+void	Bureaucrat::executeForm(const AForm &f)
+{
+	try
+	{
+		f.beExecuted(*this);
+		std::cout << "Bureaucrat " << this->getName() << " executed the form " << f.getName() << " successfully" << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "Bureaucrat " << this->getName() << " couldn't execute the form " << f.getName() << " because of error : " << e.what() << std::endl;
 	}
 }
 

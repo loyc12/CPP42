@@ -1,50 +1,52 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int	main(void)
 {
 	std::cout << "1 O================================================================O" << std::endl << std::endl;
 	{
-		Bureaucrat b("Gravy", 1);
+		Bureaucrat b("Zap", 1);
 		std::cout << std::endl;
 
-		Form f("Artillery only", 2, 1);
+		PresidentialPardonForm f("Himself");
 		std::cout << std::endl;
 
-		try
-		{
-			b.signForm(f);
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
-		std::cout << std::endl << " > " << f << std::endl << std::endl;
+		b.signForm(f);
+		std::cout << std::endl;
+
+		b.executeForm(f);
+
+		std::cout << std::endl << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
 	std::cout << std::endl << "2 O================================================================O" << std::endl << std::endl;
 	{
-		Bureaucrat b("Timmy", 2);
+		Bureaucrat b("Zap", 6);
 		std::cout << std::endl;
 
-		Form f("Megacampaign", 2, 1);
+		PresidentialPardonForm f("Himself");
+		std::cout << std::endl;
+
+		b.signForm(f);
 		std::cout << std::endl;
 
 		try
 		{
-			b.signForm(f);
+			b.executeForm(f);
 		}
 		catch (std::exception &e)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
-		std::cout << std::endl << " > " << f << std::endl << std::endl;
+
+		std::cout << std::endl << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
 	std::cout << std::endl << "3 O================================================================O" << std::endl << std::endl;
 	{
-		Bureaucrat b("Baby", 3);
+		Bureaucrat b("Zap", 26);
 		std::cout << std::endl;
 
-		Form f("Ck3 A to Z", 2, 1);
+		PresidentialPardonForm f("Himself");
 		std::cout << std::endl;
 
 		try
@@ -55,53 +57,63 @@ int	main(void)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
-		std::cout << std::endl << " > " << f << std::endl << std::endl;
+		std::cout << std::endl;
+
+		try
+		{
+			b.executeForm(f);
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Error : " << e.what() << std::endl;
+		}
+
+		std::cout << std::endl << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
 	std::cout << std::endl << "4 O================================================================O" << std::endl << std::endl;
 	{
+		Bureaucrat b("Zap", 1);
+		std::cout << std::endl;
+
+		PresidentialPardonForm f("Himself");
+		std::cout << std::endl;
+
 		try
 		{
-			Form f("All achievements", 1234, 1);
-			std::cout << std::endl << " > " << f << std::endl << std::endl;
+			b.executeForm(f);
 		}
 		catch (std::exception &e)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
 
-	}
-	std::cout << std::endl << "5 O================================================================O" << std::endl << std::endl;
-	{
-		Form f1("A", 2, 1);
-		std::cout << std::endl;
-
-		try
-		{
-			Form f2("Z", 4, 3);
-			f2 = f1;
-			std::cout << std::endl << " > " << f2 << std::endl << std::endl;
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl << "6 O================================================================O" << std::endl << std::endl;
-	{
-		Form f1("Tank only", 2, 1);
-		std::cout << std::endl;
-
-		try
-		{
-			Form f2(f1);
-			std::cout << std::endl << " > " << f2 << std::endl << std::endl;
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error : " << e.what() << std::endl;
-		}
-		std::cout << std::endl;
+		std::cout << std::endl << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
 	std::cout << std::endl << "E O================================================================O" << std::endl << std::endl;
 }
+
+/*
+
+char[43][85], last ones column is \n, las row is \0
+
+flood-fill constructor (wave function collapse)
+
+.........................
+.........................
+.........................
+.........................
+.........................
+.........@@@@@...........
+.......@@@@@@@@@@........
+......@@@@@@@@@@@@.......
+......@@@@@@@@@@@@@......
+......@@@@@@@@@@@@.......
+.........\||.//@@........
+.........|~|//...........
+.........|~~/............
+.........|~~|............
+.........|~~|............
+......../~~~~\...........
+
+
+*/

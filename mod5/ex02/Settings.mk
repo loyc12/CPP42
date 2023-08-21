@@ -8,7 +8,8 @@ NAME		=	Office
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
 				Bureaucrat \
-				Form \
+				AForm \
+				PresidentialPardonForm \
 
 # Directory names
 SRCDIR		=

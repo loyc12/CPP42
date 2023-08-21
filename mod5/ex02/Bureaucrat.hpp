@@ -2,9 +2,9 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream>
-# include "Form.hpp"
+# include "AForm.hpp"
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -12,6 +12,7 @@ class Bureaucrat
 		std::string	name;
 		int			grade;
 
+	protected:
 		// Constructors
 		Bureaucrat();
 
@@ -36,8 +37,8 @@ class Bureaucrat
 		void				demote(void);
 
 		// Others
-		void	signForm(Form &f);
-		void	executeForm(Form const &f);
+		void	signForm(AForm &f);
+		void	executeForm(AForm const &f);
 
 		// Nested Classes
 		class GradeTooHigh : public std::exception
