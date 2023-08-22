@@ -12,7 +12,7 @@ FILES		=	main \
 				PresidentialPardonForm \
 				RobotomyRequestForm \
 				ShrubberyCreationForm \
-#				Shrub \
+				Shrub \
 
 # Directory names
 SRCDIR		=

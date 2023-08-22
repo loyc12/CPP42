@@ -8,7 +8,7 @@ ShrubberyCreationForm::ShrubberyCreationForm()
 
 	this->setSignGrade(145);
 	this->setExecGrade(137);
-	this->setName("Srubbery Creation");
+	this->setName("Shrubbery Creation");
 	this->target = "UNINITIALIZED";
 }
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string _target)
@@ -17,10 +17,10 @@ ShrubberyCreationForm::ShrubberyCreationForm(const std::string _target)
 
 	this->setSignGrade(145);
 	this->setExecGrade(137);
-	this->setName("Srubbery Creation");
+	this->setName("Shrubbery Creation");
 	this->target = _target;
 
-	std::cout << "Constructed srubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
+	std::cout << "Constructed shrubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
 }
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other)
 {
@@ -31,7 +31,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other)
 	this->setName(other.getName());
 	this->target = other.getTarget();
 
-	std::cout << "Copied srubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
+	std::cout << "Copied shrubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
 }
 
 ShrubberyCreationForm &ShrubberyCreationForm::operator= (const ShrubberyCreationForm &other)
@@ -43,14 +43,14 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator= (const ShrubberyCreation
 	this->setName(other.getName());
 	this->target = other.getTarget();
 
-	std::cout << "Copied srubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
+	std::cout << "Copied shrubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
 
 	return *this;
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-	std::cout << "Destroying srubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " ) ";
+	std::cout << "Destroying shrubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " ) ";
 }
 
 // Others
@@ -61,6 +61,8 @@ const std::string	ShrubberyCreationForm::getTarget(void) const
 }
 void	ShrubberyCreationForm::beExecuted(Bureaucrat const &b) const
 {
+	std::srand(std::time(NULL));
+
 	if (!this->canBeExec())
 		throw FormUnsigned();
 	else if (this->getExecGrade() < b.getGrade())
@@ -75,13 +77,24 @@ void	ShrubberyCreationForm::beExecuted(Bureaucrat const &b) const
 
 void	ShrubberyCreationForm::testShrub(void)
 {
+	std::srand(std::time(NULL));
+
 	this->initArea();
 	this->drawArea();
+}
+void	ShrubberyCreationForm::addSrub()
+{
+	int h_pos = (rand() % AREA_WIDTH - 2) + 1;
+
+	Shrub s(this, h_pos);
+
+	// call shrub methods to put stuff on area
 }
 
 char	ShrubberyCreationForm::getGrassChar(void)
 {
-	int value = rand() % 5;
+	int value = rand() % 8;
+
 	if (value == 0)
 		return ('.');
 	else if (value == 1)
@@ -93,11 +106,11 @@ char	ShrubberyCreationForm::getGrassChar(void)
 	else if (value == 4)
 		return ('l');
 	else if (value == 5)
-		return ('|');
+		return ('!');
 	else if (value == 6)
-		return ('/');
+		return ('?');
 	else if (value == 7)
-		return ('\\');
+		return (',');
 	return (' ');
 }
 
@@ -133,9 +146,9 @@ void	ShrubberyCreationForm::drawArea(void)
 {
 	std::cout << std::endl;
 
-	for (int y = 0; y < AREA_HEIGHT; ++y)
+	for (int y = 0; y < AREA_HEIGHT; y++)
 	{
-		for (int x = 0; x < AREA_WIDTH; ++x)
+		for (int x = 0; x < AREA_WIDTH; x++)
 		{
 			std::cout << this->area[y][x];
 		}

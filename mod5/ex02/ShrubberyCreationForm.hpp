@@ -1,16 +1,18 @@
-#ifndef SRUBBERYCREATIONFORM_HPP
-# define SRUBBERYCREATIONFORM_HPP
+#ifndef SHRUBBERYCREATIONFORM_HPP
+# define SHRUBBERYCREATIONFORM_HPP
 
 # include <iostream>
 # include <fstream>
 # include "Bureaucrat.hpp"
 # include "AForm.hpp"
+# include "Shrub.hpp"
 
 # define AREA_WIDTH		84
 # define AREA_HEIGHT 	42
-# define SOIL_RATIO		0.4f
+# define SOIL_RATIO		0.333f
 
 class Bureaucrat;
+class Shrub;
 
 class ShrubberyCreationForm : public AForm
 {
@@ -37,6 +39,7 @@ class ShrubberyCreationForm : public AForm
 		void				beExecuted(Bureaucrat const &b) const;
 
 		// Shrubbing
+		void	addSrub();
 		void	testShrub(void);
 		char	getGrassChar(void);
 		void	initArea(void);
@@ -44,7 +47,7 @@ class ShrubberyCreationForm : public AForm
 
 };
 
-#endif //SRUBBERYCREATIONFORM
+#endif //SHRUBBERYCREATIONFORM
 
 
 //=========================================//

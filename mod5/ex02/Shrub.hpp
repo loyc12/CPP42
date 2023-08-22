@@ -4,17 +4,17 @@
 # include <iostream>
 # include "ShrubberyCreationForm.hpp"
 
-class ShruberryCreationForm;
+class ShrubberyCreationForm;
 
 class Shrub
 {
 	private:
-		ShruberryCreationForm f;
+		ShrubberyCreationForm *scf;
 		int	horizontal_p;
-		int	trunk_h;
-		int	trunk_w;
-		int	root_s;
-		int	bush_s;
+//		int	trunk_h;
+//		int	trunk_w;
+//		int	root_s;
+//		int	bush_s;
 
 	protected:
 		// Constructors
@@ -22,14 +22,15 @@ class Shrub
 
 	public:
 		// Constructors - Destructor
-		Shrub(const int pos);
+		Shrub(ShrubberyCreationForm *_scf, int _h_pos);
 		Shrub(const Shrub &other);
 		Shrub &operator= (const Shrub &other);
 		~Shrub();
 
-		// Setters - Getters
-
 		// Others
+		int	getPos(void) const;
+
+		// Setters - Getters
 };
 
 std::ostream &operator<< (std::ostream &out, const Shrub &rhs);
