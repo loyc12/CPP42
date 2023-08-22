@@ -39,11 +39,12 @@ class ShrubberyCreationForm : public AForm
 		void				beExecuted(Bureaucrat const &b) const;
 
 		// Shrubbing
-		void	addSrub();
+		void	addShrub();
 		void	testShrub(void);
 		char	getGrassChar(void);
 		void	initArea(void);
 		void	drawArea(void);
+		void	drawAt(int x, int y, char c);
 
 };
 

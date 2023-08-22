@@ -11,7 +11,8 @@ class Shrub
 	private:
 		ShrubberyCreationForm *scf;
 		int	horizontal_p;
-//		int	trunk_h;
+		int vertical_p;
+		int	trunk_h;
 //		int	trunk_w;
 //		int	root_s;
 //		int	bush_s;
@@ -22,15 +23,17 @@ class Shrub
 
 	public:
 		// Constructors - Destructor
-		Shrub(ShrubberyCreationForm *_scf, int _h_pos);
+		Shrub(ShrubberyCreationForm *_scf, int _h_pos, int _v_pos);
 		Shrub(const Shrub &other);
 		Shrub &operator= (const Shrub &other);
 		~Shrub();
 
 		// Others
-		int	getPos(void) const;
+		int	getHPos(void) const;
+		int	getVPos(void) const;
 
-		// Setters - Getters
+		// Shrubbing
+		void	growShrub(void);
 };
 
 std::ostream &operator<< (std::ostream &out, const Shrub &rhs);
