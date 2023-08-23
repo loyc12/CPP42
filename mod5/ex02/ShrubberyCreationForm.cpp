@@ -81,13 +81,14 @@ void	ShrubberyCreationForm::testShrub(void)
 
 	this->initArea();
 
-	this->addShrub();
+	for (int i = 0; i < 16; i++)
+		this->addShrub();
 
 	this->drawArea();
 }
 void	ShrubberyCreationForm::addShrub()
 {
-	int h_pos = (rand() % AREA_WIDTH - 2) + 1;
+	int h_pos = (rand() % AREA_WIDTH - 4) + 2;
 
 	Shrub s(this, h_pos, this->soil_h);
 
@@ -98,7 +99,7 @@ void	ShrubberyCreationForm::addShrub()
 	// call shrub methods to put stuff on area
 }
 
-char	ShrubberyCreationForm::getGrassChar(void)
+char	ShrubberyCreationForm::getGrassChar(void) const
 {
 	int value = rand() % 8;
 
@@ -119,6 +120,20 @@ char	ShrubberyCreationForm::getGrassChar(void)
 	else if (value == 7)
 		return ('*');
 	return (' ');
+}
+char	ShrubberyCreationForm::getBarkChar(void) const
+{
+	int value = rand() % 16;
+
+	if (value == 0)
+		return ('.');
+	else if (value == 1)
+		return (',');
+	else if (value == 2)
+		return ('\'');
+	else if (value == 3)
+		return ('o');
+	return ('~');
 }
 
 void	ShrubberyCreationForm::initArea(void)
@@ -164,8 +179,14 @@ void	ShrubberyCreationForm::drawArea(void)
 
 	std::cout << std::endl;
 }
-void	ShrubberyCreationForm::drawAt(int x, int y, char c)
+void	ShrubberyCreationForm::setChar(int x, int y, char c)
 {
 	if (0 < x && x < AREA_WIDTH - 1 && 0 < y && y < AREA_HEIGHT - 1 )
 		this->area[y][x] = c;
+}
+char	ShrubberyCreationForm::getChar(int x, int y) const
+{
+	if (0 < x && x < AREA_WIDTH - 1 && 0 < y && y < AREA_HEIGHT - 1 )
+		return (this->area[y][x]);
+	return ('\0');
 }

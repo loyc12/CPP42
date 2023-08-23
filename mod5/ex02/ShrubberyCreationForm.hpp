@@ -7,7 +7,7 @@
 # include "AForm.hpp"
 # include "Shrub.hpp"
 
-# define AREA_WIDTH		84
+# define AREA_WIDTH		128
 # define AREA_HEIGHT 	42
 # define SOIL_RATIO		0.333f
 
@@ -41,10 +41,12 @@ class ShrubberyCreationForm : public AForm
 		// Shrubbing
 		void	addShrub();
 		void	testShrub(void);
-		char	getGrassChar(void);
+		char	getGrassChar(void) const;
+		char	getBarkChar(void) const;
 		void	initArea(void);
 		void	drawArea(void);
-		void	drawAt(int x, int y, char c);
+		void	setChar(int x, int y, char c);
+		char	getChar(int x, int y) const;
 
 };
 

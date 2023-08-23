@@ -13,9 +13,8 @@ class Shrub
 		int	horizontal_p;
 		int vertical_p;
 		int	trunk_h;
-//		int	trunk_w;
+		int	trunk_w;
 //		int	root_s;
-//		int	bush_s;
 
 	protected:
 		// Constructors
@@ -34,6 +33,9 @@ class Shrub
 
 		// Shrubbing
 		void	growShrub(void);
+		void	growBush(int h_pos, int v_pos, int size);
+		void	branchLeft(int h_pos, int v_pos, int size);
+		void	branchRight(int h_pos, int v_pos, int size);
 };
 
 std::ostream &operator<< (std::ostream &out, const Shrub &rhs);
