@@ -10,6 +10,9 @@ ShrubberyCreationForm::ShrubberyCreationForm()
 	this->setExecGrade(137);
 	this->setName("Shrubbery Creation");
 	this->target = "UNINITIALIZED";
+
+	std::srand(std::time(NULL));
+	this->initArea();
 }
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string _target)
 {
@@ -19,6 +22,9 @@ ShrubberyCreationForm::ShrubberyCreationForm(const std::string _target)
 	this->setExecGrade(137);
 	this->setName("Shrubbery Creation");
 	this->target = _target;
+
+	std::srand(std::time(NULL));
+	this->initArea();
 
 	std::cout << "Constructed shrubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
 }
@@ -31,6 +37,9 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other)
 	this->setName(other.getName());
 	this->target = other.getTarget();
 
+	std::srand(std::time(NULL));
+	this->initArea();
+
 	std::cout << "Copied shrubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
 }
 
@@ -42,6 +51,14 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator= (const ShrubberyCreation
 	this->setExecGrade(other.getExecGrade());
 	this->setName(other.getName());
 	this->target = other.getTarget();
+
+	for (int y = 0; y < AREA_HEIGHT; y++)
+	{
+		for (int x = 0; x < AREA_WIDTH; x++)
+		{
+			this->area[y][x] = other.area[y][x];
+		}
+	}
 
 	std::cout << "Copied shrubbery creation form for " << this->target << " ( grade " << this->getSignGrade() << "/" << this->getExecGrade() << " )" << std::endl;
 
@@ -68,37 +85,105 @@ void	ShrubberyCreationForm::beExecuted(Bureaucrat const &b) const
 	else if (this->getExecGrade() < b.getGrade())
 		throw GradeTooLow();
 	else if (rand() % 2)
+	{
+		this->writeArea();
 		std::cout << this->target << " has been shrubbed" << std::endl;
+	}
 	else
 		std::cout << this->target << "'s shrubbing has failed" << std::endl;
 }
 
 // Shrubbing
 
-void	ShrubberyCreationForm::testShrub(void)
+void	ShrubberyCreationForm::initArea(void)
 {
-	std::srand(std::time(NULL));
+	this->area_w = AREA_WIDTH;
+	this->area_h = AREA_HEIGHT;
+	this->soil_h = AREA_HEIGHT - (int)(SOIL_RATIO * AREA_HEIGHT);
 
-	this->initArea();
+	char	c;
 
-	for (int i = 0; i < 16; i++)
-		this->addShrub();
+	for (int y = 0; y < AREA_HEIGHT; y++)
+	{
+		if (y == 0 || y == AREA_HEIGHT - 1)
+			c = BOTTOM_LINE;
+		else if (y < this->soil_h)
+			c = SKY_CHAR;
+		else
+			c = GROUND_CHAR;
 
-	this->drawArea();
+		for (int x = 0; x < AREA_WIDTH; x++)
+		{
+			if (x == 0 || x == AREA_WIDTH - 1)
+			{
+				if (y == 0 || y == AREA_HEIGHT - 1)
+					this->area[y][x] = CORNER_LINE;
+				else
+					this->area[y][x] = SIDE_LINE;
+			}
+			else if (y == this->soil_h)
+				this->area[y][x] = this->getGrassChar();
+			else
+				this->area[y][x] = c;
+		}
+	}
+
+	this->addShrubs(SHRUB_COUNT);
 }
-void	ShrubberyCreationForm::addShrub()
+void	ShrubberyCreationForm::addShrubs(int count)
 {
-	int h_pos = (rand() % AREA_WIDTH - 4) + 2;
+	for (int i = 0; i < count; i++)
+	{
+		int h_pos = (rand() % AREA_WIDTH - 6) + 3;
 
-	Shrub s(this, h_pos, this->soil_h);
+		Shrub s(this, h_pos, this->soil_h);
 
-	std::cout << std::endl << s << std::endl;
+		std::cout << std::endl << s << std::endl;
 
-	s.growShrub();
-
-	// call shrub methods to put stuff on area
+		s.growShrub();
+	}
 }
+void	ShrubberyCreationForm::drawArea(void) const //		PRINTS IN TERMINAL
+{
+	std::cout << std::endl;
 
+	for (int y = 0; y < AREA_HEIGHT; y++)
+	{
+		for (int x = 0; x < AREA_WIDTH; x++)
+		{
+			std::cout << this->area[y][x];
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << std::endl;
+}
+void	ShrubberyCreationForm::writeArea(void) const //		PRINTS IN FILE
+{
+	std::ofstream output;
+ 	output.open(this->target + "_Shrubbery");
+
+	for (int y = 0; y < AREA_HEIGHT; y++)
+	{
+		for (int x = 0; x < AREA_WIDTH; x++)
+		{
+  			output << this->area[y][x];
+		}
+		output << std::endl;
+	}
+  	output.close();
+}
+void	ShrubberyCreationForm::setChar(int x, int y, char c)
+{
+	if (0 < x && x < AREA_WIDTH - 1 && 0 < y && y < AREA_HEIGHT - 1 )
+		this->area[y][x] = c;
+}
+char	ShrubberyCreationForm::getChar(int x, int y) const
+{
+	if (0 < x && x < AREA_WIDTH - 1 && 0 < y && y < AREA_HEIGHT - 1 )
+		return (this->area[y][x]);
+	return ('\0');
+}
 char	ShrubberyCreationForm::getGrassChar(void) const
 {
 	int value = rand() % 8;
@@ -135,58 +220,17 @@ char	ShrubberyCreationForm::getBarkChar(void) const
 		return ('o');
 	return ('~');
 }
-
-void	ShrubberyCreationForm::initArea(void)
+char	ShrubberyCreationForm::getLeafChar(void) const
 {
-	this->area_w = AREA_WIDTH;
-	this->area_h = AREA_HEIGHT;
-	this->soil_h = AREA_HEIGHT - (int)(SOIL_RATIO * AREA_HEIGHT);
+	int value = rand() % 8;
 
-	char	c;
-
-	for (int y = 0; y < AREA_HEIGHT; y++)
-	{
-		if (y == 0 || y == AREA_HEIGHT - 1)
-			c = '-';
-		else if (y < this->soil_h)
-			c = ' ';
-		else
-			c = '#';
-
-		for (int x = 0; x < AREA_WIDTH; x++)
-		{
-			if (x == 0 || x == AREA_WIDTH - 1)
-				this->area[y][x] = '|';
-			else if (y == this->soil_h)
-				this->area[y][x] = this->getGrassChar();
-			else
-				this->area[y][x] = c;
-		}
-	}
-}
-void	ShrubberyCreationForm::drawArea(void)
-{
-	std::cout << std::endl;
-
-	for (int y = 0; y < AREA_HEIGHT; y++)
-	{
-		for (int x = 0; x < AREA_WIDTH; x++)
-		{
-			std::cout << this->area[y][x];
-		}
-		std::cout << std::endl;
-	}
-
-	std::cout << std::endl;
-}
-void	ShrubberyCreationForm::setChar(int x, int y, char c)
-{
-	if (0 < x && x < AREA_WIDTH - 1 && 0 < y && y < AREA_HEIGHT - 1 )
-		this->area[y][x] = c;
-}
-char	ShrubberyCreationForm::getChar(int x, int y) const
-{
-	if (0 < x && x < AREA_WIDTH - 1 && 0 < y && y < AREA_HEIGHT - 1 )
-		return (this->area[y][x]);
-	return ('\0');
+	if (value == 0)
+		return ('o');
+	else if (value == 1)
+		return ('0');
+	else if (value == 2)
+		return ('*');
+	else if (value == 3)
+		return ('e');
+	return ('@');
 }

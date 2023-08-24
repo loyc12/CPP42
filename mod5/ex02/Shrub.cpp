@@ -52,14 +52,31 @@ std::ostream &operator<< (std::ostream &out, const Shrub &rhs)
 // Shrubbers
 void	Shrub::growShrub(void)
 {
-	this->trunk_h = 2 + (rand() % 21);
+	this->trunk_h = 2 + (rand() % 16);
 	this->trunk_w = 1 + (trunk_h / 5);
+
+	if (!(rand() % 6))
+		this->type = 1;
+	else if (!(rand() % 6))
+		this->type = -1;
+	else
+		this->type = 0;
+
+//	this->type = 1; //				DEBUG
 
 	int i;
 	int	leftOffset = ((this->trunk_w + 0) / 2);
 	int	rightOffset = ((this->trunk_w + 1) / 2);
 	int	branchLeftH = this->getHPos() - leftOffset - 1;
 	int	branchrightH = this->getHPos() + rightOffset + 1;
+
+	if (this->type == 1)
+	{
+		this->growBush(this->getHPos(), this->getVPos(), this->trunk_w);
+		return ;
+	}
+	if (this->type == -1)
+		this->trunk_h = (this->trunk_h / 2) + (rand() % this->trunk_w);
 
 	for (i = 0; i < this->trunk_h; i++)
 	{
@@ -72,7 +89,7 @@ void	Shrub::growShrub(void)
 			this->scf->setChar(branchLeftH, this->getVPos() - i, '/');
 			this->scf->setChar(branchrightH, this->getVPos() - i, '\\');
 			for (int j = -leftOffset; j <= rightOffset; j++)
-				this->scf->setChar(this->getHPos() + j, this->getVPos() - i, this->scf->getBarkChar());
+				this->scf->setChar(this->getHPos() + j, this->getVPos() - i, '~');
 		}
 		else
 		{
@@ -81,7 +98,7 @@ void	Shrub::growShrub(void)
 			for (int j = -(leftOffset - 1); j <= rightOffset - 1; j++)
 				this->scf->setChar(this->getHPos() + j, this->getVPos() - i, this->scf->getBarkChar());
 		}
-		if (i != 0 && i < this->trunk_h - 2)
+		if (i > 1 && (i < this->trunk_h - 2 || this->type == -1))
 		{
 			if (!(rand() % 8) && this->scf->getChar(branchLeftH, branchV + 1) != '\\')
 				this->branchLeft(branchLeftH, branchV, 1 + (rand() % this->trunk_w));
@@ -90,8 +107,11 @@ void	Shrub::growShrub(void)
 				this->branchRight(branchrightH, branchV, 1 + (rand() % this->trunk_w));
 		}
 	}
+	for (int j = -(leftOffset + 1); j <= (rightOffset + 1); j++)
+		this->growRoot(this->getHPos() + j, this->getVPos() + 1, 1 + (this->trunk_h / 4) + (rand() % 8));
 
-	this->growBush(this->getHPos(), this->getVPos() - this->trunk_h, this->trunk_w * 2);
+	if (this->type != -1)
+		this->growBush(this->getHPos(), this->getVPos() - this->trunk_h, this->trunk_w * 2);
 }
 void	Shrub::growBush(int h_pos, int v_pos, int size)
 {
@@ -105,30 +125,59 @@ void	Shrub::growBush(int h_pos, int v_pos, int size)
 //			if (this->scf->getChar(h_pos + x, v_pos - y) == ' ') //		DEBUG
 			{
 				if (x == -(leftOffset - y) || x == (rightOffset - y))
-					this->scf->setChar(h_pos + x, v_pos - y, 'o');
+				{
+					if (this->scf->getChar(h_pos + x, v_pos - y + 1) != ' '
+						|| this->scf->getChar(h_pos + x + 1, v_pos - y) != ' '
+						|| this->scf->getChar(h_pos + x - 1, v_pos - y) != ' ')
+					{
+						this->scf->setChar(h_pos + x, v_pos - y, BUSH_CHAR);
+					}
+				}
 				else
-					this->scf->setChar(h_pos + x, v_pos - y, '@');
+					this->scf->setChar(h_pos + x, v_pos - y, this->scf->getLeafChar());
 			}
 		}
 	}
 }
+void	Shrub::growRoot(int h_pos, int v_pos, int size)
+{
+	int x = 0;
+
+	for (int y = 0; y < size; y++)
+	{
+//		if (this->scf->getChar(h_pos + x, v_pos + y) == 'GROUND_CHAR') //	old
+		if  (rand() % 3)
+			this->scf->setChar(h_pos + x, v_pos + y, ROOT_CHAR);
+		else
+			this->scf->setChar(h_pos + x, v_pos + y, GROUND_CHAR);
+
+		x += (rand() % 5) - 2;
+	}
+}
+
 void	Shrub::branchLeft(int h_pos, int v_pos, int size)
 {
 	int i;
+
 	for (i = 0; i <= size; i++)
 	{
 		this->scf->setChar(h_pos - i, v_pos - i, '\\');
+		if (i > 0 && size > 2)
+			this->scf->setChar(h_pos - i + 1, v_pos - i, '\\');
 	}
-
-	this->growBush(h_pos - i, v_pos - i, 1 + (i / 3));
+	if (this->type != -1)
+		this->growBush(h_pos - i, v_pos - i, 1 + (size / 2));
 }
 void	Shrub::branchRight(int h_pos, int v_pos, int size)
 {
 	int i;
+
 	for (i = 0; i <= size; i++)
 	{
 		this->scf->setChar(h_pos + i, v_pos - i, '/');
+		if (i > 0 && size > 2)
+			this->scf->setChar(h_pos + i - 1, v_pos - i, '/');
 	}
-
-	this->growBush(h_pos + i, v_pos - i, 1 + (i / 4));
+	if (this->type != -1)
+		this->growBush(h_pos + i, v_pos - i, 1 + (size / 2));
 }

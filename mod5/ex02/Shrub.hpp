@@ -14,7 +14,7 @@ class Shrub
 		int vertical_p;
 		int	trunk_h;
 		int	trunk_w;
-//		int	root_s;
+		int	type;
 
 	protected:
 		// Constructors
@@ -34,6 +34,7 @@ class Shrub
 		// Shrubbing
 		void	growShrub(void);
 		void	growBush(int h_pos, int v_pos, int size);
+		void	growRoot(int h_pos, int v_pos, int size);
 		void	branchLeft(int h_pos, int v_pos, int size);
 		void	branchRight(int h_pos, int v_pos, int size);
 };
