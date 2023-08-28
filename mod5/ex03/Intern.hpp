@@ -2,8 +2,10 @@
 # define INTERN_HPP
 
 # include <iostream>
-# include "Intern.hpp"
 # include "AForm.hpp"
+# include "ShrubberyCreationForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "PresidentialPardonForm.hpp"
 
 class Intern
 {
@@ -16,7 +18,18 @@ class Intern
 		~Intern();
 
 		// Others
+		int		findFormID(std::string _formName)
 		AForm	*makeForm(std::string _formName, std::string _targetName) const;
+
+		// Nested Classes
+		class InvalidFormName : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return "invalid form name";
+				}
+		};
 };
 
 std::ostream &operator<< (std::ostream &out, const Intern &rhs);
