@@ -121,7 +121,7 @@ void	ShrubberyCreationForm::initArea(void)
 		}
 	}
 
-	this->addShrubs(SHRUB_COUNT);
+	this->addShrubs(2 + (rand() % 16) + (rand() % 16) + (rand() % 8));
 }
 void	ShrubberyCreationForm::addShrubs(int count)
 {
