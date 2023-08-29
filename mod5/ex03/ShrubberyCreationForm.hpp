@@ -10,7 +10,6 @@
 # define AREA_WIDTH		128
 # define AREA_HEIGHT 	42
 # define SOIL_RATIO		0.3f
-# define SHRUB_COUNT	16
 
 # define BOTTOM_LINE	'-'
 # define SIDE_LINE		'!'
@@ -59,6 +58,16 @@ class ShrubberyCreationForm : public AForm
 		char	getGrassChar(void) const;
 		char	getBarkChar(void) const;
 		char	getLeafChar(void) const;
+
+		// Nested Classes
+		class FileError : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return "invalid file : could not be oppened";
+				}
+		};
 };
 
 #endif //SHRUBBERYCREATIONFORM

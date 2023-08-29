@@ -58,6 +58,16 @@ class ShrubberyCreationForm : public AForm
 		char	getGrassChar(void) const;
 		char	getBarkChar(void) const;
 		char	getLeafChar(void) const;
+
+		// Nested Classes
+		class FileError : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return "invalid file : could not be oppened";
+				}
+		};
 };
 
 #endif //SHRUBBERYCREATIONFORM

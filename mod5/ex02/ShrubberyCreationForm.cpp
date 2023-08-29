@@ -154,7 +154,10 @@ void	ShrubberyCreationForm::drawArea(void) const //		PRINTS IN TERMINAL
 void	ShrubberyCreationForm::writeArea(void) const //		PRINTS IN FILE
 {
 	std::ofstream output;
+
  	output.open(this->target + "_Shrubbery", std::ios::out | std::ios::trunc);
+	if (!output.is_open())
+		throw FileError();
 
 	for (int y = 0; y < AREA_HEIGHT; y++)
 	{
