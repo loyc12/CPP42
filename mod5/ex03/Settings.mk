@@ -13,6 +13,7 @@ FILES		=	main \
 				RobotomyRequestForm \
 				ShrubberyCreationForm \
 				Shrub \
+				Intern \
 
 # Directory names
 SRCDIR		=

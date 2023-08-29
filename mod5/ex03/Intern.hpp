@@ -11,14 +11,14 @@ class Intern
 {
 	public:
 		int	number;
-		Intern();
 		// Constructors - Destructor
+		Intern();
 		Intern(const Intern &other);
 		Intern &operator= (const Intern &other);
 		~Intern();
 
 		// Others
-		int		findFormID(std::string _formName)
+		int		findFormID(std::string _formName) const;
 		AForm	*makeForm(std::string _formName, std::string _targetName) const;
 
 		// Nested Classes

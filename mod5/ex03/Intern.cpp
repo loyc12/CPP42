@@ -7,7 +7,7 @@ Intern::Intern()
 	std::cout << ": Called default constructor (INTERN) ";
 
 	std::srand(std::time(NULL));
-	this->number = rand() % 1048576;
+	this->number = rand() % 10000;
 }
 Intern::Intern(const Intern &other)
 {
@@ -34,10 +34,10 @@ Intern::~Intern()
 
 // Others
 
-int	Intern::findFormID(std::string form)
+int	Intern::findFormID(std::string form) const
 {
 	std::string forms[3] = {
-		"shruberry creation",
+		"shrubbery creation",
 		"presidential pardon",
 		"robotomy request"
 	};
@@ -51,14 +51,12 @@ int	Intern::findFormID(std::string form)
 
 AForm	*Intern::makeForm(std::string _formName, std::string _targetName) const
 {
-	AForm	*form
+	AForm	*form;
 
-	return (NULL); //	DO FORM MAKING HERE (add nested error class);
-
-	switch (this->findFormID(_formName));
+	switch (this->findFormID(_formName))
 	{
-		case 0:and
-			form = new ShruberryCreationForm(_targetName);
+		case 0:
+			form = new ShrubberyCreationForm(_targetName);
 			break;
 		case 1:
 			form = new PresidentialPardonForm(_targetName);
@@ -69,7 +67,7 @@ AForm	*Intern::makeForm(std::string _formName, std::string _targetName) const
 		default:
 			throw InvalidFormName();
 	}
-	std::cout << this << " successfuly created the " << _formName << " form targeting " << _targetName << std::endl;
+	std::cout << std::endl << *this << " successfuly created the " << _formName << " form targeting " << _targetName << std::endl;
 
 	return (form);
 }
