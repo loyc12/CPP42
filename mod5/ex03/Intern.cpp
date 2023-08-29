@@ -34,6 +34,11 @@ Intern::~Intern()
 
 // Others
 
+int	Intern::getNumber(void) const
+{
+	return (this->number);
+}
+
 int	Intern::findFormID(std::string form) const
 {
 	std::string forms[3] = {
@@ -67,13 +72,13 @@ AForm	*Intern::makeForm(std::string _formName, std::string _targetName) const
 		default:
 			throw InvalidFormName();
 	}
-	std::cout << std::endl << *this << " successfuly created the " << _formName << " form targeting " << _targetName << std::endl;
+	std::cout << std::endl << std::endl << *this << " successfuly created the " << _formName << " form targeting " << _targetName << std::endl;
 
 	return (form);
 }
 
 std::ostream &operator<< (std::ostream &out, const Intern &rhs)
 {
-	out << "intern #" << rhs.number;
+	out << "Intern #" << rhs.getNumber();
 	return (out);
 }

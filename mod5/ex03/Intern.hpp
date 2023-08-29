@@ -9,8 +9,10 @@
 
 class Intern
 {
-	public:
+	private:
 		int	number;
+
+	public:
 		// Constructors - Destructor
 		Intern();
 		Intern(const Intern &other);
@@ -18,6 +20,7 @@ class Intern
 		~Intern();
 
 		// Others
+		int		getNumber(void) const;
 		int		findFormID(std::string _formName) const;
 		AForm	*makeForm(std::string _formName, std::string _targetName) const;
 
