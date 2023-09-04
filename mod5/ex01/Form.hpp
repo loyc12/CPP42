@@ -46,7 +46,7 @@ class Form
 			public:
 				virtual const char *what() const throw()
 				{
-					return "invalid grade : too high ( > sign\\exec grade )";
+					return "invalid grade : too high ( < 1 )";
 				}
 		};
 		class GradeTooLow : public std::exception

@@ -6,19 +6,20 @@
 # include "Bureaucrat.hpp"
 # include "AForm.hpp"
 # include "Shrub.hpp"
+# include "Colours.hpp"
 
-# define AREA_WIDTH		128
-# define AREA_HEIGHT 	42
-# define SOIL_RATIO		0.3f
+# define AREA_WIDTH			128
+# define AREA_HEIGHT 		42
+# define SOIL_RATIO			0.3f
 
-# define BOTTOM_LINE	'-'
-# define SIDE_LINE		'!'
-# define CORNER_LINE	'+'
+# define HORIZONTAL_LINE	'-'
+# define VERTICAL_LINE		'!'
+# define CORNER_LINE		'+'
 
-# define GROUND_CHAR	':'
-# define SKY_CHAR		' '
-# define ROOT_CHAR		'X'
-# define BUSH_CHAR		'.'
+# define GROUND_CHAR		':'
+# define ROOT_CHAR			'X'
+# define SKY_CHAR			' '
+# define BUSH_CHAR			'.'
 
 
 class Bureaucrat;

@@ -99,7 +99,7 @@ void	ShrubberyCreationForm::initArea(void)
 	for (int y = 0; y < AREA_HEIGHT; y++)
 	{
 		if (y == 0 || y == AREA_HEIGHT - 1)
-			c = BOTTOM_LINE;
+			c = HORIZONTAL_LINE;
 		else if (y < this->soil_h)
 			c = SKY_CHAR;
 		else
@@ -112,7 +112,7 @@ void	ShrubberyCreationForm::initArea(void)
 				if (y == 0 || y == AREA_HEIGHT - 1)
 					this->area[y][x] = CORNER_LINE;
 				else
-					this->area[y][x] = SIDE_LINE;
+					this->area[y][x] = VERTICAL_LINE;
 			}
 			else if (y == this->soil_h)
 				this->area[y][x] = this->getGrassChar();
@@ -144,11 +144,21 @@ void	ShrubberyCreationForm::drawArea(void) const //		PRINTS IN TERMINAL
 	{
 		for (int x = 0; x < AREA_WIDTH; x++)
 		{
-			std::cout << this->area[y][x];
+			char c = this->area[y][x];
+			if (c == HORIZONTAL_LINE || c == VERTICAL_LINE || c == CORNER_LINE)
+				std::cout << DCYAN;
+			else if (c == GROUND_CHAR || c == ROOT_CHAR)
+				std::cout << DYELLOW;
+			else if (c == '|' || c == '\\' || c == '/' || c == ',' || c == '\'' || c == '~') // || c == 'o' || c == '.')
+				std::cout << DRED;
+			else if (c != ' ') //	GREEN BY DEFAULT
+				std::cout << DGREEN;
+			std::cout << c;
 		}
 		std::cout << std::endl;
 	}
 
+	std::cout << GREEN; //	REVERTS TEXT TO BOLD GREEN
 	std::cout << std::endl;
 }
 void	ShrubberyCreationForm::writeArea(void) const //		PRINTS IN FILE
@@ -168,6 +178,8 @@ void	ShrubberyCreationForm::writeArea(void) const //		PRINTS IN FILE
 		output << std::endl;
 	}
   	output.close();
+
+	this->drawArea(); //			COMMENT ME TO STOP TERMINAL PRINTING
 }
 void	ShrubberyCreationForm::setChar(int x, int y, char c)
 {
@@ -204,7 +216,7 @@ char	ShrubberyCreationForm::getGrassChar(void) const
 }
 char	ShrubberyCreationForm::getBarkChar(void) const
 {
-	int value = rand() % 16;
+	int value = rand() % 8;
 
 	if (value == 0)
 		return ('.');

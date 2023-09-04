@@ -44,7 +44,7 @@ class Bureaucrat
 			public:
 				virtual const char *what() const throw()
 				{
-					return "invalid grade : too high ( > 150 )";
+					return "invalid grade : too high ( < 1 )";
 				}
 		};
 		class GradeTooLow : public std::exception

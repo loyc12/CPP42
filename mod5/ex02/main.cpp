@@ -194,8 +194,6 @@ int	main(void)
 
 		b.executeForm(f);
 
-		f.drawArea();
-
 		std::cout << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
 	sleep(1);
@@ -215,8 +213,6 @@ int	main(void)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
-
-		f.drawArea();
 
 		std::cout << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
@@ -240,8 +236,6 @@ int	main(void)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
-
-		f.drawArea();
 
 		std::cout << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
@@ -272,8 +266,6 @@ int	main(void)
 		{
 			std::cerr << "Error : " << e.what() << std::endl;
 		}
-
-		f.drawArea();
 
 		std::cout << " > " << f << std::endl << " > " << b << std::endl << std::endl;
 	}
