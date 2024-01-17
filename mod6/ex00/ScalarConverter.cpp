@@ -5,36 +5,29 @@ ScalarConverter::ScalarConverter()
 {
 	std::cout << " : Called ScalConv default constructor";
 
-	this->_sv.c = 0;
-	this->_sv.i = 0;
-	this->_sv.f = 0.0f;
-	this->_sv.d = 0.0;
-
-	this->_ss.c = "";
-	this->_ss.i = "";
-	this->_ss.f = "";
-	this->_ss.d = "";
+	this->_scalar.c = "";
+	this->_scalar.i = "";
+	this->_scalar.f = "";
+	this->_scalar.d = "";
 }
 
 ScalarConverter::ScalarConverter( std::string const &str )
 {
 	std::cout << " : Called ScalConv param constructor";
-	this->convertVal( str );
+	this->convert( str );
 }
 
 ScalarConverter::ScalarConverter( ScalarConverter const & other )
 {
 	std::cout << " : Called ScalConv copy constructor";
-	this->_sv = other._sv;
-	this->_ss = other._ss;
+	this->_scalar = other._scalar;
 }
 
 ScalarConverter &ScalarConverter::operator=( ScalarConverter const & other )
 {
 	std::cout << " : Called ScalConv assign constructor";
 
-	this->_sv = other._sv;
-	this->_ss = other._ss;
+	this->_scalar = other._scalar;
 
 	return *this;
 }
@@ -42,43 +35,66 @@ ScalarConverter &ScalarConverter::operator=( ScalarConverter const & other )
 ScalarConverter::~ScalarConverter()
 { std::cout << " : Called ScalConv destructor"; }
 
-void ScalarConverter::convertVal( std::string const & str )
+void ScalarConverter::convert( std::string const & str )
 {
-	if ( isChar( str ))
-		this->convChar();
-	else if ( isInt( str ))
-		this->convInt();
-	else if ( isFloat( str ))
-		this->convFloat();
-	else if ( isDouble( str ))
-		this->convDouble();
-	else
-		std::cout << " : Invalid input";
+	if		( isChar( str ))	{ this->convFromChar( str ); }
+	else if	( isInt( str ))		{ this->convFromInt( str ); }
+	else if	( isFloat( str ))	{ this->convFromFloat( str ); }
+	else if	( isDouble( str ))	{ this->convFromDouble( str ); }
+	else						{ this->badInput(); }
 }
-void ScalarConverter::convChar() const
+void ScalarConverter::convFromChar( std::string const & str )
 {
+	char c = str[ 0 ];
 
+	this->_scalar.c = getChar( c );
+	this->_scalar.i = getInt( c );
+	this->_scalar.f = getFloat( c );
+	this->_scalar.d = getDouble( c );
 }
-void ScalarConverter::convInt() const
+void ScalarConverter::convFromInt( std::string const & str )
 {
+	int i = std::stoi( str );
 
+	this->_scalar.c = getChar( i );
+	this->_scalar.i = getInt( i );
+	this->_scalar.f = getFloat( i );
+	this->_scalar.d = getDouble( i );
 }
-void ScalarConverter::convFloat() const
+void ScalarConverter::convFromFloat( std::string const & str )
 {
+	float f = std::stof( str );
 
+	this->_scalar.c = getChar( f );
+	this->_scalar.i = getInt( f );
+	this->_scalar.f = getFloat( f );
+	this->_scalar.d = getDouble( f );
 }
-void ScalarConverter::convDouble() const
+void ScalarConverter::convFromDouble( std::string const & str )
 {
+	double d = std::stod( str );
 
+	this->_scalar.c = getChar( d );
+	this->_scalar.i = getInt( d );
+	this->_scalar.f = getFloat( d );
+	this->_scalar.d = getDouble( d );
 }
-
-void ScalarConverter::getScalarStrings() const
+void ScalarConverter::badInput()
 {
-
+	this->_scalar.c = "impossible";
+	this->_scalar.i = "impossible";
+	this->_scalar.f = "impossible";
+	this->_scalar.d = "impossible";
 }
+
+std::string ScalarConverter::getString() const
+{
+	return ""; //	WIP
+}
+
 
 std::ostream &operator<< ( std::ostream &out, const ScalarConverter &rhs )
 {
-	out << rhs.print();
+	out << rhs.getString();
 	return out;
 }

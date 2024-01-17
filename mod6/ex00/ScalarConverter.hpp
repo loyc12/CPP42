@@ -3,15 +3,7 @@
 # include <iostream>
 # include "addons.hpp"
 
-struct ScalarVal
-{
-	char	c;
-	int		i;
-	float	f;
-	double	d;
-};
-
-struct ScalarStr
+struct Scalar
 {
 	std::string	c;
 	std::string	i;
@@ -22,13 +14,13 @@ struct ScalarStr
 class ScalarConverter
 {
 	private:
-		ScalarVal	_sv;
-		ScalarStr	_ss;
+		Scalar	_scalar;
 
-		void	convChar( void ) const;
-		void	convInt( void ) const;
-		void	convFloat( void ) const;
-		void	convDouble( void ) const;
+		void	convFromChar(  std::string const & str  );
+		void	convFromInt(  std::string const & str  );
+		void	convFromFloat(  std::string const & str  );
+		void	convFromDouble(  std::string const & str  );
+		void	badInput( void );
 
 	public:
 		ScalarConverter( void );
@@ -37,8 +29,8 @@ class ScalarConverter
 		ScalarConverter &operator=( ScalarConverter const &other );
 		~ScalarConverter( void );
 
-		void	convertVal( std::string const & str );
-		void	getScalarStrings( void ) const;
+		void		convert( std::string const & str );
+		std::string	getString() const;
 };
 
 std::ostream &operator<< ( std::ostream &out, const ScalarConverter &other );
