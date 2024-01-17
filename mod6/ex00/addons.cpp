@@ -1,5 +1,23 @@
 #include "addons.hpp"
 
+std::string makeString( char c )
+{ return ( std::to_string( c )); }
+std::string makeString( int i )
+{ return ( std::to_string( i )); }
+
+std::string makeString( float f )
+{
+	std::ostringstream ss;
+	ss << std::fixed << std::setprecision( 1 ) << f << "f";
+	return ( ss.str() );
+}
+std::string makeString( double d )
+{
+	std::ostringstream ss;
+	ss << std::fixed << std::setprecision( 1 ) << d;
+	return ( ss.str() );
+}
+
 // 0======== char stuff =========0
 
 bool isPrintable( char c )
@@ -10,6 +28,7 @@ bool isDigit( char c )
 
 bool isChar( std::string const &str )
 { return ( str.length() == 1 && !isDigit( str[ 0 ])); }
+
 
 std::string getChar( char c )
 {
@@ -42,55 +61,82 @@ std::string getChar( double d )
 
 bool isInt( std::string const &str )
 {
-	try
+	for ( size_t i = 0; i < str.length(); i++ )
 	{
-		std::stoi( str );
-		return true;
+		if ( i == 0 && ( str[ i ] == '-' || str[ i ] == '+' ))	{ continue; }
+		if ( !isDigit( str[ i ] ))								{ return false; }
 	}
-	catch ( std::exception &e ) { return false; }
+	return true;
 }
 
 std::string getInt( char c )
-{ return ( std::to_string( static_cast<int>( c ))); }
+{ return ( makeString( static_cast<int>( c ))); }
 std::string getInt( int i )
-{ return ( std::to_string( i )); }
+{ return ( makeString( i )); }
+
 std::string getInt( float f )
 {
 	if ( f == NAN || f == INFINITY || f == -INFINITY )	{ return ( "impossible" ); }
-	else												{ return ( std::to_string( static_cast<int>( f ))); }
+	else												{ return ( makeString( static_cast<int>( f ))); }
 }
 std::string getInt( double d )
 {
 	if ( d == NAN || d == INFINITY || d == -INFINITY )	{ return ( "impossible" ); }
-	else												{ return ( std::to_string( static_cast<int>( d ))); }
+	else												{ return ( makeString( static_cast<int>( d ))); }
 }
 
 // 0======== float stuff =========0
 
 bool isFloat( std::string const &str )
 {
+	bool f = false;
+
+	if ( str[ str.length() - 1 ] != 'f' )						{ return false; }
+	else if ( str.length() < 2 )								{ return false; }
+
+	for ( size_t i = 0; i < str.length() - 1; i++ )
+	{
+		if ( str[ i ] == '.' ) {
+			if ( f )											{ return false; }
+			f = true;											  continue; }
+		if ( i == 0 && ( str[ i ] == '-' || str[ i ] == '+' ))	{ continue; }
+		if ( !isDigit( str[ i ] ))								{ return false; }
+	}
+
 	try
 	{
 		std::stof( str );
 		return true;
 	}
 	catch ( std::exception &e ) { return false; }
-
 }
 
 std::string getFloat( char c )
-{ return ( std::to_string( static_cast<float>( c ))); }
+{ return ( makeString( static_cast<float>( c ))); }
 std::string getFloat( int i )
-{ return ( std::to_string( static_cast<float>( i ))); }
+{ return ( makeString( static_cast<float>( i ))); }
 std::string getFloat( float f )
-{ return ( std::to_string( f )); }
+{ return ( makeString( static_cast<float>( f ))); }
 std::string getFloat( double d )
-{ return ( std::to_string( static_cast<float>( d ))); }
+{ return ( makeString( static_cast<float>( d ))); }
 
 // 0======== double stuff =========0
 
 bool isDouble( std::string const &str )
 {
+	bool f = false;
+
+	if ( str.length() < 2 )										{ return false; }
+
+	for ( size_t i = 0; i < str.length(); i++ )
+	{
+		if ( str[ i ] == '.' ) {
+			if ( f )											{ return false; }
+			f = true;											  continue; }
+		if ( i == 0 && ( str[ i ] == '-' || str[ i ] == '+' ))	{ continue; }
+		if ( !isDigit( str[ i ] ))								{ return false; }
+	}
+
 	try
 	{
 		std::stod( str );
@@ -100,10 +146,10 @@ bool isDouble( std::string const &str )
 }
 
 std::string getDouble( char c )
-{ return ( std::to_string( static_cast<double>( c ))); }
+{ return ( makeString( static_cast<double>( c ))); }
 std::string getDouble( int i )
-{ return ( std::to_string( static_cast<double>( i ))); }
+{ return ( makeString( static_cast<double>( i ))); }
 std::string getDouble( float f )
-{ return ( std::to_string( static_cast<double>( f ))); }
+{ return ( makeString( static_cast<double>( f ))); }
 std::string getDouble( double d )
-{ return ( std::to_string( d )); }
+{ return ( makeString( d )); }

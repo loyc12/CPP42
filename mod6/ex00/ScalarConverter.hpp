@@ -33,6 +33,6 @@ class ScalarConverter
 		std::string	getString() const;
 };
 
-std::ostream &operator<< ( std::ostream &out, const ScalarConverter &other );
+std::ostream &operator<< ( std::ostream &out, const ScalarConverter &rhs );
 
 #endif // SCALARCONVERTER_HPP

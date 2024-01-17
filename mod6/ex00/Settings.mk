@@ -7,6 +7,8 @@ NAME		=	Run
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
+				addons \
+				ScalarConverter \
 
 # Directory names
 SRCDIR		=

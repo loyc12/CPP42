@@ -1,6 +1,13 @@
 #ifndef ADDONS_HPP
 # define ADDONS_HPP
 # include <iostream>
+# include <sstream>
+# include <iomanip>
+
+std::string makeString( char c );
+std::string makeString( int i );
+std::string makeString( float f );
+std::string makeString( double d );
 
 // 0======== char stuff =========0
 
