@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Array.tpp"
 
-#define MAX_VAL 16
-#define MAX_RAND 1024
+#define MAX_VAL 8
+#define MAX_RAND 256
 
-template <typename T>
+template < typename T >
 T getRandValue( void )
 {
 	T value;
@@ -17,6 +17,16 @@ T getRandValue( void )
 		value += ( rand() % 100 ) / 100.0;
 
 	return value;
+}
+template < typename T >
+void tryIndexAccess( Array<T> &array, int index )
+{
+	try {
+		std::cout << "\nTrying to access index " << index << std::endl;
+		T value = array[ index ];
+		std::cout << "Value : " << value << std::endl;
+		array[ index ] = value;
+	} catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
 }
 
 template <typename T>
@@ -58,52 +68,18 @@ void tester()
         }
     }
 
-    try {
-		std::cout << "\nTrying to access index MIN_VAL - 1" << std::endl;
-        T value = numbers[ -MAX_VAL - 1 ];
-		std::cout << "Value : " << value << std::endl;
-		numbers[ -MAX_VAL - 1 ] = value;
-    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
-
-    try {
-		std::cout << "\nTrying to access index MIN_VAL" << std::endl;
-        T value = numbers[ -MAX_VAL ];
-		std::cout << "Value : " << value << std::endl;
-		numbers[ -MAX_VAL ] = value;
-    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
-
-	try {
-		std::cout << "\nTrying to access index -1" << std::endl;
-        T value = numbers[ -1 ];
-		std::cout << "Value : " << value << std::endl;
-		numbers[ -1 ] = value;
-    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
-
-    try {
-		std::cout << "\nTrying to access index 0" << std::endl;
-        T value = numbers[ 0 ];
-		std::cout << "Value : " << value << std::endl;
-		numbers[ 0 ] = value;
-    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
-
-    try {
-		std::cout << "\nTrying to access index MAX_VAL - 1" << std::endl;
-        T value = numbers[ MAX_VAL - 1 ];
-		std::cout << "Value : " << value << std::endl;
-		numbers[ MAX_VAL - 1 ] = value;
-    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
-
-    try {
-		std::cout << "\nTrying to access index MAX_VAL" << std::endl;
-        T value = numbers[ MAX_VAL ];
-		std::cout << "Value : " << value << std::endl;
-		numbers[ MAX_VAL ] = value;
-    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
+	tryIndexAccess( numbers, -MAX_VAL - 1 );
+	tryIndexAccess( numbers, -MAX_VAL );
+	tryIndexAccess( numbers, -( MAX_VAL / 2 ));
+	tryIndexAccess( numbers, -1 );
+	tryIndexAccess( numbers, 2 );
+	tryIndexAccess( numbers, MAX_VAL / 2 );
+	tryIndexAccess( numbers, MAX_VAL - 1 );
+	tryIndexAccess( numbers, MAX_VAL );
 
 	std::cout << "\nTrying to reassign values forwards" << std::endl;
     for ( int i = 0; i < MAX_VAL; i++ ) { numbers[ i ] = getRandValue<T>(); }
 	std::cout << "Array : " << numbers << std::endl;
-
 
 	std::cout << "\nTrying to reassign values backwards" << std::endl;
     for ( int i = 0; i > -MAX_VAL; --i ) { numbers[ i ] = getRandValue<T>(); }
@@ -124,7 +100,7 @@ void runTests( void )
 	{ tester<float>(); }
 	std::cout << "\nO================================ TEST 4 ================================O\n"  << std::endl;
 	{ tester<double>(); }
-	std::cout << "\nO================================= END ==================================O\n\n" << std::endl;
+	std::cout << "\nO================================= END ==================================O\n" << std::endl;
 }
 
 int	main( void )

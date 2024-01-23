@@ -98,7 +98,7 @@ class Array
 template < typename T >
 std::ostream &operator<< ( std::ostream &out, const Array<T> &rhs )
 {
-	out << std::fixed << std::setprecision( 1 );
+	out << std::fixed << std::setprecision( 2 );
 	out << "size : " << rhs.getSize() << " | [ ";
 	for ( int i = 0; i < rhs.getSize(); i++ )
 		out << rhs.getValue( i ) << " ";
