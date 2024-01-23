@@ -18,6 +18,7 @@ Template::Template( const Template &other )
 	std::cout << "[ Called copy constr. for a TEMPLATE instance ]\n";
 	this->name = other.getName();
 }
+Template::~Template() { std::cout << "[ Destroying a TEMPLATE instance ]\n"; }
 
 Template &Template::operator= ( const Template &other )
 {
@@ -27,7 +28,6 @@ Template &Template::operator= ( const Template &other )
 	return *this;
 }
 
-Template::~Template() { std::cout << "[ Destroying a TEMPLATE instance ]\n"; }
 
 
 // Setters - Getters
