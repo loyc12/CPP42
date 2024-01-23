@@ -1,136 +1,112 @@
 #include <iostream>
-#include "Array.hpp"
+#include "Array.tpp"
 
-#define MAX_VAL 10
-/*
-int intTester()
+#define MAX_VAL 16
+#define MAX_RAND 1024
+
+template <typename T>
+T getRandValue( void )
 {
-    Array<int> numbers(MAX_VAL);
-    int* mirror = new int[MAX_VAL];
-    srand(time(NULL));
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        const int value = rand();
-        numbers[i] = value;
-        mirror[i] = value;
-    }
-    //SCOPE
-    {
-        Array<int> tmp = numbers;
-        Array<int> test(tmp);
-    }
+	T value;
 
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        if (mirror[i] != numbers[i])
-        {
-            std::cerr << "didn't save the same value!!" << std::endl;
-            return 1;
-        }
-    }
-    try
-    {
-        numbers[-2] = 0;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    try
-    {
-        numbers[MAX_VAL] = 0;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+	// If char, make sure it's a printable character
+	if ( typeid( T ) == typeid( char )) { value = 33 + ( rand() % 94 ); }
+	else								  value = rand() % MAX_RAND;
 
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        numbers[i] = rand();
-    }
-    delete [] mirror;//
-    return 0;
-} */
-void intTester()
+	if ( typeid( T ) == typeid( float ) || typeid( T ) == typeid( double ))
+		value += ( rand() % 100 ) / 100.0;
+
+	return value;
+}
+
+template <typename T>
+void tester()
 {
-    Array numbers(MAX_VAL);
-    int* mirror = new int[MAX_VAL];
-    srand(time(NULL));
+    Array<T> numbers( MAX_VAL );
+    T* mirror = new T[ MAX_VAL ];
+
+	std::cout << "\n >>> Testing with type : " << typeid( T ).name() << std::endl;
+	std::cout << "     | Arrays of size " << numbers.getSize() << std::endl;
+	std::cout << "     | Values between 0 and " << MAX_RAND << std::endl;
+
+    srand( time( NULL ));
 	std::cout << "\nArray : " << numbers << std::endl;
 
-    for (int i = 0; i < MAX_VAL; i++)
+    for ( int i = 0; i < MAX_VAL; i++ )
     {
-        const int value = rand() % 256;
-        numbers[i] = value;
-        mirror[i] = value;
+		T value = getRandValue<T>();
+
+        numbers[ i ] = ( T )value;
+        mirror[ i ] = ( T )value;
     }
 	std::cout << "Array : " << numbers << std::endl << std::endl;
 
     //SCOPE
     {
-        Array tmp = numbers;
-        Array test(tmp);
+		Array<T> tmp( 4 );
+        Array<T> test( tmp );
+		test = numbers;
+		tmp = test;
     }
 
     for (int i = 0; i < MAX_VAL; i++)
     {
-        if (mirror[i] != numbers[i])
+        if (mirror[ i ] != numbers[ i ])
         {
-            std::cerr << "\ndidn't save the same value!!" << std::endl;
+            std::cerr << "\nvalues do not match originals !" << std::endl;
             return;
         }
     }
 
     try {
 		std::cout << "\nTrying to access index MIN_VAL - 1" << std::endl;
-        int value = numbers[-MAX_VAL - 1];
+        T value = numbers[ -MAX_VAL - 1 ];
 		std::cout << "Value : " << value << std::endl;
-		numbers[-MAX_VAL - 1] = value;
-    } catch(const std::exception& e) { std::cerr << e.what() << '\n'; }
+		numbers[ -MAX_VAL - 1 ] = value;
+    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
 
     try {
 		std::cout << "\nTrying to access index MIN_VAL" << std::endl;
-        int value = numbers[-MAX_VAL];
+        T value = numbers[ -MAX_VAL ];
 		std::cout << "Value : " << value << std::endl;
-		numbers[-MAX_VAL] = value;
-    } catch(const std::exception& e) { std::cerr << e.what() << '\n'; }
+		numbers[ -MAX_VAL ] = value;
+    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
 
 	try {
 		std::cout << "\nTrying to access index -1" << std::endl;
-        int value = numbers[-1];
+        T value = numbers[ -1 ];
 		std::cout << "Value : " << value << std::endl;
-		numbers[-1] = value;
-    } catch(const std::exception& e) { std::cerr << e.what() << '\n'; }
+		numbers[ -1 ] = value;
+    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
 
     try {
 		std::cout << "\nTrying to access index 0" << std::endl;
-        int value = numbers[0];
+        T value = numbers[ 0 ];
 		std::cout << "Value : " << value << std::endl;
-		numbers[0] = value;
-    } catch(const std::exception& e) { std::cerr << e.what() << '\n'; }
+		numbers[ 0 ] = value;
+    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
 
     try {
 		std::cout << "\nTrying to access index MAX_VAL - 1" << std::endl;
-        int value = numbers[MAX_VAL - 1];
+        T value = numbers[ MAX_VAL - 1 ];
 		std::cout << "Value : " << value << std::endl;
-		numbers[MAX_VAL - 1] = value;
-    } catch(const std::exception& e) { std::cerr << e.what() << '\n'; }
+		numbers[ MAX_VAL - 1 ] = value;
+    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
 
     try {
 		std::cout << "\nTrying to access index MAX_VAL" << std::endl;
-        int value = numbers[MAX_VAL];
+        T value = numbers[ MAX_VAL ];
 		std::cout << "Value : " << value << std::endl;
-		numbers[MAX_VAL] = value;
-    } catch(const std::exception& e) { std::cerr << e.what() << '\n'; }
+		numbers[ MAX_VAL ] = value;
+    } catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
 
 	std::cout << "\nTrying to reassign values forwards" << std::endl;
-    for (int i = 0; i < MAX_VAL; i++) { numbers[i] = rand() % 256; }
+    for ( int i = 0; i < MAX_VAL; i++ ) { numbers[ i ] = getRandValue<T>(); }
 	std::cout << "Array : " << numbers << std::endl;
 
 
 	std::cout << "\nTrying to reassign values backwards" << std::endl;
-    for (int i = 0; i > -MAX_VAL; --i) { numbers[i] = rand() % 256; }
+    for ( int i = 0; i > -MAX_VAL; --i ) { numbers[ i ] = getRandValue<T>(); }
 	std::cout << "Array : " << numbers << std::endl;
 
     delete [] mirror;
@@ -141,19 +117,15 @@ void intTester()
 void runTests( void )
 {
 	std::cout << "\nO================================ TEST 1 ================================O\n"  << std::endl;
-	{
-
-	}
+	{ tester<char>(); }
 	std::cout << "\nO================================ TEST 2 ================================O\n"  << std::endl;
-	{
-
-	}
+	{ tester<int>(); }
+	std::cout << "\nO================================ TEST 3 ================================O\n"  << std::endl;
+	{ tester<float>(); }
+	std::cout << "\nO================================ TEST 4 ================================O\n"  << std::endl;
+	{ tester<double>(); }
 	std::cout << "\nO================================= END ==================================O\n\n" << std::endl;
 }
 
 int	main( void )
-{
-	//runTests();
-	intTester();
-	//TemplateTester();
-}
+{ runTests(); }
