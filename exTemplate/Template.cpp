@@ -20,6 +20,8 @@ Template::Template( const Template &other )
 }
 Template::~Template() { std::cout << "[ Destroying a TEMPLATE instance ]\n"; }
 
+// Operators
+
 Template &Template::operator= ( const Template &other )
 {
 	std::cout << "[ Called assign. op. for a TEMPLATE instance ]\n";
@@ -28,16 +30,21 @@ Template &Template::operator= ( const Template &other )
 	return *this;
 }
 
+// Checkers
+
+void	Template::checkName( const std::string _name ) const
+{
+	if ( _name.empty() )
+		throw BadName();
+}
 
 
 // Setters - Getters
 
-void	Template::setName( std::string _name )
+void	Template::setName( const std::string _name )
 {
-	if (_name.empty())
-		throw BadName();
-	else
-		this->name = _name;
+	checkName( _name );
+	this->name = _name;
 }
 const std::string	Template::getName( void ) const
 {
@@ -55,5 +62,5 @@ void	Template::printName( void )
 std::ostream &operator<< (std::ostream &out, const Template &rhs)
 {
 	out << rhs.getName();
-	return (out);
+	return ( out );
 }
