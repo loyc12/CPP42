@@ -27,7 +27,7 @@ void tryIndexAccess( Array<T> &array, int index )
 		T value = array[ index ];
 		std::cout << "Value : " << value << std::endl;
 		array[ index ] = value;
-	} catch( const std::exception& e ) { std::cerr << e.what() << '\n'; }
+	} catch( const std::exception &e ) { std::cerr << e.what() << '\n'; }
 }
 
 template <typename T>
@@ -60,9 +60,9 @@ void tester()
 		tmp = test;
     }
 
-    for (int i = 0; i < MAX_VAL; i++)
+    for ( int i = 0; i < MAX_VAL; i++ )
     {
-        if (mirror[ i ] != numbers[ i ])
+        if ( mirror[ i ] != numbers[ i ])
         {
             std::cerr << "\nvalues do not match originals !" << std::endl;
             return;

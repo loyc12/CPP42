@@ -11,7 +11,7 @@ int	Array<T>::checkIndex( int i ) const
 		throw InvalidIndex();
 
 	else if ( i < 0 ) // allows reading the array backwards via negative indexes
-		return this->_size + i;
+		return ( this->_size + i );
 
 	else
 		return i;
