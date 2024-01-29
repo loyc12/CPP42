@@ -7,7 +7,6 @@ NAME		=	Run
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
-				Template \
 
 # Directory names
 SRCDIR		=

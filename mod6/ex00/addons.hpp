@@ -9,6 +9,10 @@ std::string makeString( int i );
 std::string makeString( float f );
 std::string makeString( double d );
 
+// 0======== text stuff =========0
+
+bool isText( std::string const &str ); // for non-numerical values (nan, inf, etc.)
+
 // 0======== char stuff =========0
 
 bool isPrintable( char c );

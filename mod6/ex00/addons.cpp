@@ -18,6 +18,17 @@ std::string makeString( double d )
 	return ( ss.str() );
 }
 
+// 0======== text stuff =========0
+
+bool isText( std::string const &str ) // check if the value is either NAN, INFINITY, INF, -INFINITY or -INF
+{
+	if ( str == "NAN" || str == "NANF" || str == "INFINITY" || str == "INF" || str == "INFF" || str == "-INFINITY" || str == "-INF" || str == "-INFF")
+		{ return true; }
+
+	return false;
+}
+
+
 // 0======== char stuff =========0
 
 bool isPrintable( char c )
@@ -126,6 +137,7 @@ bool isDouble( std::string const &str )
 {
 	bool f = false;
 
+	if ( isText( str ))											{ return true; }
 	if ( str.length() < 2 )										{ return false; }
 
 	for ( size_t i = 0; i < str.length(); i++ )
