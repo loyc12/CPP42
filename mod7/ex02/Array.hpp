@@ -12,8 +12,8 @@ class Array
 {
 	private:
 		// Attributes
-		T	*bank;
-		int	size;
+		T	*_bank;
+		int	_size;
 
 	protected:
 		// Checkers
@@ -38,8 +38,8 @@ class Array
 		T &operator[] ( int i );
 
 		// Getters
-		int	getSize( void ) const;
-		T	getValue( int i ) const;
+		int	size( void ) const;
+		T	value( int i ) const;
 };
 
 template < typename T >

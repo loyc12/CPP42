@@ -13,6 +13,7 @@ T getRandValue( void )
 	if ( typeid( T ) == typeid( char )) { value = 33 + ( rand() % 94 ); }
 	else								  value = rand() % MAX_RAND;
 
+	// If decimal, add a decimal part
 	if ( typeid( T ) == typeid( float ) || typeid( T ) == typeid( double ))
 		value += ( rand() % 100 ) / 100.0;
 
@@ -36,7 +37,7 @@ void tester()
     T* mirror = new T[ MAX_VAL ];
 
 	std::cout << "\n >>> Testing with type : " << typeid( T ).name() << std::endl;
-	std::cout << "     | Arrays of size " << numbers.getSize() << std::endl;
+	std::cout << "     | Arrays of size " << numbers.size() << std::endl;
 	std::cout << "     | Values between 0 and " << MAX_RAND << std::endl;
 
     srand( time( NULL ));
