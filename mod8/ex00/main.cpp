@@ -11,7 +11,6 @@ void tester_T()
 	std::cout << "\n >>> Insert test here" << std::endl;
 	std::cout << "     | type : " << typeid( T ).name() << '\n' << std::endl;
 
-
 	easyfind( c1, 2 );
 }
 
