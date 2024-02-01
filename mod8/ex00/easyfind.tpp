@@ -19,6 +19,7 @@ int findADAPT( T _container, int _value )
 {
 	(void)_container;
 	(void)_value;
+
 	// use top() and pop() to iterate through the container
 	throw UnhandledContainer();
 }
@@ -28,6 +29,7 @@ int findASSOC( T _container, int _value )
 {
 	(void)_container;
 	(void)_value;
+
 	// use front() and pop() to iterate through the container
 	throw UnhandledContainer();
 }
