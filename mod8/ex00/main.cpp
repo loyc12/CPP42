@@ -1,30 +1,134 @@
 #include "easyfind.hpp"
 
-template <typename T>
-void tester_T()
+void testVec()
 {
-	T c1;
-	c1.push_back( 1 );
-	c1.push_back( 2 );
-	c1.push_back( 3 );
+	std::vector<int> c;
+	try
+	{
+		c.push_back( 1 );
+		c.push_back( 2 );
+		c.push_back( 3 );
 
-	std::cout << "\n >>> Insert test here" << std::endl;
-	std::cout << "     | type : " << typeid( T ).name() << '\n' << std::endl;
+		easyfind( c, 2 );
+	}
+	catch ( std::exception & e )
+	{
+		std::cout << "Error : " << e.what() << std::endl;
+		return;
+	}
 
-	easyfind( c1, 2 );
+}
+
+void testList()
+{
+	std::list<int> c;
+	try
+	{
+		c.push_back( 1 );
+		c.push_back( 2 );
+		c.push_back( 3 );
+
+		easyfind( c, 2 );
+	}
+	catch ( std::exception & e )
+	{
+		std::cout << "Error : " << e.what() << std::endl;
+		return;
+	}
+
+}
+
+void testStack()
+{
+	std::stack<int> c;
+	try
+	{
+		c.push( 1 );
+		c.push( 2 );
+		c.push( 3 );
+
+		easyfind( c, 2 );
+	}
+	catch ( std::exception & e )
+	{
+		std::cout << "Error : " << e.what() << std::endl;
+		return;
+	}
+
+}
+
+void testDeque()
+{
+	std::deque<int> c;
+	try
+	{
+		c.push_back( 1 );
+		c.push_back( 2 );
+		c.push_back( 3 );
+
+		easyfind( c, 2 );
+	}
+	catch ( std::exception & e )
+	{
+		std::cout << "Error : " << e.what() << std::endl;
+		return;
+	}
+
+}
+
+void testQueue()
+{
+	std::queue<int> c;
+	try
+	{
+		c.push( 1 );
+		c.push( 2 );
+		c.push( 3 );
+
+		easyfind( c, 2 );
+	}
+	catch ( std::exception & e )
+	{
+		std::cout << "Error : " << e.what() << std::endl;
+		return;
+	}
+
+}
+
+void testPrioQ()
+{
+	std::priority_queue<int> c;
+	try
+	{
+		c.push( 1 );
+		c.push( 2 );
+		c.push( 3 );
+
+		easyfind( c, 2 );
+	}
+	catch ( std::exception & e )
+	{
+		std::cout << "Error : " << e.what() << std::endl;
+		return;
+	}
+
 }
 
 void runTests( void )
 {
-	std::cout << "\nO====================================[ TEST 1 ]====================================O\n"  << std::endl;
-	{ tester_T< std::list<int> >(); }
-	std::cout << "\nO====================================[ TEST 2 ]====================================O\n"  << std::endl;
-	{ tester_T< std::deque<int> >(); }
-	std::cout << "\nO====================================[ TEST 3 ]====================================O\n"  << std::endl;
-	{ tester_T< std::set<int> >(); }
-	std::cout << "\nO====================================[ TEST 4 ]====================================O\n"  << std::endl;
-	{ tester_T< std::vector<int> >(); }
-	std::cout << "\nO=====================================[ END ]======================================O\n" << std::endl;
+	std::cout << "\n O========================================[ TEST 1 ]========================================O\n"  << std::endl;
+	{ testVec(); }
+	std::cout << "\n O========================================[ TEST 2 ]========================================O\n"  << std::endl;
+	{ testList(); }
+	std::cout << "\n O========================================[ TEST 3 ]========================================O\n"  << std::endl;
+	{ testDeque(); }
+	std::cout << "\n O========================================[ TEST 4 ]========================================O\n"  << std::endl;
+	{ testStack(); }
+	std::cout << "\n O========================================[ TEST 5 ]========================================O\n"  << std::endl;
+	{ testQueue(); }
+	std::cout << "\n O========================================[ TEST 6 ]========================================O\n"  << std::endl;
+	{ testPrioQ(); }
+	std::cout << "\n O=========================================[ END ]==========================================O\n" << std::endl;
 }
 
 int	main( void )

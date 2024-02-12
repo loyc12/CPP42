@@ -1,51 +1,101 @@
 #include "easyfind.hpp"
 
-template < typename T >
-int findTypeSEQ( T _container, int _value )
+int	easyfind( std::vector<int> _container, int _value )
 {
-	typename T::iterator	it = std::find( _container.begin(), _container.end(), _value );
+	std::vector<int>::iterator it;
+	it = std::find( _container.begin(), _container.end(), _value );
 	if ( it != _container.end() )
 	{
 		int index = std::distance( _container.begin(), it );
-		std::cout << "Found " << _value << " in container at index " << index << std::endl;
+		std::cout << "  Found ( " << _value << " ) in container at index " << index << std::endl;
 		return ( index );
 	}
-	std::cout << "Could not find " << _value << " in container" << std::endl;
+	std::cout << "  Could not find ( " << _value << " ) in container" << std::endl;
+
 	return -1; // Value not found
 }
 
-template < typename T >
-int findADAPT( T _container, int _value )
+int	easyfind( std::list<int> _container, int _value )
 {
-	(void)_container;
-	(void)_value;
-
-	// use top() and pop() to iterate through the container
-	throw UnhandledContainer();
-}
-
-template < typename T >
-int findASSOC( T _container, int _value )
-{
-	(void)_container;
-	(void)_value;
-
-	// use front() and pop() to iterate through the container
-	throw UnhandledContainer();
-}
-
-template < typename T >
-int	easyfind( T _container, int _value )
-{
-	switch ( getConType( _container ))
+	std::list<int>::iterator it;
+	it = std::find( _container.begin(), _container.end(), _value );
+	if ( it != _container.end() )
 	{
-		case 1 : // Sequential containers
-			return findTypeSEQ( _container, _value );
-		case 2 : // Adaptor containers
-			return findADAPT( _container, _value );
-		case 3 : // Associative containers
-			return findASSOC( _container, _value );
-		default:
-			throw BadContainer();
+		int index = std::distance( _container.begin(), it );
+		std::cout << "  Found ( " << _value << " ) in container at index " << index << std::endl;
+		return ( index );
 	}
+	std::cout << "  Could not find ( " << _value << " ) in container" << std::endl;
+
+	return -1; // Value not found
+}
+
+int	easyfind( std::deque<int> _container, int _value )
+{
+	std::deque<int>::iterator it;
+	it = std::find( _container.begin(), _container.end(), _value );
+	if ( it != _container.end() )
+	{
+		int index = std::distance( _container.begin(), it );
+		std::cout << "  Found ( " << _value << " ) in container at index " << index << std::endl;
+		return ( index );
+	}
+	std::cout << "  Could not find ( " << _value << " ) in container" << std::endl;
+
+	return -1; // Value not found
+}
+
+int	easyfind( std::stack<int> _container, int _value )
+{
+
+	int i = 0;
+    while ( !_container.empty() )
+	{
+		++i;
+        if ( _container.top() == _value )
+		{
+			std::cout << "  Found ( " << _value << " ) in container after " << i << " attempt(s)" << std::endl;
+            return true;
+        }
+        _container.pop();
+    }
+	std::cout << "  Could not find ( " << _value << " ) in container after " << i << " attempt(s)" << std::endl;
+
+    return -1; // Value not found
+}
+
+int	easyfind( std::queue<int> _container, int _value )
+{
+	int i = 0;
+	while ( !_container.empty() )
+	{
+		++i;
+		if ( _container.front() == _value )
+		{
+			std::cout << "  Found ( " << _value << " ) in container after " << i << " attempt(s)" << std::endl;
+			return true;
+		}
+		_container.pop();
+	}
+	std::cout << "  Could not find ( " << _value << " ) in container after " << i << " attempt(s)" << std::endl;
+
+	return -1; // Value not found
+}
+
+int easyfind( std::priority_queue<int> _container, int _value )
+{
+	int i = 0;
+	while ( !_container.empty() )
+	{
+		++i;
+		if ( _container.top() == _value )
+		{
+			std::cout << "  Found ( " << _value << " ) in container after " << i << " attempt(s)" << std::endl;
+			return true;
+		}
+		_container.pop();
+	}
+	std::cout << "  Could not find ( " << _value << " ) in container after " << i << " attempt(s)" << std::endl;
+
+	return -1; // Value not found
 }
