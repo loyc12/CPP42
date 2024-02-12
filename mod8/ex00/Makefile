@@ -58,7 +58,7 @@ DEFAULT_GOAL: all
 #------------------------------------------------------------------------------#
 
 # Flags for gcc, valgrind and leaks
-CFLAGS	=	-Wall -Werror -Wextra -std=c++98 $(XFLAGS)
+CFLAGS	=	-Wall -Werror -Wextra -Wshadow -std=c++98 $(XFLAGS)
 LFLAGS	=	-atExit
 VFLAGS	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
 # add "--suppressions=include/supp" to use the supression file
