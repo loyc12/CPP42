@@ -1,51 +1,38 @@
 #include "easyfind.hpp"
 
 template < typename T >
-int findTypeSEQ( T _container, int _value )
+bool easyfind( T container, int value )
 {
-	typename T::iterator	it = std::find( _container.begin(), _container.end(), _value );
-	if ( it != _container.end() )
+	if ( container.size() == 0 )
 	{
-		int index = std::distance( _container.begin(), it );
-		std::cout << "Found " << _value << " in container at index " << index << std::endl;
-		return ( index );
+		std::cout << "Container is empty" << std::endl;
+		return ( false );
 	}
-	std::cout << "Could not find " << _value << " in container" << std::endl;
-	return -1; // Value not found
-}
 
-template < typename T >
-int findADAPT( T _container, int _value )
-{
-	(void)_container;
-	(void)_value;
+	typename T::iterator	it = std::find( container.begin(), container.end(), value );
 
-	// use top() and pop() to iterate through the container
-	throw UnhandledContainer();
-}
-
-template < typename T >
-int findASSOC( T _container, int _value )
-{
-	(void)_container;
-	(void)_value;
-
-	// use front() and pop() to iterate through the container
-	throw UnhandledContainer();
-}
-
-template < typename T >
-int	easyfind( T _container, int _value )
-{
-	switch ( getConType( _container ))
+	if ( it == container.end() )
 	{
-		case 1 : // Sequential containers
-			return findTypeSEQ( _container, _value );
-		case 2 : // Adaptor containers
-			return findADAPT( _container, _value );
-		case 3 : // Associative containers
-			return findASSOC( _container, _value );
-		default:
-			throw BadContainer();
+		std::cout << "Value " << value << " not found in container" << std::endl;
+		return ( false );
 	}
+
+	std::cout << "Found " << value << " in container" << std::endl;
+
+	return ( true );
+}
+
+template <typename T>
+void test( int size, int value )
+{
+	T c;
+	for ( int i = 0; i < size; i++ )
+		c.push_back( i + 1 );
+		//c.push_front( i + 1 ); // for forward_list
+
+	std::cout << "\n >>> Testing container of type " << typeid( T ).name() << " <<<" << std::endl;
+	std::cout << "     | size :  " << size << std::endl;
+	std::cout << "     | value : " << value << std::endl;
+
+	easyfind( c, value );
 }

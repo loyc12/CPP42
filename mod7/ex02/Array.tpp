@@ -23,7 +23,7 @@ Array<T>::Array()
 {
 	std::cout << "[ Called def. const. for an ARRAY instance ]\n";
 
-	this->_size = T();
+	this->_size = 0;
 	this->_bank = new T[ this->_size ];
 
 };
