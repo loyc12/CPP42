@@ -1,6 +1,7 @@
-#ifndef TEMPLATE_HPP
-# define TEMPLATE_HPP
+#ifndef FOO_HPP
+# define FOO_HPP
 
+// basic libs
 # include <exception>
 # include <iostream>
 # include <iomanip>
@@ -9,9 +10,7 @@
 
 
 // CLASS ( implemented in .cpp file )
-
-
-class Template
+class Foo
 {
 	private:
 		// Attributes
@@ -25,18 +24,18 @@ class Template
 		class BadName : public std::exception
 		{
 			public:
-				virtual const char *what() const throw() { return "Template error : invalid name, idiot!"; }
+				virtual const char *what() const throw() { return "Foo error : invalid name, idiot!"; }
 		};
 
 	public:
 		// Constructors - Destructor
-		Template();
-		Template( const std::string _name );
-		Template( const Template &other );
-		~Template();
+		Foo();
+		Foo( const std::string _name );
+		Foo( const Foo &other );
+		~Foo();
 
 		// Operators
-		Template &operator= ( const Template &other );
+		Foo &operator= ( const Foo &other );
 
 		// Setters - Getters
 		void				setName( const std::string _name );
@@ -47,14 +46,12 @@ class Template
 
 };
 
-std::ostream &operator<< (std::ostream &out, const Template &rhs);
+std::ostream &operator<< (std::ostream &out, const Foo &rhs);
 
 
-// CLASS TEMPLATE ( implemented in .tpp file )
-
-
+// CLASS FOO ( implemented in .tpp file )
 template <class T>
-class Template_T
+class Foo_T
 {
 	private:
 		// Attributes
@@ -68,18 +65,18 @@ class Template_T
 		class BadValue : public std::exception
 		{
 			public:
-				virtual const char *what() const throw() { return "Template_T error : invalid value, dumbass!"; }
+				virtual const char *what() const throw() { return "Foo_T error : invalid value, dumbass!"; }
 		};
 
 	public:
 		// Constructors - Destructor
-		Template_T();
-		Template_T( const T _value );
-		Template_T( const Template_T<T> &other );
-		~Template_T();
+		Foo_T();
+		Foo_T( const T _value );
+		Foo_T( const Foo_T<T> &other );
+		~Foo_T();
 
 		// Operators
-		Template_T<T> &operator= ( const Template_T<T> &other );
+		Foo_T<T> &operator= ( const Foo_T<T> &other );
 
 		// Setters - Getters
 		void	setValue( const T _value );
@@ -90,8 +87,8 @@ class Template_T
 
 };
 template < typename T >
-std::ostream &operator<< (std::ostream &out, const Template_T<T> &rhs);
+std::ostream &operator<< (std::ostream &out, const Foo_T<T> &rhs);
 
-# include "Template.tpp"
+# include "Foo.tpp"
 
-#endif // TEMPLATE_HPP
+#endif // FOO_HPP

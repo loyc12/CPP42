@@ -1,19 +1,38 @@
 #ifndef EASYFIND_HPP
 # define EASYFIND_HPP
 
+// basic libs
 # include <exception>
 # include <iostream>
 # include <iomanip>
 # include <sstream>
 # include <string>
 
+// containers
 # include <vector>
 # include <list>
 # include <deque>
+
+/*
+
+// CPP11 containers
+# include <array>
 # include <forward_list>
 
+// associative containers
+# include <map>
+# include <set>
+# include <multimap>
+# include <multiset>
 
-template <typename T> int easyfind( T _container, int _value );
+// adapter containers
+# include <stack>
+# include <queue>
+# include <priority_queue>
+
+*/
+
+template <typename T> int easyfind( T container, int value );
 template <typename T> void test( int size, int value);
 
 class UnhandledContainer : public std::exception
