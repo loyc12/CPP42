@@ -51,7 +51,7 @@ all: $(NAME)
 
 # Compiles all files into an executable
 $(NAME): $(OBJS)
-	@echo "$(GREEN)Files compiled with flags : $(CFLAGS)\n $(DEFCOL)"
+	@echo "$(GREEN)\nFiles compiled with flags : $(CFLAGS)\n $(DEFCOL)"
 	$(HIDE) $(CC) $(MODE) $(CFLAGS) -o $@ $^ $(INCLUDE) $(LIBS) $(LIBX)
 	@echo "$(CYAN)Executable created !\n $(DEFCOL)"
 
@@ -84,6 +84,7 @@ fclean: clean
 re: fclean all
 	@echo "$(CYAN)Rebuilt everything !\n $(DEFCOL)"
 
+
 #------------------------------------------------------------------------------#
 #                               SHORTCUT TARGETS                               #
 #------------------------------------------------------------------------------#
@@ -97,7 +98,7 @@ run: all
 	if [ $$? -eq 0 ]; then \
 		echo "$(GREEN)\nExited normally\n $(DEFCOL)"; \
 	else \
-		echo "$(RED)\nExited with error code $$?\n$(DEFCOL)"; \
+		echo "$(RED)\nExited with error code $$?\n $(DEFCOL)"; \
 	fi
 	$(HIDE) $(MAKE) clean
 
@@ -111,8 +112,8 @@ leaks: all
 		echo "$(GREEN)\nExited normally\n $(DEFCOL)"; \
 		echo "$(GREEN)No leaks found...\n $(DEFCOL)"; \
 	else \
-		echo "$(RED)\nExited with error code $$?\n$(DEFCOL)"; \
-		echo "$(RED)! LEAKS FOUND !\n$(DEFCOL)"; \
+		echo "$(RED)\nExited with error code $$?\n $(DEFCOL)"; \
+		echo "$(RED)! LEAKS FOUND !\n $(DEFCOL)"; \
 	fi
 	$(HIDE) $(MAKE) clean
 
@@ -126,8 +127,8 @@ vleaks: all
 		echo "$(GREEN)\nExited normally\n $(DEFCOL)"; \
 		echo "$(GREEN)No leaks found...\n $(DEFCOL)"; \
 	else \
-		echo "$(RED)\nExited with error code $$?$(DEFCOL)"; \
-		echo "$(RED)! LEAKS FOUND !\n$(DEFCOL)"; \
+		echo "$(RED)\nExited with error code $$? $(DEFCOL)"; \
+		echo "$(RED)! LEAKS FOUND !\n $(DEFCOL)"; \
 	fi
 	$(HIDE) $(MAKE) clean
 
@@ -143,12 +144,14 @@ norm:
 
 # Updates the git submodules
 sub:
-
+	@echo "$(YELLOW)Updating submodules \n $(WHITE)"
+	$(HIDE) git submodule update --init --recursive
+	@echo "$(GREEN)Submodules updated ! \n $(DEFCOL)"
 
 # Updates the libft module (requires push after)
 libft:
 	@echo "$(YELLOW)Updating libft to latest commit $(WHITE)"
-	$(HIDE) cd Libft42 && git pull origin main
+	$(HIDE) cd Libft42 ; git pull origin main
 	@echo "$(GREEN)Libft updated ! \n$(DEFCOL)"
 
 
@@ -161,8 +164,8 @@ brew:
 	@echo "$(YELLOW)\nInstalling Brew $(DEFCOL)"
 	$(HIDE) bash include/brew_install.sh; \
 	if [ $$? -eq 0 ]; then \
-		echo "$(BLUE)\nBrew installed !\n $(DEFCOL)"; \
-		echo "$(RED)\n! CLOSE AND REOPEN TERMINAL !$(DEFCOL)"; \
+		echo "$(BLUE)\nBrew installed ! $(DEFCOL)"; \
+		echo "$(RED)\n! CLOSE AND REOPEN TERMINAL !\n $(DEFCOL)"; \
 	else \
 		echo "$(RED)\n! FAILED TO INSTALL BREW !\n $(DEFCOL)"; \
 	fi
