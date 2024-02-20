@@ -32,9 +32,6 @@
 
 */
 
-template <typename T> int easyfind( T container, int value );
-template <typename T> void test( int size, int value);
-
 class UnhandledContainer : public std::exception
 {
 	public:

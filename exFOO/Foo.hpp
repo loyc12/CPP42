@@ -18,7 +18,7 @@ class Foo
 
 	protected:
 		// Checkers
-		void checkName( const std::string _name) const;
+		void checkName( const std::string _name ) const;
 
 		// Nested Classes
 		class BadName : public std::exception
