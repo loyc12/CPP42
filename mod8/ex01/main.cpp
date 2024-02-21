@@ -1,8 +1,8 @@
-#include "Foo.hpp"
+#include "Span.hpp"
 
 void test( int lenght )
 {
-	Foo t1( lenght );
+	Span t1( lenght );
 	std::cout << "\n >>> Insert test here" << std::endl;
 	std::cout << "     | type : s\n" << std::endl;
 }
