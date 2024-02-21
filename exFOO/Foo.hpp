@@ -1,7 +1,7 @@
 #ifndef FOO_HPP
 # define FOO_HPP
 
-# define XCPT_RTRN public: virtual const char *what() const throw()
+# define XCPT public: const char *what() const throw()
 
 // basic libs
 # include <exception>
@@ -23,7 +23,7 @@ class Foo
 		void checkName( const std::string _name ) const;
 
 		// Nested Classes
-		class BadName : public std::exception { XCPT_RTRN { return "Foo error : invalid name, idiot!"; } };
+		class BadName : public std::exception { XCPT { return "Foo error : invalid name, idiot!"; } };
 
 	public:
 		// Constructors - Destructor
@@ -60,7 +60,7 @@ class Foo_T
 		void	checkValue( const T _value ) const;
 
 		// Nested Classes
-		class BadValue : public std::exception { XCPT_RTRN { return "Foo_T error : invalid value, dumbass!"; } };
+		class BadValue : public std::exception { XCPT { return "Foo_T error : invalid value, dumbass!"; } };
 
 	public:
 		// Constructors - Destructor

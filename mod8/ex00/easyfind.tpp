@@ -1,3 +1,4 @@
+#include <iostream>
 #include "easyfind.hpp"
 
 template < typename T >

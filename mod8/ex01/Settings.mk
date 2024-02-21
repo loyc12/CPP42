@@ -7,7 +7,7 @@ NAME		=	Run
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
-				Foo \
+				Span \
 
 # Directory names
 SRCDIR		=
