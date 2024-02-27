@@ -1,6 +1,8 @@
 #ifndef EASYFIND_HPP
 # define EASYFIND_HPP
 
+# define XCPT public: const char *what() const throw()
+
 // basic libs
 # include <exception>
 # include <iostream>
@@ -32,11 +34,7 @@
 
 */
 
-class UnhandledContainer : public std::exception
-{
-	public:
-		virtual const char *what() const throw() { return "Container error : not a valid containers"; }
-};
+class UnhandledContainer : public std::exception { XCPT { return "Container error : not a valid containers"; }};
 
 # include "easyfind.tpp"
 

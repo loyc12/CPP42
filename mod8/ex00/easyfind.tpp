@@ -10,11 +10,11 @@ bool easyfind( T container, int value )
 		return ( false );
 	}
 
-	typename T::iterator	it = std::find( container.begin(), container.end(), value );
+	typename T::iterator it = std::find( container.begin(), container.end(), value );
 
 	if ( it == container.end() )
 	{
-		std::cout << "Value " << value << " not found in container" << std::endl;
+		std::cout << "Couldn't find " << value << " in container" << std::endl;
 		return ( false );
 	}
 
@@ -33,7 +33,7 @@ void test( int size, int value )
 
 	std::cout << "\n >>> Testing container of type " << typeid( T ).name() << " <<<" << std::endl;
 	std::cout << "     | size :  " << size << std::endl;
-	std::cout << "     | value : " << value << std::endl;
+	std::cout << "     | value : " << value << std::endl << std::endl;
 
 	easyfind( c, value );
 }
