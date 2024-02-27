@@ -10,7 +10,7 @@ bool easyfind( T container, int value )
 		return ( false );
 	}
 
-	typename T::iterator it = std::find( container.begin(), container.end(), value );
+	typename T::iterator it = find( container.begin(), container.end(), value );
 
 	if ( it == container.end() )
 	{
@@ -29,7 +29,6 @@ void test( int size, int value )
 	T c;
 	for ( int i = 0; i < size; i++ )
 		c.push_back( i + 1 );
-		//c.push_front( i + 1 ); // for forward_list
 
 	std::cout << "\n >>> Testing container of type " << typeid( T ).name() << " <<<" << std::endl;
 	std::cout << "     | size :  " << size << std::endl;

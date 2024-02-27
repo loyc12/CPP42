@@ -10,6 +10,8 @@
 # include <sstream>
 # include <string>
 
+# include <algorithm> // superfluous, as find is already in the std namespace
+
 // containers
 # include <vector>
 # include <list>

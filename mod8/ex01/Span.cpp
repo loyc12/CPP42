@@ -82,6 +82,27 @@ void	Span::delNumber()
 	this->numbers.pop_back();
 }
 
+void	Span::addRange( int A, int B)
+{
+	if (A > B)
+	{
+		int tmp = A;
+		A = B;
+		B = tmp;
+	}
+	for (int i = A; i <= B; i++)
+		this->addNumber(i);
+}
+void	Span::delNumbers( int N )
+{
+	if (N < 0)
+		throw NegativeNumber();
+	if (this->size() < N)
+		throw TooFewNumbers();
+	for (int i = 0; i < N; i++)
+		this->delNumber();
+}
+
 // sorts the numbers,
 // finds the difference between each number and the next,
 // returns the smallest difference
