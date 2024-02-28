@@ -5,32 +5,32 @@
 
 Calculator::Calculator()
 {
-	std::cout << "[ Called def. constr. for a CALCULATOR instance ]\n";
+	//std::cout << "[ Called def. constr. for a CALCULATOR instance ]\n";
 	this->_value = 0;
 }
 Calculator::Calculator( int n )
 {
-	std::cout << "[ Called param. constr. for a CALCULATOR instance ]\n";
+	//std::cout << "[ Called param. constr. for a CALCULATOR instance ]\n";
 	this->_value = n;
 }
 Calculator::Calculator( char c )
 {
-	std::cout << "[ Called param. constr. for a CALCULATOR instance ]\n";
+	//std::cout << "[ Called param. constr. for a CALCULATOR instance ]\n";
 	this->checkNum( c );
 	this->_value = c - '0';
 }
 Calculator::Calculator( const Calculator &other )
 {
-	std::cout << "[ Called copy constr. for a CALCULATOR instance ]\n";
+	//std::cout << "[ Called copy constr. for a CALCULATOR instance ]\n";
 	this->_value = other.getValue();
 }
-Calculator::~Calculator() { std::cout << "[ Destroying a CALCULATOR instance ]\n"; }
+Calculator::~Calculator() {} //std::cout << "[ Destroying a CALCULATOR instance ]\n"; }
 
 // Operators
 
 Calculator &Calculator::operator= ( const Calculator &other )
 {
-	std::cout << "[ Called assign. op. for a CALCULATOR instance ]\n";
+	//std::cout << "[ Called assign. op. for a CALCULATOR instance ]\n";
 	this->_value = other.getValue();
 
 	return *this;
@@ -41,26 +41,17 @@ Calculator &Calculator::operator= ( const Calculator &other )
 void	Calculator::checkSymbol( char c ) const
 {
 	if (( c < '0' || c > '9' ) && c != '+' && c != '-' && c != '*' && c != '/' && c != '%' )
-	{
-		std::cerr << std::endl << " > " << c << " < "  << std::endl;
 		throw BadSymbol();
-	}
 }
 void	Calculator::checkNum( char c ) const
 {
 	if ( c < '0' || c > '9' )
-	{
-		std::cerr << std::endl << " > " << c << " < "  << std::endl;
 		throw BadDigit();
-	}
 }
 void	Calculator::checkOper( char c ) const
 {
 	if ( c != '+' && c != '-' && c != '*' && c != '/' && c != '%' )
-	{
-		std::cerr << std::endl << " > " << c << " < "  << std::endl;
 		throw BadOperator();
-	}
 }
 
 
