@@ -18,7 +18,7 @@ int calculate( int ac, char **av )
 
 	for ( int i = 1; i < ac; i++ )
 	{
-		std::string str = av[i];
+		std::string str = av[ i ];
 		std::cout << str << ' ';
 
 		if ( str.size() != 1 )
@@ -27,8 +27,8 @@ int calculate( int ac, char **av )
 			return ( 1 );
 		}
 
-		calc.checkSymbol( str[0] );
-		bank.push_back( str[0] );
+		calc.checkSymbol( str[ 0 ] );
+		bank.push_back( str[ 0 ] );
 	}
 
 	std::cout << "] ( " << bank.size() << " args )\n" << std::endl;;
@@ -50,9 +50,9 @@ int calculate( int ac, char **av )
 
 int	main( int ac, char **av )
 {
-	if ( ac < 2 || ac % 2 != 0)
+	if ( ac < 2 || ac % 2 != 0 )
 	{
-		std::cerr << "Usage : " << av[0] << " ./RPN N0 [ N1 O1 ] [ N2 O2 ] ..." << std::endl;
+		std::cerr << "Usage : " << av[ 0 ] << " ./RPN N0 [ N1 O1 ] [ N2 O2 ] ..." << std::endl;
 		return ( 1 );
 	}
 	try { return calculate( ac, av ); }
