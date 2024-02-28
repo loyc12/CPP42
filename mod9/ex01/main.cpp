@@ -1,76 +1,61 @@
+#include <iostream>
 #include "Calculator.hpp"
+#include <deque>
 
-void test()
+char getNext( std::deque<char> *bank )
 {
-	try
-	{
-		Calculator c;
-		c.calculate('+', '9');
-		c.calculate('-', '2');
-		c.calculate('*', '4');
-		c.calculate('/', '4');
-		c.calculate('%', '3');
-
-		std::cout << "\n RESULT == " << c << std::endl << std::endl;
-	}
-	catch (std::exception &e) { std::cerr << e.what() << std::endl; }
+	char c = bank->front();
+	bank->pop_front();
+	return c;
 }
 
-void runTests( void )
+int calculate( int ac, char **av )
 {
-	std::cout << "\n #========================================[ TEST 1 ]========================================#\n"  << std::endl;
-	{ test(); }
-	std::cout << "\n #========================================[ TEST 2 ]========================================#\n"  << std::endl;
+	std::deque<char> bank ;
+	Calculator calc;
+
+	std::cout << "\nArguments : [ ";
+
+	for ( int i = 1; i < ac; i++ )
 	{
+		std::string str = av[i];
+		std::cout << str << ' ';
 
-	}
-	std::cout << "\n #=========================================[ END ]==========================================#\n" << std::endl;
-}
-
-int calc( int ac, char **av)
-{
-	try
-	{
-		Calculator c;
-
-		if ( ac < 2 )
+		if ( str.size() != 1 )
 		{
-
-		}
-			std::cerr << "Usage: " << av[0] << " num num opp [ num opp ] ..." << std::endl;
-		return (1);
-
-		if ( av[1][1] != '\0' )
-			goto errend;
-
-		c.setValue( av[1][0] );
-
-		for ( int i = 2; i <= ac; i += 2 )
-		{
-			std::cout << " > " << av[i] << " < " << std::endl;
-
-			if ( av[i][1] != '\0' || av[i][1 + 1] != '\0')
-				goto errend;
-
-			c.calculate( av[i][0], av[i + 1][0] );
+			std::cerr << "\nInvalid Argument ( non-char ) : " << str << std::endl;
+			return ( 1 );
 		}
 
-		std::cout << c << std::endl;
-		return (0);
+		calc.checkSymbol( str[0] );
+		bank.push_back( str[0] );
 	}
-	catch (std::exception &e) { std::cerr << e.what() << std::endl; }
 
-	errend:
+	std::cout << "] ( " << bank.size() << " args )\n" << std::endl;;
 
-	std::cerr << "Encountered an error" << std::endl;
+	calc.setValue( getNext( &bank ));
 
-	return (1);
+	while ( !bank.empty() )
+	{
+		char num = getNext( &bank );
+		char sym = getNext( &bank );
+
+		calc.calculate( num, sym );
+	}
+
+	std::cout << "Result : " << calc.getValue() << std::endl << std::endl;
+
+	return (0);
 }
 
-
-int	main( int ac, char **av)
+int	main( int ac, char **av )
 {
-	//runTests( );
-
-	return ( calc( ac, av ) );
+	if ( ac < 2 || ac % 2 != 0)
+	{
+		std::cerr << "Usage : " << av[0] << " ./RPN N0 [ N1 O1 ] [ N2 O2 ] ..." << std::endl;
+		return ( 1 );
+	}
+	try { return calculate( ac, av ); }
+	catch ( std::exception &e ) { std::cerr << e.what(); };
+	return ( 2 );
 }
