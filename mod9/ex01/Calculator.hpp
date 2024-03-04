@@ -17,14 +17,25 @@ class Calculator
 	private:
 		// Attributes
 		long _value;
+		bool _debug;
 
 	protected:
 
 	// Nested Classes
+		class BadArgument :	public std::exception { XCPT { return "\nFormat Error : Invalid Agument Lenght ( != 1 )\n"; } };
 		class BadSymbol :	public std::exception { XCPT { return "\nFormat Error : Invalid Symbol\n"; } };
 		class BadDigit :	public std::exception { XCPT { return "\nFormat Error : Invalid Digit\n"; } };
 		class BadOperator :	public std::exception { XCPT { return "\nFormat Error : Invalid Operator\n"; } };
 		class DivByZero :	public std::exception { XCPT { return "\nMath Error : Division by Zero\n"; } };
+
+		// Calculations ( from ints )
+		void setValue( int n );
+
+		void add( int n );
+		void sub( int n );
+		void mul( int n );
+		void div( int n );
+		void mod( int n );
 
 	public:
 		// Constructors - Destructor
@@ -38,22 +49,16 @@ class Calculator
 		Calculator &operator= ( const Calculator &other );
 
 		// Checkers
+		void checkArg( const std::string &str ) const;
 		void checkSymbol( char c ) const;
 		void checkNum( char c ) const;
 		void checkOper( char c ) const;
 
 		// Setters - Getters
-		void	setValue( int n );
-		void	setValue( char c );
-		int		getValue( void ) const;
+		void setValue( char c );
+		int	 getValue( void ) const;
 
-		// Calculations
-		void add( int n );
-		void sub( int n );
-		void mul( int n );
-		void div( int n );
-		void mod( int n );
-
+		// Calculations ( from chars )
 		void add( char c );
 		void sub( char c );
 		void mul( char c );
@@ -63,7 +68,9 @@ class Calculator
 		void calculate( char sym, char num );
 
 		// Others
-		void	printValue( void );
+		bool debug( void ) const;
+		void debug( bool b );
+		void printValue( void ) const;
 };
 
 std::ostream &operator<< (std::ostream &out, const Calculator &rhs);

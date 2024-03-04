@@ -37,6 +37,12 @@ Calculator &Calculator::operator= ( const Calculator &other )
 }
 
 // Checkers
+void	Calculator::checkArg( const std::string &str ) const
+{
+	if ( str.empty() || str.length() > 1 )
+		throw BadArgument();
+	this->checkSymbol( str[ 0 ] );
+}
 
 void	Calculator::checkSymbol( char c ) const
 {
@@ -57,34 +63,62 @@ void	Calculator::checkOper( char c ) const
 
 // Setters - Getters
 
-void	Calculator::setValue( int n ) { this->_value = n; }
-void	Calculator::setValue( char c ) { this->_value = c - '0'; }
+void	Calculator::setValue( int n )
+{
+	this->_value = n;
+	if ( this->_debug )
+		std::cout << " > " << n << " < \n" << std::endl;
+}
+void	Calculator::setValue( char c )
+{
+	this->checkNum( c );
+	this->setValue( ( int )c - '0' );
+}
 int		Calculator::getValue( void ) const { return ( this->_value ); }
 
 
 // Calculations
 
-void	Calculator::add( int n ) { this->_value += n; }
-void	Calculator::sub( int n ) { this->_value -= n; }
-void	Calculator::mul( int n ) { this->_value *= n; }
+void	Calculator::add( int n )
+{
+	this->_value += n;
+	if ( this->_debug )
+		std::cout << "Adding " << n << std::endl;
+}
+void	Calculator::sub( int n )
+{
+	this->_value -= n;
+	if ( this->_debug )
+		std::cout << "Subtracting " << n << std::endl;
+}
+void	Calculator::mul( int n )
+{
+	this->_value *= n;
+	if ( this->_debug )
+		std::cout << "Multiplying by " << n << std::endl;
+}
 void	Calculator::div( int n )
 {
 	if ( n == 0 )
-	throw DivByZero();
+		throw DivByZero();
 	this->_value /= n;
+	if ( this->_debug )
+		std::cout << "Dividing by " << n << std::endl;
 }
 void	Calculator::mod( int n )
 {
 	if ( n == 0 )
 		throw DivByZero();
 	this->_value %= n;
+	if ( this->_debug )
+		std::cout << "Modulo " << n << std::endl;
 }
 
-void	Calculator::add( char c ) { this->add( c - '0' ); }
-void	Calculator::sub( char c ) { this->sub( c - '0' ); }
-void	Calculator::mul( char c ) { this->mul( c - '0' ); }
-void	Calculator::div( char c ) { this->div( c - '0' ); }
-void	Calculator::mod( char c ) { this->mod( c - '0' ); }
+void	Calculator::add( char c ) { this->add( ( int )c - '0' ); }
+void	Calculator::sub( char c ) { this->sub( ( int )c - '0' ); }
+void	Calculator::mul( char c ) { this->mul( ( int )c - '0' ); }
+void	Calculator::div( char c ) { this->div( ( int )c - '0' ); }
+void	Calculator::mod( char c ) { this->mod( ( int )c - '0' ); }
 
 void	Calculator::calculate( char num, char oper )
 {
@@ -101,14 +135,19 @@ void	Calculator::calculate( char num, char oper )
 		case '/': this->div( n ); break;
 		case '%': this->mod( n ); break;
 	}
+	if ( this->_debug )
+		std::cout << " > " << this->_value << " < \n" << std::endl;
 }
 
 
 // Others
 
-void	Calculator::printValue( void )
+bool	Calculator::debug( void ) const { return ( this->_debug ); }
+void	Calculator::debug( bool b ) { this->_debug = b; }
+
+void	Calculator::printValue( void ) const
 {
-	std::cout << "Value : " << this->_value << std::endl;
+	std::cout << "Equals : " << this->_value << std::endl;
 }
 
 std::ostream &operator<< (std::ostream &out, const Calculator &rhs)

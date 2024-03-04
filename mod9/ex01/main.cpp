@@ -45,24 +45,18 @@ int calculate( int n, std::string *in )
 {
 	std::deque<char> bank ;
 	Calculator calc;
+	calc.debug( true );
 
-	std::cout << "\nArguments : [ ";
+	std::cout << "\nFormula : ";
 
 	for ( int i = 0; i < n; i++ )
 	{
 		std::cout << in[ i ] << " ";
-
-		if ( in[ i ].size() != 1 )
-		{
-			std::cerr << "... ]\n\nInvalid Argument : " << in[ i ] << " ( multiple characters )\n" << std::endl;
-			return ( 4 );
-		}
-
-		calc.checkSymbol( in[ i ][ 0 ] );
+		calc.checkArg( in[ i ] );
 		bank.push_back( in[ i ][ 0 ] );
 	}
 
-	std::cout << "] ( " << bank.size() << " args )" << std::endl;;
+	std::cout << " : ( " << bank.size() << " args )" << std::endl;
 
 	calc.setValue( getNextChar( &bank ));
 
@@ -74,8 +68,6 @@ int calculate( int n, std::string *in )
 		calc.calculate( num, sym );
 	}
 
-	std::cout << "\nResult : " << calc.getValue() << "\n" << std::endl;
-
 	return (0);
 }
 
@@ -83,7 +75,8 @@ int	main( int ac, char **av )
 {
 	if ( ac < 2 )
 	{
-		std::cerr << "\nUsage : ./RPN '< expression >' OR ./RPN N0 [ N1 O1 ] [ N2 O2 ] ...\n" << std::endl;
+		std::cerr << "\nUsage : ./RPN '< expression >' OR ./RPN n0 [ n1 o1 ] [ n2 o2 ] ...\n" << std::endl;
+		std::cerr << "PS : if using the second method, be sure to put \\ before any *\n" << std::endl;
 		return ( 1 );
 	}
 
