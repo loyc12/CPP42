@@ -10,6 +10,8 @@
 # include <sstream>
 # include <string>
 
+
+// CLASS ( implemented in .cpp file )
 class Calculator
 {
 	private:
