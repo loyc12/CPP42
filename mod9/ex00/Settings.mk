@@ -7,7 +7,7 @@ NAME		=	btc
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
-				Calculator \
+				Exchanger \
 
 # Directory names
 SRCDIR		=
@@ -20,7 +20,7 @@ LIBS		=
 LIBX		=
 
 # Arguments to call the command with
-ARGS		= 1 2 + 4 \* 2 / 5 %
+ARGS		= ./inputs
 
 
 #------------------------------------------------------------------------------#

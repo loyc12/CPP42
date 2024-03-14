@@ -32,8 +32,7 @@ ScalarConverter &ScalarConverter::operator=( ScalarConverter const &other )
 	return *this;
 }
 
-ScalarConverter::~ScalarConverter()
-{ std::cout << " : Called ScalConv destructor"; }
+ScalarConverter::~ScalarConverter() { std::cout << " : Called ScalConv destructor"; }
 
 void ScalarConverter::convert( std::string const &str )
 {

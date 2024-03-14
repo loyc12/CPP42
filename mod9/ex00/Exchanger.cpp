@@ -1,6 +1,33 @@
 #include <iostream>
 #include "Exchanger.hpp"
 
+// Helpers
+static bool isDateBigger( std::string d1, std::string d2 )
+{	// WARNING : assumes a valid date in the format "YYYY-MM-DD"
+
+	// take the year from the string (0001-9999)
+	int year1 = stoi( d1.substr( 0, 4 ));
+	int year2 = stoi( d2.substr( 0, 4 ));
+
+	// multiply the year by 100 ( to make space for the month )
+	year1 *= 100;
+	year2 *= 100;
+
+	// take the month from the string (1-12)
+	year1 += stoi( d1.substr( 5, 2 ));
+	year2 += stoi( d2.substr( 5, 2 ));
+
+	// multiply the month by 100 (to make space for the day)
+	year1 *= 100;
+	year2 *= 100;
+
+	// take the day from the string (1-31)
+	year1 += stoi( d1.substr( 8, 2 ));
+	year2 += stoi( d2.substr( 8, 2 ));
+
+	return ( year1 > year2 );
+}
+
 // Constructors - Destructor
 
 Exchanger::Exchanger()
@@ -8,8 +35,16 @@ Exchanger::Exchanger()
 	//std::cout << "[ Called def. constr. for a EXCHANGER instance ]\n";
 	this->_db = new RMAP;
 }
+Exchanger::Exchanger( bool debug )
+{
+	//std::cout << "[ Called param. constr. for a EXCHANGER instance ]\n";
+	this->_db = new RMAP;
+	this->_debug = debug;
+}
 Exchanger::Exchanger( std::string &path )
 {
+	this->_db = new RMAP;
+	this->setDB( path );
 	//std::cout << "[ Called param. constr. for a EXCHANGER instance ]\n";
 }
 Exchanger::Exchanger( const Exchanger &other )
@@ -40,19 +75,40 @@ Exchanger &Exchanger::operator= ( const Exchanger &other )
 
 // Checkers
 
+// Checks if the string is in the format "YYYY-MM-DD:VALUE"
 void	Exchanger::checkFormat( const std::string &str ) const
 {
-	if ( false )
+	try
+	{
+		if ( str.length() < 12 )
+			throw BadFormat();
+		this->checkDate( str.substr( 0, 10 ));
+		this->checkValue( std::stod( str.substr( 11 )), false );
+	}
+	catch ( std::exception &e )
+	{
+		std::cerr << "\nFailed conversion of line '" << str << "' due to : " << e.what();
 		throw BadFormat();
+	}
 }
 void	Exchanger::checkDate( const std::string &str ) const
 {
-	if ( false )
+	// check if the date is in the format "YYYY-MM-DD"
+	if ( str.length() != 10 )
+		throw BadDate();
+	if ( str[4] != '-' || str[7] != '-' )
+		throw BadDate();
+	if ( str[0] < '0' || str[0] > '9' || str[1] < '0' || str[1] > '9' || str[2] < '0' || str[2] > '9' || str[3] < '0' || str[3] > '9' )
+		throw BadDate();
+	if ( str[5] < '0' || str[5] > '1' || str[6] < '0' || str[6] > '9' )
+		throw BadDate();
+	if ( str[8] < '0' || str[8] > '3' || str[9] < '0' || str[9] > '9' )
 		throw BadDate();
 }
-void	Exchanger::checkValue( double val ) const
+void	Exchanger::checkValue( double val, bool checkMax ) const
 {
-	if ( val < 0 || val > 1000)
+	// check if the value is between 0 and 1000
+	if ( val < 0 || ( checkMax && val > 1000 ))
 		throw BadValue();
 }
 
@@ -61,9 +117,34 @@ void	Exchanger::checkValue( double val ) const
 
 void	Exchanger::setDB( std::string &path )
 {
-	// TODO
-}
+	std::ifstream file;
+	file.open( path );
 
+	if ( this->_debug ) std::cout << "Loading input file : " << path << std::endl;
+	if ( !file.is_open() ) throw BadFile();
+
+	std::string line;
+	std::getline( file, line ); // skips the first line
+
+	while ( std::getline( file, line ) )
+	{
+		try
+		{
+			this->checkFormat( line );
+
+			// Split the line into date and value
+			std::string date = line.substr( 0, 10 );
+			double value = std::stod( line.substr( 11 ) );
+
+			this->_db->insert( std::pair<std::string, double>( date, value ) );
+		}
+		catch ( std::exception &e ) { std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what(); }
+	}
+
+	file.close();
+	if ( this->_debug ) std::cout << path << " successfully loaded\n";
+
+}
 RMAP	*Exchanger::getDB( void ) const { return ( this->_db ); }
 RMAP	*Exchanger::copyDB( void ) const
 {
@@ -74,16 +155,80 @@ RMAP	*Exchanger::copyDB( void ) const
 
 
 // Exchanges
-void	Exchanger::exchange( double btc, double date )
+double	Exchanger::getRate( std::string date ) const
 {
-	// TODO
+	this->checkDate( date );
+	double rate = 0;
+
+	RMAP::const_iterator it = this->_db->find( date );
+	if ( it != this->_db->end() )
+		rate = it->second;
+	else
+	{
+		it = this->_db->begin();
+		std::string closestDate = "0000-00-00";
+		while ( it != this->_db->end() )
+		{
+			if ( isDateBigger( it->first, closestDate ) && isDateBigger( date, it->first ) )
+				closestDate = it->first;
+			it++;
+		}
+		if ( closestDate != "0000-00-00" )
+		{
+			if ( this->_debug ) std::cout << "Warning : Rounding " << date << " to nearest lowest date : " << closestDate << std::endl;
+			rate = this->_db->at( closestDate );
+		}
+		else throw BadRate();
+	}
+
+	return ( rate );
+}
+void Exchanger::exchange( std::string &path ) const
+{
+	std::ifstream file;
+	file.open( path );
+
+	if ( this->_debug ) std::cout << "\nLoading input file : " << path << std::endl << std::endl;
+	if ( !file.is_open() )
+		throw BadFile();
+
+	std::string line;
+
+	while ( std::getline( file, line ) && !line.empty() && line[0] != '\0' )
+	{
+		std::cout << std::fixed << std::setprecision( 2 );
+		try
+		{
+			this->checkFormat( line );
+
+			// Split the line into date and bitcoin_amount
+			std::string date = line.substr( 0, 10 );
+			double bitcoin_amount = std::stod( line.substr( 11 ) );
+			this->checkValue( bitcoin_amount, true );
+
+			// call exchange and multiply the result by the bitcoin_amount
+			double usd_value = this->getRate( date );
+			double converted_amount = bitcoin_amount * usd_value;
+
+			// print the result
+			std::cout << "Value of " << bitcoin_amount << " BTC on " << date << " : " << converted_amount << std::endl;
+		}
+		catch ( std::exception &e ) { std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what(); }
+	}
+
+	file.close();
 }
 
 // Others
 
 bool	Exchanger::debug( void ) const { return ( this->_debug ); }
 void	Exchanger::debug( bool b ) { this->_debug = b; }
-void	Exchanger::printDB( void ) const { std::cout << "database : " << this->_db << std::endl; }
+void	Exchanger::printDB( void ) const
+{
+	std::cout << "database : " << std::endl;
+	for ( RMAP::const_iterator it = this->_db->begin(); it != this->_db->end(); it++ )
+		std::cout << it->first << " : " << it->second << std::endl;
+}
 
 std::ostream &operator<< (std::ostream &out, const Exchanger &rhs)
 {
