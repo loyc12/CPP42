@@ -81,9 +81,9 @@ void	Exchanger::checkFormat( const std::string &str, bool isInput ) const
 	try
 	{
 		if ( isInput && str.length() <= 13 && str[ 11 ] == '|' )
-			throw BadFormDB();
-		if ( !isInput && str.length() <= 11 && str[ 10 ] == ',')
 			throw BadFormIn();
+		if ( !isInput && str.length() <= 11 && str[ 10 ] == ',')
+			throw BadFormDB();
 
 		this->checkDate( str.substr( 0, 10 ));
 
@@ -149,8 +149,7 @@ void	Exchanger::setDB( std::string &path)
 		catch ( std::exception &e )
 		{
 			if ( this->_debug )
-				std::cerr << "Failed conversion of line '" << line << "' due to : ";
-			std::cerr << e.what();
+				std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what();
 		}
 	}
 
@@ -229,8 +228,7 @@ void Exchanger::exchange( std::string &path ) const
 		catch ( std::exception &e )
 		{
 			if ( this->_debug )
-				std::cerr << "Failed conversion of line '" << line << "' due to : ";
-			std::cerr << e.what();
+				std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what();
 		}
 	}
 
