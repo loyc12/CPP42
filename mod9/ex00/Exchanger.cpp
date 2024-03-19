@@ -76,28 +76,23 @@ Exchanger &Exchanger::operator= ( const Exchanger &other )
 // Checkers
 
 // Checks if the string is in the format "YYYY-MM-DD:VALUE"
-void	Exchanger::checkFormat( const std::string &str, bool isInput ) const
+void	Exchanger::checkFormatDB( const std::string &str) const
 {
-	try
-	{
-		if ( isInput && str.length() <= 13 && str[ 11 ] == '|' )
-			throw BadFormIn();
-		if ( !isInput && str.length() <= 11 && str[ 10 ] == ',')
-			throw BadFormDB();
 
-		this->checkDate( str.substr( 0, 10 ));
+	if ( str.length() <= 11 || str[ 10 ] != ',' )
+		throw BadFormDB();
 
-		if ( isInput )
-			this->checkValue( std::stod( str.substr( 13 )), true );
-		else
-			this->checkValue( std::stod( str.substr( 11 )), false );
-	}
-	catch ( std::exception &e )
-	{
-		if ( this->_debug )
-			std::cerr << "\nFailed conversion of line '" << str << "' due to : ";
-		std::cerr << e.what();
-	}
+	this->checkDate( str.substr( 0, 10 ));
+	this->checkValue( std::stod( str.substr( 11 )), false );
+}
+void	Exchanger::checkFormatInput( const std::string &str ) const
+{
+
+	if ( str.length() <= 13 || str[ 10 ] != ' ' || str[ 11 ] != '|' || str[ 12 ] != ' ' )
+		throw BadFormIn();
+
+	this->checkDate( str.substr( 0, 10 ));
+	this->checkValue( std::stod( str.substr( 13 )), true );
 }
 void	Exchanger::checkDate( const std::string &str ) const
 {
@@ -108,9 +103,9 @@ void	Exchanger::checkDate( const std::string &str ) const
 		throw BadDate();
 	if ( str[0] < '0' || str[0] > '9' || str[1] < '0' || str[1] > '9' || str[2] < '0' || str[2] > '9' || str[3] < '0' || str[3] > '9' )
 		throw BadDate();
-	if ( str[5] < '0' || str[5] > '1' || str[6] < '0' || str[6] > '9' )
+	if ( str[5] < '0' || str[5] > '1' || str[6] < '0' || str[6] > '9' || ( str[5] == '1' && str[6] > '2' ))
 		throw BadDate();
-	if ( str[8] < '0' || str[8] > '3' || str[9] < '0' || str[9] > '9' )
+	if ( str[8] < '0' || str[8] > '3' || str[9] < '0' || str[9] > '9' || ( str[8] == '3' && str[9] > '1' ))
 		throw BadDate();
 }
 void	Exchanger::checkValue( double val, bool checkMax ) const
@@ -128,29 +123,25 @@ void	Exchanger::setDB( std::string &path)
 	std::ifstream file;
 	file.open( path );
 
-	if ( this->_debug ) std::cout << "Loading input file : " << path << std::endl;
+	if ( this->_debug ) std::cout << "Loading DB file : " << path << std::endl;
 	if ( !file.is_open() ) throw BadFile();
 
 	std::string line;
 	std::getline( file, line ); // skips the first line
 
-	while ( std::getline( file, line ) )
+	while ( std::getline( file, line ) && !line.empty() && line[0] != '\0' )
 	{
 		try
 		{
-			this->checkFormat( line, false );
+			this->checkFormatDB( line );
 
 			// Split the line into date and value
 			std::string date = line.substr( 0, 10 );
 			double value = std::stod( line.substr( 11 ) );
 
-			this->_db->insert( std::pair<std::string, double>( date, value ) );
+			this->_db->insert( std::pair<std::string, double>( date, value ));
 		}
-		catch ( std::exception &e )
-		{
-			if ( this->_debug )
-				std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what();
-		}
+		catch ( std::exception &e ) { this->printConvFailure( e, line ); }
 	}
 
 	file.close();
@@ -187,7 +178,7 @@ double	Exchanger::getRate( std::string date ) const
 		}
 		if ( closestDate != "0000-00-00" )
 		{
-			if ( this->_debug ) std::cout << "Warning : Rounding " << date << " to nearest lowest date : " << closestDate << std::endl;
+			if ( this->_debug ) std::cout << std::endl << "Rounding " << date << " to : " << closestDate;
 			rate = this->_db->at( closestDate );
 		}
 		else throw BadRate();
@@ -200,7 +191,7 @@ void Exchanger::exchange( std::string &path ) const
 	std::ifstream file;
 	file.open( path );
 
-	if ( this->_debug ) std::cout << "\nLoading input file : " << path << std::endl << std::endl;
+	if ( this->_debug ) std::cout << "\nLoading input file : " << path << std::endl;
 	if ( !file.is_open() )
 		throw BadFile();
 
@@ -211,7 +202,7 @@ void Exchanger::exchange( std::string &path ) const
 		std::cout << std::fixed << std::setprecision( 2 );
 		try
 		{
-			this->checkFormat( line, true );
+			this->checkFormatInput( line );
 
 			// Split the line into date and bitcoin_amount
 			std::string date = line.substr( 0, 10 );
@@ -223,13 +214,9 @@ void Exchanger::exchange( std::string &path ) const
 			double converted_amount = bitcoin_amount * usd_value;
 
 			// print the result
-			std::cout << "Value of " << bitcoin_amount << " BTC on " << date << " : " << converted_amount << std::endl;
+			std::cout << std::endl << "Value of " << bitcoin_amount << " Bitcoin on " << date << " : " << converted_amount;
 		}
-		catch ( std::exception &e )
-		{
-			if ( this->_debug )
-				std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what();
-		}
+		catch ( std::exception &e ) { this->printConvFailure( e, line ); }
 	}
 
 	file.close();
@@ -244,6 +231,11 @@ void	Exchanger::printDB( void ) const
 	std::cout << "database : " << std::endl;
 	for ( RMAP::const_iterator it = this->_db->begin(); it != this->_db->end(); it++ )
 		std::cout << it->first << " : " << it->second << std::endl;
+}
+void	Exchanger::printConvFailure( const std::exception &e, const std::string &line ) const
+{
+	if ( this->_debug )
+		std::cerr << std::endl << "Failed to convert line ' " << line << " ' due to : " << e.what();
 }
 
 std::ostream &operator<< (std::ostream &out, const Exchanger &rhs)

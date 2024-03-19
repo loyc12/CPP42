@@ -29,13 +29,13 @@ class Exchanger
 	protected:
 
 	// Nested Classes
-		class BadFormDB : public std::exception { XCPT { return "Format Error : Database line entry does not follow the format 'YYYY-MM-DD,VALUE'\n"; }};
-		class BadFormIn : public std::exception { XCPT { return "Format Error : Input file line entry does not follow the format 'YYYY-MM-DD | VALUE'\n"; }};
-		class BadDate	: public std::exception { XCPT { return "Format Error : Specified date does not exist\n"; }};
-		class BadValue	: public std::exception { XCPT { return "Format Error : Value must be between 0 and 1000\n"; }};
+		class BadFormDB : public std::exception { XCPT { return "Format Error : Database entry does not follow the format 'YYYY-MM-DD,VALUE'"; }};
+		class BadFormIn : public std::exception { XCPT { return "Format Error : Input entry does not follow the format 'YYYY-MM-DD | VALUE'"; }};
+		class BadDate	: public std::exception { XCPT { return "Format Error : Specified date does not exist"; }};
+		class BadValue	: public std::exception { XCPT { return "Format Error : Value must be between 0 and 1000"; }};
 
-		class BadFile	: public std::exception { XCPT { return "File Error : Could not open file\n"; }};
-		class BadRate	: public std::exception { XCPT { return "Rate Error : Date is outside the DB's date range\n"; }};
+		class BadFile	: public std::exception { XCPT { return "File Error : Could not open file"; }};
+		class BadRate	: public std::exception { XCPT { return "Rate Error : Date is outside the DB's date range"; }};
 
 	public:
 		// Constructors - Destructor
@@ -49,7 +49,8 @@ class Exchanger
 		Exchanger &operator= ( const Exchanger &other );
 
 		// Checkers
-		void	checkFormat( const std::string &str, bool isInput ) const;
+		void	checkFormatDB( const std::string &str ) const;
+		void	checkFormatInput( const std::string &str ) const;
 		void	checkDate( const std::string &str ) const;
 		void	checkValue( double val, bool checkMax ) const;
 
@@ -65,6 +66,7 @@ class Exchanger
 		bool	debug( void ) const;
 		void	debug( bool b );
 		void	printDB( void ) const;
+		void 	printConvFailure( const std::exception &e, const std::string &line) const;
 };
 
 std::ostream &operator<< (std::ostream &out, const Exchanger &rhs);

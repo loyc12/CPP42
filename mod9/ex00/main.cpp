@@ -6,14 +6,12 @@ int	main( int ac, char **av )
 {
 	if ( ac != 2 ) { std::cerr << "\nUsage : ./btc '< table >'\n" << std::endl;  return ( 1 ); }
 
-	Exchanger exchanger ( false );
+	Exchanger exchanger( false );
 
 	try
 	{
 		std::string path = "./data.csv";
 		exchanger.setDB( path );
-		if ( exchanger.debug() )
-			exchanger.printDB();
 	}
 	catch ( std::exception &e ) { std::cerr << e.what() << std::endl;  return ( 2 ); }
 
@@ -23,6 +21,8 @@ int	main( int ac, char **av )
 		exchanger.exchange( path );
 	}
 	catch ( std::exception &e ) { std::cerr << e.what() << std::endl;  return ( 3 ); }
+
+	std::cout << std::endl;
 
 	return ( 0 );
 }
