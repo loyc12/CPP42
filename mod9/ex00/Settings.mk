@@ -20,7 +20,7 @@ LIBS		=
 LIBX		=
 
 # Arguments to call the command with
-ARGS		= ./inputs
+ARGS		= ./inputs.txt
 
 
 #------------------------------------------------------------------------------#

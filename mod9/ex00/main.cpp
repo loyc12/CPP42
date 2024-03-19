@@ -6,7 +6,7 @@ int	main( int ac, char **av )
 {
 	if ( ac != 2 ) { std::cerr << "\nUsage : ./btc '< table >'\n" << std::endl;  return ( 1 ); }
 
-	Exchanger exchanger ( true );
+	Exchanger exchanger ( false );
 
 	try
 	{

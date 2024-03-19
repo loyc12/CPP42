@@ -76,19 +76,27 @@ Exchanger &Exchanger::operator= ( const Exchanger &other )
 // Checkers
 
 // Checks if the string is in the format "YYYY-MM-DD:VALUE"
-void	Exchanger::checkFormat( const std::string &str ) const
+void	Exchanger::checkFormat( const std::string &str, bool isInput ) const
 {
 	try
 	{
-		if ( str.length() < 12 )
-			throw BadFormat();
+		if ( isInput && str.length() <= 13 && str[ 11 ] == '|' )
+			throw BadFormDB();
+		if ( !isInput && str.length() <= 11 && str[ 10 ] == ',')
+			throw BadFormIn();
+
 		this->checkDate( str.substr( 0, 10 ));
-		this->checkValue( std::stod( str.substr( 11 )), false );
+
+		if ( isInput )
+			this->checkValue( std::stod( str.substr( 13 )), true );
+		else
+			this->checkValue( std::stod( str.substr( 11 )), false );
 	}
 	catch ( std::exception &e )
 	{
-		std::cerr << "\nFailed conversion of line '" << str << "' due to : " << e.what();
-		throw BadFormat();
+		if ( this->_debug )
+			std::cerr << "\nFailed conversion of line '" << str << "' due to : ";
+		std::cerr << e.what();
 	}
 }
 void	Exchanger::checkDate( const std::string &str ) const
@@ -115,7 +123,7 @@ void	Exchanger::checkValue( double val, bool checkMax ) const
 
 // Setters - Getters
 
-void	Exchanger::setDB( std::string &path )
+void	Exchanger::setDB( std::string &path)
 {
 	std::ifstream file;
 	file.open( path );
@@ -130,7 +138,7 @@ void	Exchanger::setDB( std::string &path )
 	{
 		try
 		{
-			this->checkFormat( line );
+			this->checkFormat( line, false );
 
 			// Split the line into date and value
 			std::string date = line.substr( 0, 10 );
@@ -138,7 +146,12 @@ void	Exchanger::setDB( std::string &path )
 
 			this->_db->insert( std::pair<std::string, double>( date, value ) );
 		}
-		catch ( std::exception &e ) { std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what(); }
+		catch ( std::exception &e )
+		{
+			if ( this->_debug )
+				std::cerr << "Failed conversion of line '" << line << "' due to : ";
+			std::cerr << e.what();
+		}
 	}
 
 	file.close();
@@ -199,11 +212,11 @@ void Exchanger::exchange( std::string &path ) const
 		std::cout << std::fixed << std::setprecision( 2 );
 		try
 		{
-			this->checkFormat( line );
+			this->checkFormat( line, true );
 
 			// Split the line into date and bitcoin_amount
 			std::string date = line.substr( 0, 10 );
-			double bitcoin_amount = std::stod( line.substr( 11 ) );
+			double bitcoin_amount = std::stod( line.substr( 13 ) );
 			this->checkValue( bitcoin_amount, true );
 
 			// call exchange and multiply the result by the bitcoin_amount
@@ -213,7 +226,12 @@ void Exchanger::exchange( std::string &path ) const
 			// print the result
 			std::cout << "Value of " << bitcoin_amount << " BTC on " << date << " : " << converted_amount << std::endl;
 		}
-		catch ( std::exception &e ) { std::cerr << "Failed conversion of line '" << line << "' due to : " << e.what(); }
+		catch ( std::exception &e )
+		{
+			if ( this->_debug )
+				std::cerr << "Failed conversion of line '" << line << "' due to : ";
+			std::cerr << e.what();
+		}
 	}
 
 	file.close();

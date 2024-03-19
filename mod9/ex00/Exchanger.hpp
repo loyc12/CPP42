@@ -29,7 +29,8 @@ class Exchanger
 	protected:
 
 	// Nested Classes
-		class BadFormat : public std::exception { XCPT { return "Format Error : DB line entry does not follow the format 'YYYY-MM-DD:VALUE'\n"; }};
+		class BadFormDB : public std::exception { XCPT { return "Format Error : Database line entry does not follow the format 'YYYY-MM-DD,VALUE'\n"; }};
+		class BadFormIn : public std::exception { XCPT { return "Format Error : Input file line entry does not follow the format 'YYYY-MM-DD | VALUE'\n"; }};
 		class BadDate	: public std::exception { XCPT { return "Format Error : Specified date does not exist\n"; }};
 		class BadValue	: public std::exception { XCPT { return "Format Error : Value must be between 0 and 1000\n"; }};
 
@@ -48,7 +49,7 @@ class Exchanger
 		Exchanger &operator= ( const Exchanger &other );
 
 		// Checkers
-		void	checkFormat( const std::string &str ) const;
+		void	checkFormat( const std::string &str, bool isInput ) const;
 		void	checkDate( const std::string &str ) const;
 		void	checkValue( double val, bool checkMax ) const;
 
