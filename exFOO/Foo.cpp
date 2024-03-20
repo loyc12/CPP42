@@ -8,7 +8,7 @@ Foo::Foo()
 	std::cout << "[ Called def. constr. for a FOO instance ]\n";
 	this->name = "UNINITIALIZED";
 }
-Foo::Foo( std::string _name )
+Foo::Foo( const std::string _name )
 {
 	std::cout << "[ Called param. constr. for a FOO instance ]\n";
 	this->name = _name;
@@ -54,7 +54,7 @@ const std::string	Foo::getName( void ) const
 
 // Others
 
-void	Foo::printName( void )
+void	Foo::printName( void ) const
 {
 	std::cout << this->getName();
 }

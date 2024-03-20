@@ -10,7 +10,7 @@ Foo_T<T>::Foo_T()
 	this->value = 0;
 }
 template < typename T >
-Foo_T<T>::Foo_T( T _value )
+Foo_T<T>::Foo_T( const T _value )
 {
 	std::cout << "[ Called param. constr. for a FOO_T instance ]\n";
 	this->value = _value;
@@ -64,7 +64,7 @@ const T	Foo_T<T>::getValue( void ) const
 // Others
 
 template < typename T >
-void	Foo_T<T>::printValue( void )
+void	Foo_T<T>::printValue( void ) const
 {
 	std::cout << this->getValue();
 }

@@ -11,7 +11,7 @@
 # include <string>
 
 
-// CLASS ( implemented in .cpp file )
+// CLASS FOO ( implemented in .cpp file )
 class Foo
 {
 	private:
@@ -40,14 +40,14 @@ class Foo
 		const std::string	getName( void ) const;
 
 		// Others
-		void	printName( void );
+		void	printName( void ) const;
 
 };
 
 std::ostream &operator<< (std::ostream &out, const Foo &rhs);
 
 
-// CLASS FOO ( implemented in .tpp file )
+// TEMPLATE CLASS FOO_T ( implemented in .tpp file )
 template <class T>
 class Foo_T
 {
@@ -77,7 +77,7 @@ class Foo_T
 		const T	getValue( void ) const;
 
 		// Others
-		void	printValue( void );
+		void	printValue( void ) const;
 
 };
 template < typename T >
