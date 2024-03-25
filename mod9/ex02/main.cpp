@@ -1,32 +1,36 @@
 #include "PmergeMe.hpp"
 
-void test()
+# define PRINT_ALL false
+
+void addToContainer( char *val, IVEC &V, ILST &L )
 {
-	PmergeMe t1( "t1" );
-	std::cout << "\n >>> Insert test here" << std::endl;
-	std::cout << "     | type : s\n" << std::endl;
+	try
+	{
+		V.push_back( atoi( val ) );
+		L.push_back( atoi( val ) );
+	}
+	catch ( std::exception &e ) { std::cerr << e.what() << std::endl; }
 }
 
-template <typename T>
-void test_T()
+int	main( int ac, char **av )
 {
-	PmergeMe_T<T> t1( 0 );
-	std::cout << "\n >>> Insert test here" << std::endl;
-	std::cout << "     | type : " << typeid( T ).name() << '\n' << std::endl;
-}
+	IVEC V;
+	ILST L;
 
-void runTests( void )
-{
-	std::cout << "\n #========================================[ TEST 1 ]========================================#\n" << std::endl;
-	{ test(); }
-	std::cout << "\n #========================================[ TEST 2 ]========================================#\n" << std::endl;
-	{ test_T<int>(); }
-	std::cout << "\n #========================================[ TEST 3 ]========================================#\n" << std::endl;
-	{ test_T<float>(); }
-	std::cout << "\n #========================================[ TEST 4 ]========================================#\n" << std::endl;
-	{ test_T<double>(); }
-	std::cout << "\n #=========================================[ END ]==========================================#\n" << std::endl;
-}
+	for ( int i = 1; i < ac; i++ ) { addToContainer( av[i], V, L ); }
 
-int	main( void )
-{ runTests(); }
+	PmergeMe pV( V, PRINT_ALL );
+	PmergeMe pL( L, PRINT_ALL );
+
+	std::cout << "\nVector : " << pV << std::endl;
+	std::cout << "\nList : " << pL << std::endl;
+
+	std::cout << "\nSorting...\n";
+	pV.sort();
+	pL.sort();
+
+	std::cout << "\nVector : " << pV << std::endl;
+	std::cout << "\nList : " << pL << std::endl;
+
+	std::cout << "\nDone !\n";
+}

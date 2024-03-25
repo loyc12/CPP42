@@ -7,7 +7,7 @@ NAME		=	Run
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
-				Foo \
+				PmergeMe \
 
 # Directory names
 SRCDIR		=
@@ -20,7 +20,7 @@ LIBS		=
 LIBX		=
 
 # Arguments to call the command with
-ARGS		=
+ARGS		= 5 4 3 2 1
 
 
 #------------------------------------------------------------------------------#

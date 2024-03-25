@@ -2,6 +2,8 @@
 # define PMERGEME_HPP
 
 # define XCPT public: const char *what() const throw()
+# define elif else if
+# define DEBUG_DEFAULT false
 
 // basic libs
 # include <exception>
@@ -10,37 +12,67 @@
 # include <sstream>
 # include <string>
 
+// containers
+# include <vector>
+# include <list>
+# define IVEC std::vector<int>
+# define ILST std::list<int>
 
-// CLASS PMERGEME ( implemented in .cpp file )
+// Modes
+# define NUL 0
+# define VEC 1
+# define LST 2
+
 class PmergeMe
 {
 	private:
 		// Attributes
-		std::string	name;
+		int 	_mode;
+		bool	_debug;
+		IVEC	_V;
+		ILST	_L;
+
+		// Def Constructor
+		PmergeMe();
+		PmergeMe( bool debug );
 
 	protected:
-		// Checkers
-		void checkName( const std::string _name ) const;
-
 		// Nested Classes
-		class BadName : public std::exception { XCPT { return "PmergeMe error : invalid name, idiot!"; } };
+		class BadSort : public std::exception { XCPT { return "PmergeMe error : TemplateError ( dumbass, change it... )"; } };
 
 	public:
 		// Constructors - Destructor
-		PmergeMe();
-		PmergeMe( const std::string _name );
-		PmergeMe( const PmergeMe &other );
+		PmergeMe( IVEC &V );
+		PmergeMe( ILST &L );
+
+		PmergeMe( IVEC &V, bool debug );
+		PmergeMe( ILST &L, bool debug );
+
 		~PmergeMe();
+		PmergeMe( const PmergeMe &other );
 
 		// Operators
 		PmergeMe &operator= ( const PmergeMe &other );
 
-		// Setters - Getters
-		void				setName( const std::string _name );
-		const std::string	getName( void ) const;
 
-		// Others
-		void	printName( void ) const;
+		// Setters
+		void	debug( bool debug );
+
+		// Getters
+		bool	debug( void ) const;
+		int		getMode( void ) const;
+		IVEC	getVect( void ) const;
+		ILST	getList( void ) const;
+
+		// Sorters
+		void 	sort( void );
+		void	sortVect( void );
+		void	sortList( void );
+
+		// Printers
+		void	writeOut( void ) const;
+		void	writeVect( std::ostream &out ) const;
+		void	writeList( std::ostream &out ) const;
 
 };
 
