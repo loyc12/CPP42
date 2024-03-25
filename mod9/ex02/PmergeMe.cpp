@@ -13,6 +13,9 @@ PmergeMe::PmergeMe( bool debug )
 
 	this->_debug = debug;
 	this->_mode = NUL;
+	this->_V.clear();
+	this->_L.clear();
+	this->_sortTime = 0;
 }
 PmergeMe::PmergeMe( IVEC &V, bool debug	)
 {
@@ -22,6 +25,7 @@ PmergeMe::PmergeMe( IVEC &V, bool debug	)
 	this->_mode = VEC;
 	this->_V = V;
 	this->_L.clear();
+	this->_sortTime = 0;
 }
 PmergeMe::PmergeMe( ILST &L, bool debug )
 {
@@ -31,6 +35,7 @@ PmergeMe::PmergeMe( ILST &L, bool debug )
 	this->_mode = LST;
 	this->_V.clear();
 	this->_L = L;
+	this->_sortTime = 0;
 }
 
 PmergeMe::~PmergeMe() { if ( this->_debug ) { std::cout << "[ Destroying a PMERGEME instance ]\n"; }}
@@ -43,6 +48,7 @@ PmergeMe::PmergeMe( const PmergeMe &other )
 	this->_debug = other.debug();
 	this->_V.clear();
 	this->_L.clear();
+	this->_sortTime = other.getSortTime();
 
 	this->_mode = other.getMode();
 	if   ( this->_mode == VEC ) { this->_V = other.getVect(); }
@@ -59,6 +65,7 @@ PmergeMe &PmergeMe::operator= ( const PmergeMe &other )
 	this->_debug = other.debug();
 	this->_V.clear();
 	this->_L.clear();
+	this->_sortTime = other.getSortTime();
 
 	this->_mode = other.getMode();
 	if   ( this->_mode == VEC ) { this->_V = other.getVect(); }
@@ -77,16 +84,37 @@ bool	PmergeMe::debug(   void ) const { return this->_debug; }
 int		PmergeMe::getMode( void ) const { return this->_mode; }
 IVEC	PmergeMe::getVect( void ) const { return this->_V; }
 ILST	PmergeMe::getList( void ) const { return this->_L; }
+time_t	PmergeMe::getSortTime(  ) const { return this->_sortTime; }
 
 // Sorters
 
 void	PmergeMe::sort( void )
 {
 	if ( this->_debug ) { std::cout << "[ Sorting a container ] : "; }
-	if ( this->_mode == VEC ) { this->sortVect(); }
-	else if ( this->_mode == LST ) { this->sortList(); }
 
-	else { std::cerr << "WARNING : mode has not been set, cannot sort\n"; }
+	timeval start, end;
+
+	if   ( this->_mode == VEC )
+	{
+		gettimeofday( &start, NULL );
+		this->sortVect();
+		gettimeofday( &end, NULL );
+	}
+	elif ( this->_mode == LST )
+	{
+		gettimeofday( &start, NULL );
+		this->sortList();
+		gettimeofday( &end, NULL );
+	}
+
+	else { std::cerr << "WARNING : mode has not been set, cannot sort\n"; return; }
+
+	// Calculating time
+	long s  = end.tv_sec  - start.tv_sec;
+	long us = end.tv_usec - start.tv_usec;
+	this->_sortTime = ( s * 1000000 ) + us;
+
+	if ( this->_debug ) { std::cout << "done in " << this->_sortTime << "us\n"; }
 }
 
 void	PmergeMe::sortVect( void )
@@ -99,7 +127,7 @@ std::sort( this->_V.begin(), this->_V.end() ); //					TODO : implement a custom 
 void	PmergeMe::sortList( void )
 {
 	if ( this->_debug ) { std::cout << "[ Sorting a list ]\n"; }
-	this->_L.sort(); //													TODO : implement a custom sort
+	this->_L.sort(); //												TODO : implement a custom sort
 }
 
 // Printers
@@ -116,6 +144,7 @@ void	PmergeMe::writeOut( void ) const
 void	PmergeMe::writeVect( std::ostream &out ) const
 {
 	if ( this->_debug ) { std::cout << "[ Writing a vector ]\n"; }
+	if ( this->_V.empty() ) { out << "Empty vector"; return; }
 	for ( IVEC::const_iterator it = this->_V.begin(); it != this->_V.end(); it++ )
 	{
 		out << *it;
@@ -126,13 +155,13 @@ void	PmergeMe::writeVect( std::ostream &out ) const
 void	PmergeMe::writeList( std::ostream &out ) const
 {
 	if ( this->_debug ) { std::cout << "[ Writing a list ]\n"; }
+	if ( this->_L.empty() ) { out << "Empty list"; return; }
 	for ( ILST::const_iterator it = this->_L.begin(); it != this->_L.end(); it++ )
 	{
 		out << *it;
 		if ( it != --( this->_L.end() )) { out << " "; }
 	}
 }
-
 
 std::ostream &operator<< (std::ostream &out, const PmergeMe &rhs)
 {

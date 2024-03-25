@@ -18,6 +18,9 @@
 # define IVEC std::vector<int>
 # define ILST std::list<int>
 
+// time
+# include <sys/time.h>
+
 // Modes
 # define NUL 0
 # define VEC 1
@@ -31,10 +34,15 @@ class PmergeMe
 		bool	_debug;
 		IVEC	_V;
 		ILST	_L;
+		double _sortTime;
 
-		// Def Constructor
+		// Constructors
 		PmergeMe();
 		PmergeMe( bool debug );
+
+		// Sorters
+		void	sortVect( void );
+		void	sortList( void );
 
 	protected:
 		// Nested Classes
@@ -54,20 +62,18 @@ class PmergeMe
 		// Operators
 		PmergeMe &operator= ( const PmergeMe &other );
 
-
 		// Setters
 		void	debug( bool debug );
 
 		// Getters
-		bool	debug( void ) const;
+		bool	debug(   void ) const;
 		int		getMode( void ) const;
 		IVEC	getVect( void ) const;
 		ILST	getList( void ) const;
+		time_t	getSortTime() const;
 
 		// Sorters
 		void 	sort( void );
-		void	sortVect( void );
-		void	sortList( void );
 
 		// Printers
 		void	writeOut( void ) const;
