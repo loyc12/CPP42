@@ -15,6 +15,8 @@ int	main( int ac, char **av )
 	}
 	catch ( std::exception &e ) { std::cerr << e.what() << std::endl;  return ( 2 ); }
 
+	std::cout << std::endl;
+
 	try
 	{
 		std::string path = av[1];

@@ -32,7 +32,8 @@ class Exchanger
 		class BadFormDB : public std::exception { XCPT { return "Format Error : Database entry does not follow the format 'YYYY-MM-DD,VALUE'"; }};
 		class BadFormIn : public std::exception { XCPT { return "Format Error : Input entry does not follow the format 'YYYY-MM-DD | VALUE'"; }};
 		class BadDate	: public std::exception { XCPT { return "Format Error : Specified date does not exist"; }};
-		class BadValue	: public std::exception { XCPT { return "Format Error : Value must be between 0 and 1000"; }};
+		class BadValue	: public std::exception { XCPT { return "Format Error : Value must be greater than 0"; }};
+		class MaxValue	: public std::exception { XCPT { return "Format Error : Input value must be bellow 1000"; }};
 
 		class BadFile	: public std::exception { XCPT { return "File Error : Could not open file"; }};
 		class BadRate	: public std::exception { XCPT { return "Rate Error : Date is outside the DB's date range"; }};

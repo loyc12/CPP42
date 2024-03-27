@@ -46,11 +46,11 @@ PmergeMe::PmergeMe( const PmergeMe &other )
 	if ( this == &other ) { return; }
 
 	this->_debug = other.debug();
+	this->_sortTime = other.getSortTime();
+	this->_mode = other.getMode();
 	this->_V.clear();
 	this->_L.clear();
-	this->_sortTime = other.getSortTime();
 
-	this->_mode = other.getMode();
 	if   ( this->_mode == VEC ) { this->_V = other.getVect(); }
 	elif ( this->_mode == LST ) { this->_L = other.getList(); }
 }
@@ -120,8 +120,7 @@ void	PmergeMe::sort( void )
 void	PmergeMe::sortVect( void )
 {
 	if ( this->_debug ) { std::cout << "[ Sorting a vector ]\n"; }
-
-std::sort( this->_V.begin(), this->_V.end() ); //					TODO : implement a custom sort
+	std::sort( this->_V.begin(), this->_V.end() ); //					TODO : implement a custom sort
 }
 
 void	PmergeMe::sortList( void )

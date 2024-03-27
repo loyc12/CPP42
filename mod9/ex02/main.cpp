@@ -24,7 +24,7 @@ void run( IVEC &V, ILST &L, bool debug )
 		std::cout << "\nSorting...\n" << std::endl;
 	}
 	else
-		std::cout << "\nunsorted : " << pV;
+		std::cout << "\nUnsorted : " << pV;
 
 	pV.sort(); //						TODO : implement a custom sort
 	pL.sort(); //						TODO : implement a custom sort
@@ -35,10 +35,10 @@ void run( IVEC &V, ILST &L, bool debug )
 		std::cout << "\nList   : " << pL << std::endl;
 	}
 	else
-		std::cout << "\nsorted   : " << pV;
+		std::cout << "\nSorted   : " << pV;
 
-	std::cout << "\nVector sorted in " << pV.getSortTime() << "ns";
-	std::cout << "\nList   sorted in " << pL.getSortTime() << "ns\n\n";
+	std::cout << "\nVector of size " << pV.getVect().size() << " sorted in " << pV.getSortTime() << "ns";
+	std::cout << "\nList   of size " << pL.getList().size() << " sorted in " << pL.getSortTime() << "ns\n\n";
 }
 
 int	main( int ac, char **av )
@@ -49,7 +49,7 @@ int	main( int ac, char **av )
 	for ( int i = 1; i < ac; i++ ) { addToContainer( av[i], V, L ); }
 
 	run( V, L, true );
-	std::cout << "\n\n";
+	std::cout << "\n 0============================================================0 " << std::endl;
 	run( V, L, false );
 
 }

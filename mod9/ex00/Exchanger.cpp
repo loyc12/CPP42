@@ -111,8 +111,10 @@ void	Exchanger::checkDate( const std::string &str ) const
 void	Exchanger::checkValue( double val, bool checkMax ) const
 {
 	// check if the value is between 0 and 1000
-	if ( val < 0 || ( checkMax && val > 1000 ))
+	if ( val < 0 )
 		throw BadValue();
+	if ( checkMax && val > 1000 )
+		throw MaxValue();
 }
 
 
@@ -234,8 +236,10 @@ void	Exchanger::printDB( void ) const
 }
 void	Exchanger::printConvFailure( const std::exception &e, const std::string &line ) const
 {
+	std::cerr << std::endl;
 	if ( this->_debug )
-		std::cerr << std::endl << "Failed to convert line ' " << line << " ' due to : " << e.what();
+		std::cerr << "Failed to convert line ' " << line << " ' due to : ";
+	std::cerr << e.what();
 }
 
 std::ostream &operator<< (std::ostream &out, const Exchanger &rhs)
