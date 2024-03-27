@@ -4,6 +4,7 @@
 # define XCPT public: const char *what() const throw()
 # define elif else if
 # define DEBUG_DEFAULT false
+# define DISPLAY_HALF_MAX 8 // half the max number of elements to display
 
 // basic libs
 # include <exception>

@@ -145,9 +145,16 @@ void	PmergeMe::writeVect( std::ostream &out ) const
 {
 	if ( this->_debug ) { std::cout << "[ Writing a vector ]\n"; }
 	if ( this->_V.empty() ) { out << "Empty vector"; return; }
+	unsigned long i = 0;
 	for ( IVEC::const_iterator it = this->_V.begin(); it != this->_V.end(); it++ )
 	{
-		out << *it;
+		i++;
+
+		// skips the middle numbers if there are more than 2 * DISPLAY_HALF_MAX numbers
+		if ( !this->_debug && i >= 1 + DISPLAY_HALF_MAX && i < 1 + this->_V.size() - DISPLAY_HALF_MAX )
+			if ( i == 1 + DISPLAY_HALF_MAX ) out << "...";  else continue;
+		else out << *it;
+
 		if ( it != --( this->_V.end() )) { out << " "; }
 	}
 }
@@ -156,9 +163,16 @@ void	PmergeMe::writeList( std::ostream &out ) const
 {
 	if ( this->_debug ) { std::cout << "[ Writing a list ]\n"; }
 	if ( this->_L.empty() ) { out << "Empty list"; return; }
+	unsigned long i = 0;
 	for ( ILST::const_iterator it = this->_L.begin(); it != this->_L.end(); it++ )
 	{
-		out << *it;
+		i++;
+
+		// skips the middle numbers if there are more than 2 * DISPLAY_HALF_MAX numbers
+		if ( !this->_debug && i >= 1 + DISPLAY_HALF_MAX && i < 1 + this->_L.size() - DISPLAY_HALF_MAX )
+			if ( i == 1 + DISPLAY_HALF_MAX ) out << "...";  else continue;
+		else out << *it;
+
 		if ( it != --( this->_L.end() )) { out << " "; }
 	}
 }
