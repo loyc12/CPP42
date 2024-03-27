@@ -7,7 +7,7 @@ NAME		=	btc
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
-				Exchanger \
+				BitcoinExchange \
 
 # Directory names
 SRCDIR		=

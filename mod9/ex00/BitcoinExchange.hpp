@@ -1,5 +1,5 @@
-#ifndef EXCHANGER_HPP
-# define EXCHANGER_HPP
+#ifndef BITCOINEXCHANGE_HPP
+# define BITCOINEXCHANGE_HPP
 
 # define XCPT public: const char *what() const throw()
 # define RMAP std::map<std::string, double>
@@ -17,9 +17,8 @@
 // check for format error more thoroughly
 // add predefined error messages instead of on-the-fly ones
 // fix this shit
-// rename the classes
 
-class Exchanger
+class BitcoinExchange
 {
 	private:
 		// Attributes
@@ -40,14 +39,14 @@ class Exchanger
 
 	public:
 		// Constructors - Destructor
-		Exchanger();
-		Exchanger( bool debug );
-		Exchanger( std::string &pathDB );
-		Exchanger( const Exchanger &other );
-		~Exchanger();
+		BitcoinExchange();
+		BitcoinExchange( bool debug );
+		BitcoinExchange( std::string &pathDB );
+		BitcoinExchange( const BitcoinExchange &other );
+		~BitcoinExchange();
 
 		// Operators
-		Exchanger &operator= ( const Exchanger &other );
+		BitcoinExchange &operator= ( const BitcoinExchange &other );
 
 		// Checkers
 		void	checkFormatDB( const std::string &str ) const;
@@ -70,6 +69,6 @@ class Exchanger
 		void 	printConvFailure( const std::exception &e, const std::string &line) const;
 };
 
-std::ostream &operator<< (std::ostream &out, const Exchanger &rhs);
+std::ostream &operator<< (std::ostream &out, const BitcoinExchange &rhs);
 
-#endif // EXCHANGER_HPP
+#endif // BITCOINEXCHANGE_HPP

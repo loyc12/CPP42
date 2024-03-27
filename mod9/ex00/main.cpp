@@ -1,17 +1,17 @@
 #include <iostream>
-#include "Exchanger.hpp"
+#include "BitcoinExchange.hpp"
 #include <map>
 
 int	main( int ac, char **av )
 {
 	if ( ac != 2 ) { std::cerr << "\nUsage : ./btc '< table >'\n" << std::endl;  return ( 1 ); }
 
-	Exchanger exchanger( false );
+	BitcoinExchange bitcoinexchange( false );
 
 	try
 	{
 		std::string path = "./data.csv";
-		exchanger.setDB( path );
+		bitcoinexchange.setDB( path );
 	}
 	catch ( std::exception &e ) { std::cerr << e.what() << std::endl;  return ( 2 ); }
 
@@ -20,7 +20,7 @@ int	main( int ac, char **av )
 	try
 	{
 		std::string path = av[1];
-		exchanger.exchange( path );
+		bitcoinexchange.exchange( path );
 	}
 	catch ( std::exception &e ) { std::cerr << e.what() << std::endl;  return ( 3 ); }
 

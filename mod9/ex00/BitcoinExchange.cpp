@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Exchanger.hpp"
+#include "BitcoinExchange.hpp"
 
 // Helpers
 static bool isDateBigger( std::string d1, std::string d2 )
@@ -30,42 +30,42 @@ static bool isDateBigger( std::string d1, std::string d2 )
 
 // Constructors - Destructor
 
-Exchanger::Exchanger()
+BitcoinExchange::BitcoinExchange()
 {
-	//std::cout << "[ Called def. constr. for a EXCHANGER instance ]\n";
+	//std::cout << "[ Called def. constr. for a BITCOINEXCHANGE instance ]\n";
 	this->_db = new RMAP;
 }
-Exchanger::Exchanger( bool debug )
+BitcoinExchange::BitcoinExchange( bool debug )
 {
-	//std::cout << "[ Called param. constr. for a EXCHANGER instance ]\n";
+	//std::cout << "[ Called param. constr. for a BITCOINEXCHANGE instance ]\n";
 	this->_db = new RMAP;
 	this->_debug = debug;
 }
-Exchanger::Exchanger( std::string &path )
+BitcoinExchange::BitcoinExchange( std::string &path )
 {
 	this->_db = new RMAP;
 	this->setDB( path );
-	//std::cout << "[ Called param. constr. for a EXCHANGER instance ]\n";
+	//std::cout << "[ Called param. constr. for a BITCOINEXCHANGE instance ]\n";
 }
-Exchanger::Exchanger( const Exchanger &other )
+BitcoinExchange::BitcoinExchange( const BitcoinExchange &other )
 {
-	//std::cout << "[ Called copy constr. for a EXCHANGER instance ]\n";
+	//std::cout << "[ Called copy constr. for a BITCOINEXCHANGE instance ]\n";
 	this->_db->clear();
 	delete this->_db;
 	this->_db = other.copyDB();
 }
-Exchanger::~Exchanger()
+BitcoinExchange::~BitcoinExchange()
 {
-	//std::cout << "[ Destroying a EXCHANGER instance ]\n";
+	//std::cout << "[ Destroying a BITCOINEXCHANGE instance ]\n";
 	this->_db->clear();
 	delete this->_db;
 }
 
 // Operators
 
-Exchanger &Exchanger::operator= ( const Exchanger &other )
+BitcoinExchange &BitcoinExchange::operator= ( const BitcoinExchange &other )
 {
-	//std::cout << "[ Called assign. op. for a EXCHANGER instance ]\n";
+	//std::cout << "[ Called assign. op. for a BITCOINEXCHANGE instance ]\n";
 	this->_db->clear();
 	delete this->_db;
 	this->_db = other.copyDB();
@@ -76,7 +76,7 @@ Exchanger &Exchanger::operator= ( const Exchanger &other )
 // Checkers
 
 // Checks if the string is in the format "YYYY-MM-DD:VALUE"
-void	Exchanger::checkFormatDB( const std::string &str) const
+void	BitcoinExchange::checkFormatDB( const std::string &str) const
 {
 
 	if ( str.length() <= 11 || str[ 10 ] != ',' )
@@ -85,7 +85,7 @@ void	Exchanger::checkFormatDB( const std::string &str) const
 	this->checkDate( str.substr( 0, 10 ));
 	this->checkValue( std::stod( str.substr( 11 )), false );
 }
-void	Exchanger::checkFormatInput( const std::string &str ) const
+void	BitcoinExchange::checkFormatInput( const std::string &str ) const
 {
 
 	if ( str.length() <= 13 || str[ 10 ] != ' ' || str[ 11 ] != '|' || str[ 12 ] != ' ' )
@@ -94,7 +94,7 @@ void	Exchanger::checkFormatInput( const std::string &str ) const
 	this->checkDate( str.substr( 0, 10 ));
 	this->checkValue( std::stod( str.substr( 13 )), true );
 }
-void	Exchanger::checkDate( const std::string &str ) const
+void	BitcoinExchange::checkDate( const std::string &str ) const
 {
 	// check if the date is in the format "YYYY-MM-DD"
 	if ( str.length() != 10 )
@@ -108,7 +108,7 @@ void	Exchanger::checkDate( const std::string &str ) const
 	if ( str[8] < '0' || str[8] > '3' || str[9] < '0' || str[9] > '9' || ( str[8] == '3' && str[9] > '1' ))
 		throw BadDate();
 }
-void	Exchanger::checkValue( double val, bool checkMax ) const
+void	BitcoinExchange::checkValue( double val, bool checkMax ) const
 {
 	// check if the value is between 0 and 1000
 	if ( val < 0 )
@@ -120,7 +120,7 @@ void	Exchanger::checkValue( double val, bool checkMax ) const
 
 // Setters - Getters
 
-void	Exchanger::setDB( std::string &path)
+void	BitcoinExchange::setDB( std::string &path)
 {
 	std::ifstream file;
 	file.open( path );
@@ -150,8 +150,8 @@ void	Exchanger::setDB( std::string &path)
 	if ( this->_debug ) std::cout << path << " successfully loaded\n";
 
 }
-RMAP	*Exchanger::getDB( void ) const { return ( this->_db ); }
-RMAP	*Exchanger::copyDB( void ) const
+RMAP	*BitcoinExchange::getDB( void ) const { return ( this->_db ); }
+RMAP	*BitcoinExchange::copyDB( void ) const
 {
 	RMAP *copy = new RMAP;
 	*copy = *this->_db;
@@ -160,7 +160,7 @@ RMAP	*Exchanger::copyDB( void ) const
 
 
 // Exchanges
-double	Exchanger::getRate( std::string date ) const
+double	BitcoinExchange::getRate( std::string date ) const
 {
 	this->checkDate( date );
 	double rate = 0;
@@ -188,7 +188,7 @@ double	Exchanger::getRate( std::string date ) const
 
 	return ( rate );
 }
-void Exchanger::exchange( std::string &path ) const
+void BitcoinExchange::exchange( std::string &path ) const
 {
 	std::ifstream file;
 	file.open( path );
@@ -226,15 +226,15 @@ void Exchanger::exchange( std::string &path ) const
 
 // Others
 
-bool	Exchanger::debug( void ) const { return ( this->_debug ); }
-void	Exchanger::debug( bool b ) { this->_debug = b; }
-void	Exchanger::printDB( void ) const
+bool	BitcoinExchange::debug( void ) const { return ( this->_debug ); }
+void	BitcoinExchange::debug( bool b ) { this->_debug = b; }
+void	BitcoinExchange::printDB( void ) const
 {
 	std::cout << "database : " << std::endl;
 	for ( RMAP::const_iterator it = this->_db->begin(); it != this->_db->end(); it++ )
 		std::cout << it->first << " : " << it->second << std::endl;
 }
-void	Exchanger::printConvFailure( const std::exception &e, const std::string &line ) const
+void	BitcoinExchange::printConvFailure( const std::exception &e, const std::string &line ) const
 {
 	std::cerr << std::endl;
 	if ( this->_debug )
@@ -242,7 +242,7 @@ void	Exchanger::printConvFailure( const std::exception &e, const std::string &li
 	std::cerr << e.what();
 }
 
-std::ostream &operator<< (std::ostream &out, const Exchanger &rhs)
+std::ostream &operator<< (std::ostream &out, const BitcoinExchange &rhs)
 {
 	out << rhs.getDB();
 	return ( out );
