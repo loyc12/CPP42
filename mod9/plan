@@ -1,0 +1,18 @@
+
+> plan (?) :
+
+start with an "array" of numbers
+create an "array" of pairs of numbers (in order, save last for later if uneven)
+clear the "array" of numbers
+
+sort the pairs themselves (biggest first, smallest last)
+sort the "array" of pairs based on their first number's value
+
+reinsert the first number of each pair into the "array" of number (in order)
+use jacobstal to reinsert the last number from pair into the "array" of numbers (in order)
+
+
+> thoughts (?) :
+
+have class store values in a vector
+only use different containers in the sort functions themselves
