@@ -10,6 +10,7 @@
 # include <exception>
 # include <iostream>
 # include <iomanip>
+# include <utility>
 # include <sstream>
 # include <string>
 
@@ -26,6 +27,9 @@
 # define NUL 0
 # define VEC 1
 # define LST 2
+
+// make it a single class with a single container,
+// but use different functions for each container type needed
 
 class PmergeMe
 {

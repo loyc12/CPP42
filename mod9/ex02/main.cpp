@@ -37,8 +37,8 @@ void run( IVEC &V, ILST &L, bool debug )
 	else
 		std::cout << "\nSorted   : " << pV;
 
-	std::cout << "\nVector of size " << pV.getVect().size() << " sorted in " << pV.getSortTime() << "ns";
-	std::cout << "\nList   of size " << pL.getList().size() << " sorted in " << pL.getSortTime() << "ns\n\n";
+	std::cout << "\nVector of size " << pV.getVect().size() << " sorted in " << pV.getSortTime() << " microseconds";
+	std::cout << "\nList   of size " << pL.getList().size() << " sorted in " << pL.getSortTime() << " microseconds\n\n";
 }
 
 int	main( int ac, char **av )

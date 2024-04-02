@@ -90,7 +90,7 @@ time_t	PmergeMe::getSortTime(  ) const { return this->_sortTime; }
 
 void	PmergeMe::sort( void )
 {
-	if ( this->_debug ) { std::cout << "[ Sorting a container ] : "; }
+	if ( this->_debug ) { std::cout << "\n[ Sorting a container ] : "; }
 
 	timeval start, end;
 
@@ -106,27 +106,11 @@ void	PmergeMe::sort( void )
 		this->sortList();
 		gettimeofday( &end, NULL );
 	}
-
 	else { std::cerr << "WARNING : mode has not been set, cannot sort\n"; return; }
 
-	// Calculating time
-	long s  = end.tv_sec  - start.tv_sec;
-	long us = end.tv_usec - start.tv_usec;
-	this->_sortTime = ( s * 1000000 ) + us;
+	this->_sortTime = (( end.tv_sec  - start.tv_sec ) * 1000000 ) + end.tv_usec - start.tv_usec;
 
-	if ( this->_debug ) { std::cout << "done in " << this->_sortTime << "us\n"; }
-}
-
-void	PmergeMe::sortVect( void )
-{
-	if ( this->_debug ) { std::cout << "[ Sorting a vector ]\n"; }
-	std::sort( this->_V.begin(), this->_V.end() ); //					TODO : implement a custom sort
-}
-
-void	PmergeMe::sortList( void )
-{
-	if ( this->_debug ) { std::cout << "[ Sorting a list ]\n"; }
-	this->_L.sort(); //												TODO : implement a custom sort
+	if ( this->_debug ) { std::cout << "\nSorted within " << this->_sortTime << " microseconds\n"; }
 }
 
 // Printers
@@ -144,7 +128,7 @@ void	PmergeMe::writeVect( std::ostream &out ) const
 {
 	if ( this->_debug ) { std::cout << "[ Writing a vector ]\n"; }
 	if ( this->_V.empty() ) { out << "Empty vector"; return; }
-	unsigned long i = 0;
+	size_t i = 0;
 	for ( IVEC::const_iterator it = this->_V.begin(); it != this->_V.end(); it++ )
 	{
 		i++;
@@ -162,7 +146,7 @@ void	PmergeMe::writeList( std::ostream &out ) const
 {
 	if ( this->_debug ) { std::cout << "[ Writing a list ]\n"; }
 	if ( this->_L.empty() ) { out << "Empty list"; return; }
-	unsigned long i = 0;
+	size_t i = 0;
 	for ( ILST::const_iterator it = this->_L.begin(); it != this->_L.end(); it++ )
 	{
 		i++;
