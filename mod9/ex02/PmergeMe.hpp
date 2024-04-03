@@ -17,8 +17,8 @@
 // containers
 # include <vector>
 # include <list>
-# define IVEC std::vector<int>
-# define ILST std::list<int>
+# define IVEC std::vector< int >
+# define ILST std::list< int >
 
 // time
 # include <sys/time.h>

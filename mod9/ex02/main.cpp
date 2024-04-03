@@ -20,25 +20,26 @@ void run( IVEC &V, ILST &L, bool debug )
 	if ( debug )
 	{
 		std::cout << "\nVector : " << pV;
-		std::cout << "\nList   : " << pL << std::endl;
-		std::cout << "\nSorting...\n" << std::endl;
+//		std::cout << "\nList   : " << pL << std::endl;
+		std::cout << "\n\nSorting..." << std::endl;
 	}
 	else
 		std::cout << "\nUnsorted : " << pV;
 
-	pV.sort(); //						TODO : implement a custom sort
-	pL.sort(); //						TODO : implement a custom sort
+	pV.sort();
+//	pL.sort();
 
 	if ( debug )
 	{
 		std::cout << "\nVector : " << pV;
-		std::cout << "\nList   : " << pL << std::endl;
+//		std::cout << "\nList   : " << pL << std::endl;
 	}
 	else
 		std::cout << "\nSorted   : " << pV;
 
 	std::cout << "\nVector of size " << pV.getVect().size() << " sorted in " << pV.getSortTime() << " microseconds";
-	std::cout << "\nList   of size " << pL.getList().size() << " sorted in " << pL.getSortTime() << " microseconds\n\n";
+//	std::cout << "\nList   of size " << pL.getList().size() << " sorted in " << pL.getSortTime() << " microseconds";
+	std::cout << "\n" << std::endl;
 }
 
 int	main( int ac, char **av )
