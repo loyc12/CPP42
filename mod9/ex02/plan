@@ -1,18 +1,26 @@
 
-> plan (?) :
+/*
+Ford-Johnson Algorithm ( using jacobsthal )
 
-start with an "array" of numbers
-create an "array" of pairs of numbers (in order, save last for later if uneven)
-clear the "array" of numbers
+> start with a filled int array and an empty pair array
 
-sort the pairs themselves (biggest first, smallest last)
-sort the "array" of pairs based on their first number's value
+if the int array lenght is odd
+	store one number away
 
-reinsert the first number of each pair into the "array" of number (in order)
-use jacobstal to reinsert the last number from pair into the "array" of numbers (in order)
+while the int array is not empty
+{
+	take the first two int
+	sort them into a pair ( comp )
+	insert said pair into the pair array ( USING JACOBSTHAL ) ( comp )
+}
+
+> now the int array is empty and the pair array is full
+
+move the first value of each pair into the int array
+insert the second value of each pair into the int array ( USING JACOBSTHAL ) ( comp )
+
+if a number is stored away
+	insert it into the int array ( nomrla insert sort ) ( comp )
 
 
-> thoughts (?) :
-
-have class store values in a vector
-only use different containers in the sort functions themselves
+*/
