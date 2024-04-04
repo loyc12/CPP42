@@ -22,6 +22,7 @@ void	printPVect( PVEC &pV, bool hr, int r )
 	{ std::cout << "[ " << it->first << " " << it->second << " ]\n"; }
 
 	if ( hr ) { std::cout << "( " << r << " )\n\n"; }
+	std::cout << std::endl;
 }
 
 void	printPList( PLST &pL, bool hr, int r )
@@ -33,6 +34,7 @@ void	printPList( PLST &pL, bool hr, int r )
 	{ std::cout << "[ " << it->first << " " << it->second << " ]\n"; }
 
 	if ( hr ) { std::cout << "( " << r << " )\n\n"; }
+	std::cout << std::endl;
 }
 
 
@@ -48,6 +50,7 @@ void	PmergeMe::sortVect( void )
 	}
 	if ( this->_debug ) { std::cout << "[ > Sorting an int vector < ]\n"; }
 
+	int comp = 0;
 	bool hasRemainder = this->_V.size() % 2;
 	int remainder = 0;
 	if ( hasRemainder ) { remainder = this->_V.back(); }
@@ -65,7 +68,10 @@ void	PmergeMe::sortVect( void )
 
 	// sorts the pairs of values, smallest first, biggest last
 	for ( PVEC::iterator it = pV.begin(); it != pV.end(); it++ )
+	{
+		comp++;
 		if ( it->first > it->second ) { std::swap( it->first, it->second ); }
+	}
 
 	// sorts the pair vector based on the first value of each pair
 	for ( PVEC::iterator it = pV.begin(); it != pV.end(); it++ )
@@ -74,9 +80,10 @@ void	PmergeMe::sortVect( void )
 
 		while ( it2 != pV.begin() && ( it2 - 1 )->first >= it2->first )
 		{
+			comp++;
 			// sorts the pair vector based on the second value if the first is the same
 			if (( it2 - 1 )->first == it2->first && ( it2 - 1 )->second <= it2->second ) { break; }
-			std::iter_swap( it2, it2 - 1 );
+			std::iter_swap( it2, std::prev( it2 ));
 			it2--;
 		}
 	}
@@ -97,12 +104,17 @@ void	PmergeMe::sortVect( void )
 	if ( this->_debug ) { std::cout << "[ Reinserting the second value of each pair ]\n"; }
 
 	//int jnum[] = JNUM;
-	for ( PVEC::iterator it = std::prev( pV.end() ); it != pV.begin(); it-- )
+	PVEC::iterator ite = pV.end();
+	while (ite != pV.begin())
 	{
-		int val = it->second;
-		// use the jacobsthal sequence to insert the last number from the pairs (in reverse order) into the sequence
-		for ( IVEC::iterator it2 = --this->_V.end(); it2 != this->_V.begin(); it2--, i++ )
-			if ( it->second >= *it2 ) { this->_V.insert( std::next( it2 ), val );  break; }
+		ite = std::prev( ite );
+		int val = ite->second;
+		// reinserts the last number from the pairs (in reverse order) into the sequence
+		for ( IVEC::iterator it2 = --this->_V.end(); it2 != this->_V.begin(); it2-- )
+		{
+			comp++;
+			if ( ite->second >= *it2 ) { this->_V.insert( std::next( it2 ), val );  break; }
+		}
 	}
 /*
 	int index = 0;
@@ -112,6 +124,7 @@ void	PmergeMe::sortVect( void )
 		IVEC::iterator it2 = this->_V.begin();
 		for ( std::advance( it2, index ); it2 != this->_V.end(); it2++ )
 		{
+			comp++;
 			if   ( it->second <= *it2 ) { this->_V.insert( it2, val );  break; }
 			elif ( std::next( it2 ) == this->_V.end() ) { this->_V.push_back( val );  break; }
 		}
@@ -127,10 +140,15 @@ void	PmergeMe::sortVect( void )
 
 		for ( IVEC::iterator it = this->_V.begin(); it != this->_V.end(); it++ )
 		{
+			//comp++;
 			if   ( remainder <= *it ) { this->_V.insert( it, remainder );  break; }
 			elif ( std::next( it ) == this->_V.end() ) { this->_V.push_back( remainder );  break; }
 		}
 	}
+
+	if ( this->_debug ) { std::cout << "[ Done sorting the int vector ]\n\n"; }
+
+	std::cout << "Comparisons: " << comp << std::endl;
 
 	//std::cout << std::endl;  this->writeVect( std::cout );  std::cout << std::endl;
 }
