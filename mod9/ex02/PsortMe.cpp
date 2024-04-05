@@ -161,6 +161,7 @@ int insertVal( IVEC &V, int val )
 		if ( i ==  jnum[ j - 1 ])
 		{
 			i =  jnum[ j++ ];
+			if (( size_t )i > V.size() ) { i = V.size(); }
 			it = V.end();
 			std::advance( it, -i );
 		}
