@@ -46,8 +46,8 @@ class PmergeMe
 		PmergeMe( bool debug );
 
 		// Sorters
-		void	sortVect( void );
-		void	sortList( void );
+		int	sortVect( void );
+		int	sortList( void );
 
 	protected:
 		// Nested Classes

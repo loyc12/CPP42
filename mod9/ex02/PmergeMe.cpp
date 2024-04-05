@@ -93,24 +93,26 @@ void	PmergeMe::sort( void )
 	if ( this->_debug ) { std::cout << "\n[ Sorting a container ] : "; }
 
 	timeval start, end;
+	int cmpCount = 0;
 
 	if   ( this->_mode == VEC )
 	{
 		gettimeofday( &start, NULL );
-		this->sortVect();
+		cmpCount = this->sortVect();
 		gettimeofday( &end, NULL );
 	}
 	elif ( this->_mode == LST )
 	{
 		gettimeofday( &start, NULL );
-		this->sortList();
+		cmpCount = this->sortList();
 		gettimeofday( &end, NULL );
 	}
 	else { std::cerr << "WARNING : mode has not been set, cannot sort\n"; return; }
 
 	this->_sortTime = (( end.tv_sec  - start.tv_sec ) * 1000000 ) + end.tv_usec - start.tv_usec;
 
-	if ( this->_debug ) { std::cout << "\nSorted within " << this->_sortTime << " microseconds\n"; }
+	if ( this->_debug ) { std::cout << "\nSorted within " << this->_sortTime << " microseconds"; }
+	if ( this->_debug ) { std::cout << "\nSorted within " << cmpCount << " comparisons\n"; }
 }
 
 // Printers

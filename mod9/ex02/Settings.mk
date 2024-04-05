@@ -33,8 +33,8 @@ LIBX		=
 #ARGS		= 99 88 77 66 55 44 33 22 11 1 2 3 4 5 6 7 8 9 # 108 comparisons
 #ARGS		= 99 88 77 66 55 44 33 22 11 9 8 7 6 5 4 3 2 1 # 125 comparisons ( worst case ? )
 
-ARGS		= 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 #          26  comparisons ( all equal )
-#ARGS		= 8 4 99 22 11 88 1 5 6 55 33 77 44 66 9 3 2 7 # 84  comparisons ( random order )
+#ARGS		= 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 #          26  comparisons ( all equal )
+ARGS		= 8 4 99 22 11 88 1 5 6 55 33 77 44 66 9 3 2 7 # 84  comparisons ( random order )
 #ARGS		= 4 8 22 7 44 5 99 11 2 77 33 9 5 7 8 88 6 3 1 # 72  comparisons ( random order )
 
 #------------------------------------------------------------------------------#
