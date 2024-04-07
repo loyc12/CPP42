@@ -42,6 +42,38 @@ void run( IVEC &V, ILST &L, bool debug )
 	std::cout << "\n" << std::endl;
 }
 
+void iterOver( int size )
+{
+	int J[] = JNUM;
+	int j = 0;
+	int i = 0;
+
+	int lastMax = 0;
+	int nextMax = 1;
+
+	std::cout << "1 ";
+
+	while ( true )
+	{
+		if ( i == lastMax )
+		{
+			std::cout << std::endl;
+
+			lastMax = nextMax;
+			nextMax = J[ j++ ];
+
+			if ( nextMax > size ) { nextMax = size; }
+			i = nextMax;
+
+			std::cout << "M:" << i << " > ";
+		}
+		if ( lastMax == size ) { break; }
+		std::cout << i-- << " ";
+	}
+	std::cout << std::endl;
+
+}
+
 int	main( int ac, char **av )
 {
 	IVEC V;
@@ -49,8 +81,12 @@ int	main( int ac, char **av )
 
 	for ( int i = 1; i < ac; i++ ) { addToContainer( av[i], V, L ); }
 
+	iterOver( V.size() );
+
 	run( V, L, true );
 	std::cout << "\n 0============================================================0 " << std::endl;
 	run( V, L, false );
+
+
 
 }

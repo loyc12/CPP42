@@ -37,60 +37,12 @@ PAIR makePair( IVEC &V )
 	V.pop_back();
 	return p;
 }
-/*
-bool isSorted( PVEC &pV )
-{
-	if ( pV.size() < 2 ) { return true;}
-
-	PVIT it = pV.begin();
-	while ( it != pV.end() )
-	{
-		if ( it->first > it->second ) { return false; }
-		it++;
-	}
-
-	return true;
-}
-
-int sortPairVec( PVEC &pV )
-{
-	int cmpCount = 0;
-
-	PVIT it = pV.begin();
-	while ( it != pV.end() )
-	{
-		cmpCount++;
-		if ( it->first > std::next( it )->first )
-		{
-			std::swap( it->first, std::next( it )->first );
-			std::swap( it->second, std::next( it )->second );
-		}
-		elif ( it->first == std::next( it )->first )
-		{
-			cmpCount++;
-			if ( it->second > std::next( it )->second )
-			{
-				std::swap( it->second, std::next( it )->second );
-				cmpCount++;
-			}
-		}
-		it++;
-	}
-
-	if ( isSorted( pV ) )
-	{
-		cmpCount += pV.size() - 1;
-		return cmpCount;
-	}
-	else { return ( cmpCount + sortPairs( pV )); }
-}
-*/
 
 int insertPair( PVEC &pV, PAIR p )
 {
 	//int cmpCount = 0;
 
-	// does a binary search to find the right place to insert the pair, so that the vector stays sorted
+	// does a binary search to find the right place to insert the pair
 	pV.insert( std::upper_bound( pV.begin(), pV.end(), p ), p ); // WARNING : does it work with pairs??
 
 	return 0; // WARNING : doesn't count the comparisons
@@ -100,7 +52,7 @@ int insertValue( IVEC &V, IVIT max_it, int val )
 {
 	//int cmpCount = 0;
 
-	// does a binary search to find the right place to insert the value, so that the vector stays sorted
+	// does a binary search to find the right place to insert the value
 	V.insert( std::upper_bound( V.begin(), max_it, val ), val );
 
 	return 0; // WARNING : doesn't count the comparisons

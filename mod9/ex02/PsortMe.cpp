@@ -37,23 +37,51 @@ int	PmergeMe::sortVect( void )
 
 	// initiating vars for the Ford-Johnson algorithm
 	int J[] = JNUM; //	jacobsthal sequence (from 3 onward)
-	int j = 0; //		current jacobsthal index
-	int len; //			current jacobshtal number
-	IVIT max_it; //		current maximum it
+
+	int j = 0; //			current jacobsthal index
+	int i = 1; //			current pit index
+	int lastMax = 1 ; //	current maximum pit index
+	int nextMax = 1; //		next maximum pit index
+
+	IVIT v_it = this->_V.begin(); //	current vect it
+	PVIT p_it = pV.begin(); //			current pair it
 
 	// inserting the pend chain's elements (except the first) back on _V using the jacobsthal sequence
-	for ( PVIT it = ++( pV.begin() ); it != pV.end(); it++ )
-	{
-		// inserting the element at the current jacobsthal index
-		len = J[ j++ ];
-		if ( len < ( int )pV.size() )
-		{
-			max_it = this->_V.begin();
-			std::advance( max_it, len );
-		}
-		else { max_it = this->_V.end(); }
+	size = size - hasRmdr;
 
-		cmpCount += insertValue( this->_V, max_it, it->second );
+	while ( true )
+	{
+		if ( i <= lastMax )
+		{
+			lastMax = nextMax;
+			nextMax = J[ j++ ];
+
+			i = nextMax;
+			if ( i >= size ) { i = size; }
+		}
+		if ( lastMax >= size ) { break; }
+
+		// inserting the next element of the pend chain
+		if ( nextMax >= ( int )this->_V.size() )
+		{
+			v_it = this->_V.end();
+			std::cout << "putting v_it at end" << std::endl;
+		}
+		else
+		{
+			v_it = this->_V.begin();
+			std::advance( v_it, nextMax );
+			std::cout << "putting v_it at " << nextMax << std::endl;
+		}
+
+		p_it = pV.begin();
+		std::advance( p_it, i );
+		std::cout << "putting p_it at " << i << std::endl;
+
+		cmpCount += insertValue( this->_V, v_it, p_it->second );
+		std::cout << "inserting " << p_it->second << " between start and " << nextMax << std::endl;
+
+		i--;
 	}
 
 	// inserting the last element of the pend chain
