@@ -17,8 +17,20 @@
 // containers
 # include <vector>
 # include <list>
+
 # define IVEC std::vector< int >
+# define IVIT std::vector< int >::iterator
+
+# define PVEC std::vector< std::pair< int, int > >
+# define PVIT std::vector< std::pair< int, int > >::iterator
+
 # define ILST std::list< int >
+# define ILIT std::list< int >::iterator
+
+# define PLST std::list< std::pair< int, int > >
+# define PLIT std::list< std::pair< int, int > >::iterator
+
+# define PAIR std::pair< int, int >
 
 // time
 # include <sys/time.h>
@@ -28,7 +40,14 @@
 # define VEC 1
 # define LST 2
 
-// make it a single class with a single container,
+// Jacobstal sequence ( fomr index 3 of OEIS A001045 )
+# define JNUM { 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, \
+		2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, \
+		699051, 1398101, 2796203, 5592405, 11184811, 22369621, \
+		44739243, 89478485, 178956971, 357913941, 715827883 } \
+
+
+// idea : make it a single class with a single container,
 // but use different functions for each container type needed
 
 class PmergeMe
@@ -88,5 +107,23 @@ class PmergeMe
 };
 
 std::ostream &operator<< (std::ostream &out, const PmergeMe &rhs);
+
+// Addons
+
+void	printPVect( PVEC &pV, int hr, int r );
+int		takeLast( IVEC &V );
+int		takeFirst( IVEC &V );
+PAIR	makePair( IVEC &V );
+int		insertPair( PVEC &pv, PAIR p );
+int		insertValue( IVEC &V, IVIT max_it, int val );
+//bool	isSorted( PVEC &pV );
+//int		sortPairs( PVEC &pV );
+
+void	printPList( PLST &pL, int hr, int r );
+int		takeLast( ILST &L );
+int		takeFirst( ILST &L );
+PAIR	makePair( ILST &L );
+//bool	isSorted( PLST &pL );
+//int		sortPairs( PLST &pL );
 
 #endif // PMERGEME_HPP

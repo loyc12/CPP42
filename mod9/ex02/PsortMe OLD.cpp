@@ -2,9 +2,10 @@
 
 #define PVEC std::vector< std::pair< int, int > >
 #define PLST std::list< std::pair< int, int > >
+#define PAIR std::pair< int, int >
 
 // Jacobstal sequence ( fomr index 1 of OEIS A001045 )
-#define JNUM { 1, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, \
+#define JNUM { 0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, \
 		2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, \
 		699051, 1398101, 2796203, 5592405, 11184811, 22369621, \
 		44739243, 89478485, 178956971, 357913941, 715827883 } \
@@ -37,207 +38,209 @@ void	printPList( PLST &pL, bool hr, int r )
 	std::cout << std::endl;
 }
 
+int takeLast( IVEC &V )
+{
+	int i = V.back();
+	V.pop_back();
+	return i;
+}
+int takeFirst( IVEC &V )
+{
+	int i = V.front();
+	V.erase( V.begin() );
+	return i;
+}
+int takeLast( ILST &L )
+{
+	int i = L.back();
+	L.pop_back();
+	return i;
+}
+int takeFirst( ILST &L )
+{
+	int i = L.front();
+	L.pop_front();
+	return i;
+}
+
+PAIR makePair( IVEC &V )
+{
+	PAIR p;
+	if   ( V.front() <= V.back() ) { p = PAIR( V.front(), V.back() ); }
+	else { p = PAIR( V.back(), V.front() ); }
+	V.erase( V.begin() );
+	V.pop_back();
+	return p;
+}
+PAIR makePair( ILST &L )
+{
+	PAIR p;
+	if   ( L.front() <= L.back() ) { p = PAIR( L.front(), L.back() ); }
+	else { p = PAIR( L.back(), L.front() ); }
+	L.pop_front();
+	L.pop_back();
+	return p;
+}
+
+int insertPair( PVEC &pV, PAIR p )
+{
+
+	if ( pV.empty() ) { pV.push_back( p ); return 0; }
+	if ( pV.size() == 1 )
+	{
+		if ( p.first <= pV.front().first ) { pV.insert( pV.begin(), p ); }
+		else { pV.push_back( p ); }
+		return 1;
+	}
+
+	PVEC::iterator it = pV.begin() + pV.size() / 2;
+	int cmpCount = 0;
+	int dir = ( p.first <= it->first ) ? -1 : 1;
+
+	if ( dir == -1 ) { while ( it != pV.begin() && p.first < it->first )
+	{
+		it--;
+		cmpCount++;
+	}}
+	else { while ( it != pV.end() && p.first > it->first )
+	{
+		it++;
+		cmpCount++;
+	}}
+
+	pV.insert( it, p );
+
+	return cmpCount;
+}
+int insertPair( PLST &pL, PAIR p )
+{
+
+	if ( pL.empty() ) { pL.push_back( p ); return 0; }
+	if ( pL.size() == 1 )
+	{
+		if ( p.first <= pL.front().first ) { pL.push_front( p ); }
+		else { pL.push_back( p ); }
+		return 1;
+	}
+
+	PLST::iterator it = pL.begin();
+	int cmpCount = 0;
+	int dir = ( p.first <= it->first ) ? -1 : 1;
+
+	if ( dir == -1 ) { while ( it != pL.end() && p.first < it->first )
+	{
+		it++;
+		cmpCount++;
+	}}
+	else { while ( it != pL.begin() && p.first > it->first )
+	{
+		it--;
+		cmpCount++;
+	}}
+
+	pL.insert( it, p );
+
+	return cmpCount;
+}
+
+int insertVal( IVEC &V, int val )
+{
+	int jnum[] = JNUM;
+	int cmpCount = 0;
+	int i = 1;
+	int j = 1;
+
+	if ( V.empty() ) { V.push_back( val ); return 0; }
+
+	IVEC::iterator it = V.end();
+	std::advance( it, -jnum[ j ] );
+
+	while ( it != V.begin() )
+	{
+		it++;
+		if ( i ==  jnum[ j - 1 ])
+		{
+			i =  jnum[ j++ ];
+			if (( size_t )i > V.size() ) { i = V.size(); }
+			it = V.end();
+			std::advance( it, -i );
+		}
+		cmpCount++;
+		if ( val < *it )
+			break;
+		i++;
+	}
+
+	V.insert( it, val );
+
+	return cmpCount;
+}
+int insertVal( ILST &L, int val )
+{
+	int jnum[] = JNUM;
+	int cmpCount = 0;
+	int i = 0;
+	int j = 0;
+
+	ILST::iterator it = L.begin();
+
+	while ( it != L.end() )
+	{
+		if ( i == jnum[ j - 1 ])
+		{
+			i = jnum[ j++ ];
+			it = L.end();
+			std::advance( it, -i );
+		}
+
+		if ( val < *it )
+			break;
+		i++;
+	}
+
+	L.insert( it, i );
+
+	return cmpCount;
+}
 
 
 // Sorters
 
-void	PmergeMe::sortVect( void )
+int	PmergeMe::sortVect( void )
 {
-	if ( this->_V.size() < 2 )
+	int size = this->_V.size();
+	int cmpCount = 0;
+	bool hasRmdr = size % 2;
+
+	if ( size < 2 )
 	{
 		if ( this->_debug ) { std::cout << "[ Vector too small to sort ]\n"; }
-		return;
+		return 0;
 	}
 	if ( this->_debug ) { std::cout << "[ > Sorting an int vector < ]\n"; }
 
-	int comp = 0;
-	bool hasRemainder = this->_V.size() % 2;
-	int remainder = 0;
-	if ( hasRemainder ) { remainder = this->_V.back(); }
+	int rmdr;
+	if ( hasRmdr ) { rmdr = takeLast( this->_V ); }
 
-	if ( this->_debug ) { std::cout << "[ Creating an int pair vector from the in vector]\n"; }
 	PVEC pV;
-
-	// puts values from the vectors into a vector of pairs of values, two at a time, leaving the last one alone if uneven
-	for ( size_t i = 0; i < this->_V.size(); i += 2 )
-		if ( i + 1 < this->_V.size() ) { pV.push_back( std::make_pair( this->_V[ i ], this->_V[ i + 1 ] )); }
-
-	//printPVect( pV, hasRemainder, remainder );
-
-	if ( this->_debug ) { std::cout << "[ Sorting the int pair vector ]\n"; }
-
-	// sorts the pairs of values, smallest first, biggest last
-	for ( PVEC::iterator it = pV.begin(); it != pV.end(); it++ )
+	while ( !this->_V.empty() )
 	{
-		comp++;
-		if ( it->first > it->second ) { std::swap( it->first, it->second ); }
+		PAIR p = makePair( this->_V );
+		cmpCount += 1 + insertPair( pV, p );
 	}
 
-	// sorts the pair vector based on the first value of each pair
-	for ( PVEC::iterator it = pV.begin(); it != pV.end(); it++ )
-	{
-		PVEC::iterator it2 = it;
+	for ( PVEC::const_iterator it = pV.begin(); it != pV.end(); it++ ) { this->_V.push_back( it->first ); }
+	for ( PVEC::const_iterator it = pV.begin(); it != pV.end(); it++ ) { cmpCount += insertVal( this->_V, it->second ); }
 
-		while ( it2 != pV.begin() && ( it2 - 1 )->first >= it2->first )
-		{
-			comp++;
-			// sorts the pair vector based on the second value if the first is the same
-			if (( it2 - 1 )->first == it2->first && ( it2 - 1 )->second <= it2->second ) { break; }
-			std::iter_swap( it2, std::prev( it2 ));
-			it2--;
-		}
-	}
+	if ( hasRmdr ) { cmpCount += insertVal( this->_V, rmdr ); }
 
-	printPVect( pV, hasRemainder, remainder );
+	if ( this->_debug ) { printPVect( pV, hasRmdr, cmpCount ); }
 
-	if ( this->_debug ) { std::cout << "[ reseting the int vector ]\n"; }
-	this->_V.clear();
-
-	// reinserts the first value of each pair into a new vector
-	if ( this->_debug ) { std::cout << "[ Reinserting the first value of each pair ]\n"; }
-
-	for ( PVEC::iterator it = pV.begin(); it != pV.end(); it++ ) { this->_V.push_back( it->first ); }
-
-	//std::cout << std::endl;  this->writeVect( std::cout );  std::cout << std::endl;
-
-	// reinserts the second value of each pair into the vector
-	if ( this->_debug ) { std::cout << "[ Reinserting the second value of each pair ]\n"; }
-
-	//int jnum[] = JNUM;
-	PVEC::iterator ite = pV.end();
-	while (ite != pV.begin())
-	{
-		ite = std::prev( ite );
-		int val = ite->second;
-		// reinserts the last number from the pairs (in reverse order) into the sequence
-		for ( IVEC::iterator it2 = --this->_V.end(); it2 != this->_V.begin(); it2-- )
-		{
-			comp++;
-			if ( ite->second >= *it2 ) { this->_V.insert( std::next( it2 ), val );  break; }
-		}
-	}
-/*
-	int index = 0;
-	for ( PVEC::iterator it = pV.begin(); it != pV.end(); it++, index++ )
-	{
-		int val = it->second;
-		IVEC::iterator it2 = this->_V.begin();
-		for ( std::advance( it2, index ); it2 != this->_V.end(); it2++ )
-		{
-			comp++;
-			if   ( it->second <= *it2 ) { this->_V.insert( it2, val );  break; }
-			elif ( std::next( it2 ) == this->_V.end() ) { this->_V.push_back( val );  break; }
-		}
-	}
-*/
-
-	// reinserts the remainder if there is one
-	if ( hasRemainder )
-	{
-		//std::cout << std::endl;  this->writeVect( std::cout );  std::cout << std::endl;
-
-		if ( this->_debug ) { std::cout << "[ Reinserting the remaining value ]\n"; }
-
-		for ( IVEC::iterator it = this->_V.begin(); it != this->_V.end(); it++ )
-		{
-			//comp++;
-			if   ( remainder <= *it ) { this->_V.insert( it, remainder );  break; }
-			elif ( std::next( it ) == this->_V.end() ) { this->_V.push_back( remainder );  break; }
-		}
-	}
-
-	if ( this->_debug ) { std::cout << "[ Done sorting the int vector ]\n\n"; }
-
-	std::cout << "Comparisons: " << comp << std::endl;
-
-	//std::cout << std::endl;  this->writeVect( std::cout );  std::cout << std::endl;
+	return cmpCount;
 }
 
 
-
-
-
-void	PmergeMe::sortList( void )
+int	PmergeMe::sortList( void )
 {
-	if ( this->_L.size() < 2 )
-	{
-		if ( this->_debug ) { std::cout << "[ List too small to sort ]\n"; }
-		return;
-	}
-	if ( this->_debug ) { std::cout << "[ > Sorting an int list < ]\n"; }
-
-	bool hasRemainder = this->_L.size() % 2;
-	int remainder = 0;
-	if ( hasRemainder ) { remainder = this->_L.back(); this->_L.pop_back(); }
-
-	if ( this->_debug ) { std::cout << "[ Creating an int pair list ]\n"; }
-	PLST pL;
-
-	// puts values from the list into a list of pairs of values, two at a time, leaving the last one alone if uneven
-	for ( ILST::iterator it = this->_L.begin(); it != this->_L.end(); it++ )
-		if ( std::next( it ) != this->_L.end() ) { pL.push_back( std::make_pair( *it, *std::next( it++ ))); }
-
-	//printPList( pL, hasRemainder, remainder );
-
-	if ( this->_debug ) { std::cout << "[ Sorting the int pair list ]\n"; }
-
-	// sorts the pairs of values, smallest first, biggest last
-	for ( PLST::iterator it = pL.begin(); it != pL.end(); it++ )
-		if ( it->first > it->second ) { std::swap( it->first, it->second ); }
-
-	// sorts the pair list based on the first value of each pair
-	for ( PLST::iterator it = pL.begin(); it != pL.end(); it++ )
-	{
-		PLST::iterator it2 = it;
-		while ( it2 != pL.begin() && ( std::prev( it2 )->first >= it2->first ))
-		{
-			// sorts the pair list based on the second value if the first is the same
-			if (( std::prev( it2 ))->first == it2->first && ( std::prev( it2 ))->second <= it2->second ) { break; }
-			std::iter_swap( it2, std::prev( it2 ));
-			it2--;
-		}
-	}
-
-	//printPList( pL, hasRemainder, remainder );
-
-	if ( this->_debug ) { std::cout << "\n[ Reseting the int list ]"; }
-	this->_L.clear();
-
-	// reinserts the first value of each pair into a new list
-	if ( this->_debug ) { std::cout << "\n[ Reinserting the first value of each pair ]"; }
-
-	for ( PLST::iterator it = pL.begin(); it != pL.end(); it++ ) { this->_L.push_back( it->first ); }
-
-	//std::cout << std::endl;  this->writeList( std::cout );  std::cout << std::endl;
-
-	// reinserts the second value of each pair into the list
-	if ( this->_debug ) { std::cout << "\n[ Reinserting the second value of each pair ]"; }
-
-	int index = 0;
-	for ( PLST::iterator it = pL.begin(); it != pL.end(); it++, index++ )
-	{
-		int val = it->second;
-		ILST::iterator it2 = this->_L.begin();
-		for ( std::advance( it2, index ); it2 != this->_L.end(); it2++ )
-		{
-			if   ( it->second <= *it2 ) { this->_L.insert( it2, val );  break; }
-			elif ( std::next( it2 ) == this->_L.end() ) { this->_L.push_back( val );  break; }
-		}
-	}
-
-	// reinserts the remainder if there is one
-	if ( hasRemainder )
-	{
-		//std::cout << std::endl;  this->writeList( std::cout );  std::cout << std::endl;
-
-		if ( this->_debug ) { std::cout << "\n[ Reinserting the remaining value ]"; }
-
-		for ( ILST::iterator it = this->_L.begin(); it != this->_L.end(); it++ )
-		{
-			if   ( remainder <= *it ) { this->_L.insert( it, remainder );  break; }
-			elif ( it == --( this->_L.end() )) { this->_L.push_back( remainder );  break; }
-		}
-	}
-
-	//std::cout << std::endl;  this->writeList( std::cout );  std::cout << std::endl;
+	return 0;
 }

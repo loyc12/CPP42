@@ -90,8 +90,6 @@ time_t	PmergeMe::getSortTime(  ) const { return this->_sortTime; }
 
 void	PmergeMe::sort( void )
 {
-	if ( this->_debug ) { std::cout << "\n[ Sorting a container ] : "; }
-
 	timeval start, end;
 	int cmpCount = 0;
 
@@ -111,8 +109,8 @@ void	PmergeMe::sort( void )
 
 	this->_sortTime = (( end.tv_sec  - start.tv_sec ) * 1000000 ) + end.tv_usec - start.tv_usec;
 
-	if ( this->_debug ) { std::cout << "\nSorted within " << this->_sortTime << " microseconds"; }
-	if ( this->_debug ) { std::cout << "\nSorted within " << cmpCount << " comparisons\n"; }
+	if ( this->_debug ) { std::cout << "\nSorted within " << this->_sortTime << " microseconds\n"; }
+	//if ( this->_debug ) { std::cout << "Sorted within " << cmpCount << " comparisons\n"; } // WARNING : doesn't work
 }
 
 // Printers
@@ -128,7 +126,6 @@ void	PmergeMe::writeOut( void ) const
 
 void	PmergeMe::writeVect( std::ostream &out ) const
 {
-	if ( this->_debug ) { std::cout << "[ Writing a vector ]\n"; }
 	if ( this->_V.empty() ) { out << "Empty vector"; return; }
 	size_t i = 0;
 	for ( IVEC::const_iterator it = this->_V.begin(); it != this->_V.end(); it++ )
@@ -146,7 +143,6 @@ void	PmergeMe::writeVect( std::ostream &out ) const
 
 void	PmergeMe::writeList( std::ostream &out ) const
 {
-	if ( this->_debug ) { std::cout << "[ Writing a list ]\n"; }
 	if ( this->_L.empty() ) { out << "Empty list"; return; }
 	size_t i = 0;
 	for ( ILST::const_iterator it = this->_L.begin(); it != this->_L.end(); it++ )
