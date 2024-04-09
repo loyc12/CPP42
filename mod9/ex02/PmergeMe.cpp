@@ -3,9 +3,9 @@
 
 // Constructors - Destructor
 
-PmergeMe::PmergeMe(         ) { PmergeMe(    DEBUG_DEFAULT ); }
-PmergeMe::PmergeMe( IVEC &V ) { PmergeMe( V, DEBUG_DEFAULT ); }
-PmergeMe::PmergeMe( ILST &L ) { PmergeMe( L, DEBUG_DEFAULT ); }
+PmergeMe::PmergeMe(         ) { PmergeMe(    DFLT_DBG ); }
+PmergeMe::PmergeMe( IVEC &V ) { PmergeMe( V, DFLT_DBG ); }
+PmergeMe::PmergeMe( ILST &L ) { PmergeMe( L, DFLT_DBG ); }
 
 PmergeMe::PmergeMe( bool debug )
 {
@@ -26,6 +26,8 @@ PmergeMe::PmergeMe( IVEC &V, bool debug	)
 	this->_V = V;
 	this->_L.clear();
 	this->_sortTime = 0;
+
+	//this->checkVect();
 }
 PmergeMe::PmergeMe( ILST &L, bool debug )
 {
@@ -36,13 +38,15 @@ PmergeMe::PmergeMe( ILST &L, bool debug )
 	this->_V.clear();
 	this->_L = L;
 	this->_sortTime = 0;
+
+	//this->checkList();
 }
 
-PmergeMe::~PmergeMe() { if ( this->_debug ) { std::cout << "[ Destroying a PMERGEME instance ]\n"; }}
+PmergeMe::~PmergeMe() { if_DBG { std::cout << "[ Destroying a PMERGEME instance ]\n"; }}
 
 PmergeMe::PmergeMe( const PmergeMe &other )
 {
-	if ( this->_debug ) { std::cout << "[ Called copy constr. for a PMERGEME instance ]\n"; }
+	if_DBG { std::cout << "[ Called copy constr. for a PMERGEME instance ]\n"; }
 	if ( this == &other ) { return; }
 
 	this->_debug = other.debug();
@@ -59,7 +63,7 @@ PmergeMe::PmergeMe( const PmergeMe &other )
 
 PmergeMe &PmergeMe::operator= ( const PmergeMe &other )
 {
-	if ( this->_debug ) { std::cout << "[ Called assign. oper. for a PMERGEME instance ]\n"; }
+	if_DBG { std::cout << "[ Called assign. oper. for a PMERGEME instance ]\n"; }
 	if ( this == &other ) { return *this; }
 
 	this->_debug = other.debug();
@@ -86,31 +90,45 @@ IVEC	PmergeMe::getVect( void ) const { return this->_V; }
 ILST	PmergeMe::getList( void ) const { return this->_L; }
 time_t	PmergeMe::getSortTime(  ) const { return this->_sortTime; }
 
+// checkers
+/*
+// throw and error if there is duplicate values
+void	checkVect()
+{
+	return;
+}
+void	checkList()
+{
+	return;
+}
+*/
+
 // Sorters
 
 void	PmergeMe::sort( void )
 {
 	timeval start, end;
-	int cmpCount = 0;
+	int maxCmp = 0;
 
+	if_DBG { std::cout << "\nSorting "; }
 	if   ( this->_mode == VEC )
 	{
 		gettimeofday( &start, NULL );
-		cmpCount = this->sortVect();
+		maxCmp = this->sortVect();
 		gettimeofday( &end, NULL );
 	}
 	elif ( this->_mode == LST )
 	{
 		gettimeofday( &start, NULL );
-		cmpCount = this->sortList();
+		maxCmp = this->sortList();
 		gettimeofday( &end, NULL );
 	}
 	else { std::cerr << "WARNING : mode has not been set, cannot sort\n"; return; }
 
 	this->_sortTime = (( end.tv_sec  - start.tv_sec ) * 1000000 ) + end.tv_usec - start.tv_usec;
 
-	if ( this->_debug ) { std::cout << "\nSorted within " << this->_sortTime << " microseconds\n"; }
-	//if ( this->_debug ) { std::cout << "Sorted within " << cmpCount << " comparisons\n"; } // WARNING : doesn't work
+	if_DBG { std::cout << "\nSorted within " << this->_sortTime << " microseconds\n"; }
+	if_DBG { std::cout << "Sorted within " << maxCmp << " comparisons\n"; } // WARNING : assumes worst case comparisons
 }
 
 // Printers

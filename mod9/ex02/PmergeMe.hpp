@@ -2,9 +2,10 @@
 # define PMERGEME_HPP
 
 # define XCPT public: const char *what() const throw()
+# define if_DBG if ( this->_debug )
 # define elif else if
-# define DEBUG_DEFAULT false
-# define DISPLAY_HALF_MAX 8 // half the max number of elements to display
+# define DFLT_DBG false
+# define DISPLAY_HALF_MAX 16 // half the max number of elements to display
 
 // basic libs
 # include <exception>
@@ -40,7 +41,7 @@
 # define VEC 1
 # define LST 2
 
-// Jacobstal sequence ( fomr index 3 of OEIS A001045 )
+// Jacobstal sequence ( from index 2 of OEIS A001045 )
 # define JNUM { 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, \
 		2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, \
 		699051, 1398101, 2796203, 5592405, 11184811, 22369621, \
@@ -70,7 +71,7 @@ class PmergeMe
 
 	protected:
 		// Nested Classes
-		class BadSort : public std::exception { XCPT { return "PmergeMe error : TemplateError ( dumbass, change it... )"; } };
+		class BadValues : public std::exception { XCPT { return "Input error : invalid value(s)"; } };
 
 	public:
 		// Constructors - Destructor
@@ -99,6 +100,10 @@ class PmergeMe
 		// Sorters
 		void 	sort( void );
 
+		// Checkers
+		//void	checkVect( void );
+		//void	checkList( void );
+
 		// Printers
 		void	writeOut( void ) const;
 		void	writeVect( std::ostream &out ) const;
@@ -114,16 +119,14 @@ void	printPVect( PVEC &pV, int hr, int r );
 int		takeLast( IVEC &V );
 int		takeFirst( IVEC &V );
 PAIR	makePair( IVEC &V );
-int		insertPair( PVEC &pv, PAIR p );
-int		insertValue( IVEC &V, IVIT max_it, int val );
-//bool	isSorted( PVEC &pV );
-//int		sortPairs( PVEC &pV );
+int		insertPair( PVEC &pv, PAIR p, bool debug );
+int		insertValue( IVEC &V, IVIT max_it, int val, bool debug );
 
 void	printPList( PLST &pL, int hr, int r );
 int		takeLast( ILST &L );
 int		takeFirst( ILST &L );
 PAIR	makePair( ILST &L );
-//bool	isSorted( PLST &pL );
-//int		sortPairs( PLST &pL );
+int		insertPair( PLST &pL, PAIR p, bool debug );
+int		insertValue( ILST &L, ILIT max_it, int val, bool debug );
 
 #endif // PMERGEME_HPP

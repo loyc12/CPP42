@@ -1,18 +1,18 @@
 #include "PmergeMe.hpp"
+#include <math.h>
 
 
 // Vector functions
 
 void	printPVect( PVEC &pV, int hr, int r )
 {
-	if ( pV.empty() ) { std::cout << "\nEmpty pair vector" << std::endl; return; }
 	std::cout << std::endl;
+	if ( pV.empty() ) { std::cout << "Empty pair vector\n" << std::endl; return; }
 
 	for ( PVEC::const_iterator it = pV.begin(); it != pV.end(); it++ )
 	{ std::cout << "[ " << it->first << " " << it->second << " ]\n"; }
 
-	if ( hr == 1 ) { std::cout << "( " << r << " )\n\n"; }
-	std::cout << std::endl;
+	if ( hr == 1 ) { std::cout << "( " << r << " )\n"; }
 }
 
 int takeLast( IVEC &V )
@@ -38,24 +38,37 @@ PAIR makePair( IVEC &V )
 	return p;
 }
 
-int insertPair( PVEC &pV, PAIR p )
+//int insertPair( PVEC &pV, PAIR p ) { return insertPair( pV, p, false ); }
+int insertPair( PVEC &pV, PAIR p, bool debug )
 {
-	//int cmpCount = 0;
+	int maxCmp = 0;
+
+	if ( debug ) // WARNING : assumes worst case comparisons
+	{
+		maxCmp = ( int )log2( pV.size() + 1);
+		if ( maxCmp < 0 ) { maxCmp =0; }
+	}
 
 	// does a binary search to find the right place to insert the pair
-	pV.insert( std::upper_bound( pV.begin(), pV.end(), p ), p ); // WARNING : does it work with pairs??
+	pV.insert( std::upper_bound( pV.begin(), pV.end(), p ), p );
 
-	return 0; // WARNING : doesn't count the comparisons
+	return maxCmp;
 }
 
-int insertValue( IVEC &V, IVIT max_it, int val )
+//int insertValue( IVEC &V, IVIT max_it, int val ) { return insertValue( V, max_it, val, false ); }
+int insertValue( IVEC &V, IVIT max_it, int val, bool debug )
 {
-	//int cmpCount = 0;
+	int maxCmp = 0;
+	if ( debug ) // WARNING : assumes worst case comparisons
+	{
+		maxCmp = ( int )log2( std::distance( V.begin(), max_it ) + 1 );
+		if ( maxCmp < 0 ) { maxCmp = 0; }
+	}
 
 	// does a binary search to find the right place to insert the value
 	V.insert( std::upper_bound( V.begin(), max_it, val ), val );
 
-	return 0; // WARNING : doesn't count the comparisons
+	return maxCmp;
 }
 
 
@@ -97,35 +110,35 @@ PAIR makePair( ILST &L )
 	return p;
 }
 
-bool isSorted( PLST &pL )
+//int insertPair( PLST &pL, PAIR p ) { return insertPair( pL, p, false ); }
+int insertPair( PLST &pL, PAIR p, bool debug )
 {
-	if ( pL.size() < 2 ) { return true;}
+	int maxCmp = 0;
 
-	PLIT it = pL.begin();
-	while ( it != pL.end() )
+	if ( debug ) // WARNING : assumes worst case comparisons
 	{
-		if ( it->first > it->second ) { return false; }
-		it++;
+		maxCmp = ( int )log2( pL.size() + 1);
+		if ( maxCmp < 0 ) { maxCmp =0; }
 	}
 
-	return true;
+	// does a binary search to find the right place to insert the pair
+	pL.insert( std::upper_bound( pL.begin(), pL.end(), p ), p );
+
+	return maxCmp;
 }
 
-int sortPairs( PLST &pL )
+//int insertValue( ILST &L, ILIT max_it, int val ) { return insertValue( L, max_it, val, false ); }
+int insertValue( ILST &L, ILIT max_it, int val, bool debug )
 {
-	int cmpCount = 0;
-
-	if ( pL.size() < 2 ) { return cmpCount; }
-
-	PLIT it = pL.begin();
-	while ( it != pL.end() )
+	int maxCmp = 0;
+	if ( debug ) // WARNING : assumes worst case comparisons
 	{
-		cmpCount++;
-		if ( it->first > it->second ) { std::swap( it->first, it->second ); }
-		it++;
+		maxCmp = ( int )log2( std::distance( L.begin(), max_it ) + 1 );
+		if ( maxCmp < 0 ) { maxCmp = 0; }
 	}
 
-	if ( isSorted( pL ) ) { return cmpCount; }
-	else { return ( cmpCount + sortPairs( pL )); }
-}
+	// does a binary search to find the right place to insert the value
+	L.insert( std::upper_bound( L.begin(), max_it, val ), val );
 
+	return maxCmp;
+}
