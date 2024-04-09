@@ -68,7 +68,7 @@ int	PmergeMe::sortVect( void )
 		// making sure the insert range is valid
 		v_it = this->_V.begin();
 		if   ( nextMax * 2 > ( int )this->_V.size() ) { std::advance( v_it, ( int )this->_V.size() ); }
-		else { std::advance( l_it, nextMax * 2 ); } // NOTE : not sure *2 should be there...
+		else { std::advance( v_it, nextMax * 2 ); } // NOTE : not sure *2 should be there...
 
 		// inserting the next element of the pend chain into the range
 		p_it = pV.begin();
