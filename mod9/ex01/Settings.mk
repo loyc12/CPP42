@@ -3,10 +3,11 @@
 #------------------------------------------------------------------------------#
 
 # Executable name
-NAME		=	Run
+NAME		=	RPN
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
+				Calculator \
 
 # Directory names
 SRCDIR		=
@@ -19,7 +20,7 @@ LIBS		=
 LIBX		=
 
 # Arguments to call the command with
-ARGS		=
+ARGS		= 1 2 + 4 \* 2 / 5 %
 
 
 #------------------------------------------------------------------------------#

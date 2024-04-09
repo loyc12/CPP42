@@ -16,7 +16,7 @@ DEFAULT_GOAL: all
 		vleaks revleaks \
 		norm libft \
 		brew cmake \
-		grind \
+		glfw grind \
 
 
 #------------------------------------------------------------------------------#
@@ -159,20 +159,19 @@ libft:
 #                                 BREW TARGETS                                 #
 #------------------------------------------------------------------------------#
 
-# Installs/Updates homebrew (called manually cause slow af)
+# Installs/Updates homebrew (WARNING : can be very slow !)
 brew:
-	@echo "$(YELLOW)\nInstalling Brew $(DEFCOL)"
-	$(HIDE) bash include/brew_install.sh; \
+	@echo "$(YELLOW)\nInstalling Brew\n $(DEFCOL)"
+	$(HIDE) bash .brew_install.sh; \
 	if [ $$? -eq 0 ]; then \
-		echo "$(BLUE)\nBrew installed ! $(DEFCOL)"; \
-		echo "$(RED)\n! CLOSE AND REOPEN TERMINAL !\n $(DEFCOL)"; \
+		echo "$(BLUE)\nBrew installed !\n $(DEFCOL)"; \
 	else \
 		echo "$(RED)\n! FAILED TO INSTALL BREW !\n $(DEFCOL)"; \
 	fi
 
-# Installs/Updates cmake
+# Installs/Updates cmake (WARNING : can be very slow !)
 cmake:
-	@echo "$(YELLOW)\nInstalling Cmake $(DEFCOL)"
+	@echo "$(YELLOW)\nInstalling Cmake\n $(DEFCOL)"
 	$(HIDE) brew install cmake; \
 	if [ $$? -eq 0 ]; then \
 		echo "$(BLUE)\nCmake installed !\n $(DEFCOL)"; \
@@ -180,9 +179,19 @@ cmake:
 		echo "$(RED)\n! FAILED TO INSTALL CMAKE !\n $(DEFCOL)"; \
 	fi
 
+# Installs/Updates glfw
+glfw:
+	@echo "$(YELLOW)\nInstalling GFLW\n $(DEFCOL)"
+	$(HIDE) brew install glfw; \
+	if [ $$? -eq 0 ]; then \
+		echo "$(BLUE)\nGLFW installed !\n $(DEFCOL)"; \
+	else \
+		echo "$(RED)\n! FAILED TO INSTALL GLFW !\n $(DEFCOL)"; \
+	fi
+
 # Installs/Updates valgrind
 grind:
-	@echo "$(YELLOW)\nInstalling Valgrind $(DEFCOL)"
+	@echo "$(YELLOW)\nInstalling Valgrind\n $(DEFCOL)"
 	$(HIDE) brew tap LouisBrunner/valgrind
 	$(HIDE) brew install --HEAD LouisBrunner/valgrind/valgrind; \
 	if [ $$? -eq 0 ]; then \

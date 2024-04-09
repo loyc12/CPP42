@@ -3,10 +3,11 @@
 #------------------------------------------------------------------------------#
 
 # Executable name
-NAME		=	Run
+NAME		=	btc
 
 # Source file names (prefix their subdir if needed)
 FILES		=	main \
+				BitcoinExchange \
 
 # Directory names
 SRCDIR		=
@@ -19,7 +20,7 @@ LIBS		=
 LIBX		=
 
 # Arguments to call the command with
-ARGS		=
+ARGS		= ./inputs.txt
 
 
 #------------------------------------------------------------------------------#
