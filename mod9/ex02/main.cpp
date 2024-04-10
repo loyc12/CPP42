@@ -18,7 +18,8 @@ void run( IVEC &V, ILST &L, bool debug )
 	if ( debug )
 	{
 		std::cout << "\nVector : " << pV;
-		std::cout << "\nList   : " << pL << std::endl;
+		std::cout << "\nList   : " << pL;
+		std::cout << std::endl;
 	}
 	else
 		std::cout << "\nUnsorted : " << pV;
@@ -29,7 +30,8 @@ void run( IVEC &V, ILST &L, bool debug )
 	if ( debug )
 	{
 		std::cout << "\nVector : " << pV;
-		std::cout << "\nList   : " << pL << std::endl;
+		std::cout << "\nList   : " << pL;
+		std::cout << std::endl;
 	}
 	else
 		std::cout << "\nSorted   : " << pV;
@@ -39,35 +41,40 @@ void run( IVEC &V, ILST &L, bool debug )
 	std::cout << std::endl;
 }
 
-void iterOver( int size )
+void iterOver( int end )
 {
-	int J[] = JNUM;
-	int j = 0;
+	int J[] = JDIF;
 	int i = 0;
+	int step = 0;
 
-	int lastMax = 0;
-	int nextMax = 1;
-
-	std::cout << "\nsearch size : 1\npairs : 1, ";
+	int i_max = 0;
+	int r_pos = 0;
+	int r_start = 0;
+	int r_stop = 0;
 
 	while ( true )
 	{
-		if ( i <= lastMax )
+		if ( r_stop == end ) { break; }
+		step = J[ i++ ];
+
+		r_start += step;
+		if ( r_start >= end ) { r_start = end; }
+		r_pos = r_start;
+
+		i_max += step * 2;
+		if ( i_max >= end * 2 ) { i_max = end * 2; }
+
+		std::cout << "Range : " << r_start << " to " << r_stop << std::endl;
+		std::cout << "Max   : " << i_max << "\nInserts: ";
+		while ( r_pos > r_stop )
 		{
-			std::cout << std::endl;
-
-			lastMax = nextMax;
-			if ( lastMax >= size ) { break; }
-
-			nextMax = J[ j++ ];
-			std::cout << "search size : " << nextMax << "\npairs : ";
-
-			i = nextMax;
-			if ( i > size ) { i = size;  std::cout << "X, "; }
+			std::cout << r_pos << ", ";
+			r_pos--;
 		}
-		std::cout << i-- << ", ";
+		std::cout << std::endl << std::endl;
+
+		r_stop = r_start;
 	}
-	std::cout << std::endl;
 
 }
 
@@ -78,7 +85,7 @@ int	main( int ac, char **av )
 
 	for ( int i = 1; i < ac; i++ ) { addToContainer( av[i], V, L ); }
 
-	//iterOver( V.size() );
+	iterOver( V.size() / 2 );
 	run( V, L, true );
 
 	std::cout << "\n 0============================================================0 " << std::endl;

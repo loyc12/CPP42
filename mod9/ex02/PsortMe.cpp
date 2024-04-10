@@ -1,7 +1,5 @@
 #include "PmergeMe.hpp"
 
-// Sorters
-
 // sorts a vector of ints using the Ford-Johnson algorithm
 int	PmergeMe::sortVect( void )
 {
@@ -29,7 +27,7 @@ int	PmergeMe::sortVect( void )
 		if_DBG
 		{
 			maxCmp++; // adds the makePair() comparison
-			printPVect( pV, hasRmdr, rmdr );
+			//printPVect( pV, hasRmdr, rmdr );
 		}
 	}
 
@@ -38,50 +36,51 @@ int	PmergeMe::sortVect( void )
 	for ( PVIT it = pV.begin(); it != pV.end(); it++ ) { this->_V.push_back( it->first ); }
 
 	// initiating vars for the Ford-Johnson algorithm
-	int J[] = JNUM; //	jacobsthal sequence (from 3 onward)
+	int JD[] = JDIF; //	jacobsthal sequence (from 3 onward)
+	int j = 0;
+	int step = 0;
+	int tmp;
 
-	int j = 0; //			current jacobsthal index
-	int i = 1; //			current pit index
-	int lastMax = 1 ; //	current maximum pit index
-	int nextMax = 1; //		next maximum pit index
-
-	IVIT v_it = this->_V.begin(); //	current vect it
-	PVIT p_it = pV.begin(); //			current pair it
+	IVIT v_it = this->_V.begin();
+	PVIT p_it = pV.begin();
+	PVIT p_stop = std::next( pV.begin() );
+	PVIT p_start = pV.begin();
 
 	// inserting the pend chain's elements (except the first) back on _V using the jacobsthal sequence
-	size = ( size - hasRmdr ) / 2;
-
 	while ( true )
 	{
-		// if needed, getting the next insert range via jacobsthal sequence
-		if ( i <= lastMax )
-		{
-			lastMax = nextMax;
-			nextMax = J[ j++ ];
-			i = nextMax;
+		if ( p_stop == std::prev( pV.end() )) { break; }
+		step = JD[ j++ ];
 
-			if ( lastMax >= size ) { break; }
-			if ( i >= size ) { i = size; }
-			if_DBG { std::cout << "\nsearch size : " << nextMax << std::endl; }
+		// incrementing the extract range and making sure it's valid
+		tmp = ( int )std::distance( p_start, pV.end() );
+		if ( tmp >= step ) { step = tmp - 1; }
+
+		if_DBG { std::cout << "\nExtract range : " << std::distance( pV.begin(), p_start ) << " to " << std::distance( pV.begin(), std::next( p_stop ) ) << std::endl; }
+		std::advance( p_start, step );
+		p_it = p_start;
+
+		// incrementing the insert range and making sure it's valid
+		tmp = ( int )std::distance( v_it, this->_V.end() );
+		if ( tmp >= step * 2 ) { step = ( tmp - 1 ) / 2; }
+
+		if_DBG { std::cout << "Insert range : 0 to " << std::distance( this->_V.begin(), v_it ) << std::endl << std::endl; }
+		std::advance( v_it, step * 2 );
+
+		// looping through the extract range and inserting the the pairs' smallest value into the insert range
+		while ( p_it != p_stop )
+		{
+			maxCmp += insertValue( this->_V, v_it, p_it->second, this->_debug );
+			if_DBG { std::cout << "Inserting [ " << std::distance( pV.begin(), p_it ) << " ] == " << p_it->second << std::endl; }
+			p_it--;
 		}
 
-		// making sure the insert range is valid
-		v_it = this->_V.begin();
-		if   ( nextMax * 2 > ( int )this->_V.size() ) { std::advance( v_it, ( int )this->_V.size() ); }
-		else { std::advance( v_it, nextMax * 2 ); } // NOTE : not sure *2 should be there...
-
-		// inserting the next element of the pend chain into the range
-		p_it = pV.begin();
-		std::advance( p_it, i - 1 );
-
-		if_DBG { std::cout << "inserting [ " << i << " ] == " << p_it->second << std::endl; }
-		maxCmp += insertValue( this->_V, v_it, p_it->second, this->_debug );
-
-		i--;
+		// makring range as done
+		p_stop = p_start;
 	}
 
 	// inserting the last element of the pend chain
-	if ( hasRmdr == 1 ) { maxCmp += insertValue( this->_V, this->_V.end(), rmdr, this->_debug ); }
+	if ( hasRmdr == 1 ) { maxCmp += insertValue( this->_V, std::prev( this->_V.end() ), rmdr, this->_debug ); }
 
 	return maxCmp; // WARNING : supposed to assume the worst case scenario, but innacurate af
 }
@@ -116,7 +115,7 @@ int	PmergeMe::sortList( void )
 		if_DBG
 		{
 			maxCmp++; // adds the makePair() comparison
-			printPList( pL, hasRmdr, rmdr );
+			//printPList( pL, hasRmdr, rmdr );
 		}
 	}
 
@@ -125,50 +124,52 @@ int	PmergeMe::sortList( void )
 	for ( PLIT it = pL.begin(); it != pL.end(); it++ ) { this->_L.push_back( it->first ); }
 
 	// initiating vars for the Ford-Johnson algorithm
-	int J[] = JNUM; //	jacobsthal sequence (from 3 onward)
+	int JD[] = JDIF; //	jacobsthal sequence (from 3 onward)
+	int j = 0;
+	int step = 0;
+	int tmp;
 
-	int j = 0; //			current jacobsthal index
-	int i = 1; //			current pit index
-	int lastMax = 1 ; //	current maximum pit index
-	int nextMax = 1; //		next maximum pit index
+	ILIT l_it = this->_L.begin();
+	PLIT p_it = pL.begin();
+	PLIT p_stop = std::next( pL.begin() );
+	PLIT p_start = pL.begin();
 
-	ILIT l_it = this->_L.begin(); //	current list it
-	PLIT p_it = pL.begin(); //			current pair it
-
-	// inserting the pend chain's elements (except the first) back on _L using the jacobsthal sequence
-	size = ( size - hasRmdr ) / 2;
-
+	// inserting the pend chain's elements (except the first) back on _V using the jacobsthal sequence
 	while ( true )
 	{
-		// if needed, getting the next insert range via jacobsthal sequence
-		if ( i <= lastMax )
-		{
-			lastMax = nextMax;
-			nextMax = J[ j++ ];
-			i = nextMax;
+		if ( p_stop == std::prev( pL.end() )) { break; }
+		step = JD[ j++ ];
 
-			if ( lastMax >= size ) { break; }
-			if ( i >= size ) { i = size; }
-			if_DBG { std::cout << "\nsearch size : " << nextMax << std::endl; }
+		// incrementing the extract range and making sure it's valid
+		tmp = ( int )std::distance( p_start, pL.end() );
+		if ( tmp >= step ) { step = tmp - 1; }
+
+		if_DBG { std::cout << "\nExtract range : " << std::distance( pL.begin(), p_start ) << " to " << std::distance( pL.begin(), std::next( p_stop ) ) << std::endl; }
+		std::advance( p_start, step );
+		p_it = p_start;
+
+		// incrementing the insert range and making sure it's valid
+		tmp = ( int )std::distance( l_it, this->_L.end() );
+		if ( tmp >= step * 2 ) { step = tmp / 2; }
+
+		if_DBG { std::cout << "Insert range : 0 to " << std::distance( this->_L.begin(), l_it ) << std::endl << std::endl; }
+		std::advance( l_it, step * 2 );
+
+
+		// looping through the extract range and inserting the the pairs' smallest value into the insert range
+		while ( p_it != p_stop )
+		{
+			maxCmp += insertValue( this->_L, l_it, p_it->second, this->_debug );
+			if_DBG { std::cout << "Inserting [ " << std::distance( pL.begin(), p_it ) << " ] == " << p_it->second << std::endl; }
+			p_it--;
 		}
 
-		// making sure the insert range is valid
-		l_it = this->_L.begin();
-		if   ( nextMax * 2 > ( int )this->_L.size() ) { std::advance( l_it, ( int )this->_L.size() ); }
-		else { std::advance( l_it, nextMax * 2 ); } // NOTE : not sure *2 should be there...
-
-		// inserting the next element of the pend chain into the range
-		p_it = pL.begin();
-		std::advance( p_it, i - 1 );
-
-		if_DBG { std::cout << "inserting [ " << i << " ] == " << p_it->second << std::endl; }
-		maxCmp += insertValue( this->_L, l_it, p_it->second, this->_debug );
-
-		i--;
+		// makring range as done
+		p_stop = p_start;
 	}
 
 	// inserting the last element of the pend chain
-	if ( hasRmdr == 1 ) { maxCmp += insertValue( this->_L, this->_L.end(), rmdr, this->_debug ); }
+	if ( hasRmdr == 1 ) { maxCmp += insertValue( this->_L, std::prev( this->_L.end() ), rmdr, this->_debug ); }
 
 	return maxCmp; // WARNING : supposed to assume the worst case scenario, but innacurate af
 }

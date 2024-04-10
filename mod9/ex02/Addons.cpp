@@ -46,7 +46,7 @@ int insertPair( PVEC &pV, PAIR p, bool debug )
 	if ( debug ) // WARNING : assumes worst case comparisons
 	{
 		maxCmp = ( int )log2( pV.size() + 1);
-		if ( maxCmp < 0 ) { maxCmp =0; }
+		if ( maxCmp < 0 ) { maxCmp = 0; }
 	}
 
 	// does a binary search to find the right place to insert the pair
@@ -118,7 +118,7 @@ int insertPair( PLST &pL, PAIR p, bool debug )
 	if ( debug ) // WARNING : assumes worst case comparisons
 	{
 		maxCmp = ( int )log2( pL.size() + 1);
-		if ( maxCmp < 0 ) { maxCmp =0; }
+		if ( maxCmp < 0 ) { maxCmp = 0; }
 	}
 
 	// does a binary search to find the right place to insert the pair
