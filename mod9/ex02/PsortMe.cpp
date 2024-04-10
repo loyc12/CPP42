@@ -51,7 +51,6 @@ int	PmergeMe::sortVect( void )
 	{
 		if ( p_stop == std::prev( pV.end() )) { break; }
 		step = JD[ j++ ];
-
 		if_DBG { std::cout << "\nBase step lenght : " << step; }
 
 		// incrementing the extract range and making sure it's valid
@@ -77,7 +76,7 @@ int	PmergeMe::sortVect( void )
 			p_it--;
 		}
 
-		// makring range as done
+		// marking range as done
 		p_stop = p_start;
 	}
 
@@ -148,7 +147,7 @@ int	PmergeMe::sortList( void )
 		if ( tmp <= step ) { step = tmp - 1; }
 
 		std::advance( p_start, step );
-		if_DBG { std::cout << "\nExtract range : " << std::distance( pL.begin(), p_start ) << " to " << 1 + std::distance( pL.begin(), p_stop ) << std::endl; }
+		if_DBG { std::cout << "\nExtract range    : " << std::distance( pL.begin(), p_start ) << " to " << 1 + std::distance( pL.begin(), p_stop ) << std::endl; }
 		p_it = p_start;
 
 		// incrementing the insert range and making sure it's valid
@@ -156,7 +155,7 @@ int	PmergeMe::sortList( void )
 		if ( tmp <= step * 2 ) { step = tmp / 2; }
 
 		std::advance( l_it, step * 2 );
-		if_DBG { std::cout << "Insert range : 0 to " << std::distance( this->_L.begin(), l_it ) << std::endl << std::endl; }
+		if_DBG { std::cout << "Insert range     : 0 to " << std::distance( this->_L.begin(), l_it ) << std::endl << std::endl; }
 
 
 		// looping through the extract range and inserting the the pairs' smallest value into the insert range
@@ -167,7 +166,7 @@ int	PmergeMe::sortList( void )
 			p_it--;
 		}
 
-		// makring range as done
+		// marking range as done
 		p_stop = p_start;
 	}
 
