@@ -10,37 +10,6 @@ void addToContainer( char *val, IVEC &V, ILST &L )
 	catch ( std::exception &e ) { std::cerr << e.what() << std::endl; }
 }
 
-void run( IVEC &V, ILST &L, bool debug )
-{
-	PmergeMe pV( V, debug );
-	PmergeMe pL( L, debug );
-
-	if ( debug )
-	{
-		std::cout << "\nVector : " << pV;
-		std::cout << "\nList   : " << pL;
-		std::cout << std::endl;
-	}
-	else
-		std::cout << "\nUnsorted : " << pV;
-
-	pV.sort();
-	pL.sort();
-
-	if ( debug )
-	{
-		std::cout << "\nVector : " << pV;
-		std::cout << "\nList   : " << pL;
-		std::cout << std::endl;
-	}
-	else
-		std::cout << "\nSorted   : " << pV;
-
-	std::cout << "\nVector of size " << pV.getVect().size() << " sorted in " << pV.getSortTime() << " microseconds";
-	std::cout << "\nList   of size " << pL.getList().size() << " sorted in " << pL.getSortTime() << " microseconds";
-	std::cout << std::endl;
-}
-
 void iterOver( int end )
 {
 	int J[] = JDIF;
@@ -78,6 +47,39 @@ void iterOver( int end )
 
 }
 
+void run( IVEC &V, ILST &L, bool debug )
+{
+	PmergeMe pV( V, debug );
+	PmergeMe pL( L, debug );
+
+	if ( debug )
+	{
+		//iterOver( V.size() / 2 );
+
+		std::cout << "\nVector : " << pV;
+		std::cout << "\nList   : " << pL;
+		std::cout << std::endl;
+	}
+	else
+		std::cout << "\nUnsorted : " << pV;
+
+	pV.sort();
+	pL.sort();
+
+	if ( debug )
+	{
+		std::cout << "\nVector : " << pV;
+		std::cout << "\nList   : " << pL;
+	}
+	else
+		std::cout << "\nSorted   : " << pV;
+
+	std::cout << std::endl;
+	std::cout << "\nVector of size " << pV.getVect().size() << " sorted in " << pV.getSortTime() << " microseconds";
+	std::cout << "\nList   of size " << pL.getList().size() << " sorted in " << pL.getSortTime() << " microseconds";
+	std::cout << std::endl;
+}
+
 int	main( int ac, char **av )
 {
 	IVEC V;
@@ -85,10 +87,9 @@ int	main( int ac, char **av )
 
 	for ( int i = 1; i < ac; i++ ) { addToContainer( av[i], V, L ); }
 
-	iterOver( V.size() / 2 );
-	run( V, L, true );
+	//run( V, L, true );
 
-	std::cout << "\n 0============================================================0 " << std::endl;
+	std::cout << "\n 0=================================================================================================0 " << std::endl;
 	run( V, L, false );
-	std::cout << "\n 0============================================================0 " << std::endl;
+	std::cout << "\n 0=================================================================================================0 " << std::endl;
 }
