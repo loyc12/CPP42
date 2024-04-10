@@ -43,7 +43,7 @@ int	PmergeMe::sortVect( void )
 
 	IVIT v_it = this->_V.begin();
 	PVIT p_it = pV.begin();
-	PVIT p_stop = std::next( pV.begin() );
+	PVIT p_stop = pV.begin();
 	PVIT p_start = pV.begin();
 
 	// inserting the pend chain's elements (except the first) back on _V using the jacobsthal sequence
@@ -52,20 +52,22 @@ int	PmergeMe::sortVect( void )
 		if ( p_stop == std::prev( pV.end() )) { break; }
 		step = JD[ j++ ];
 
+		if_DBG { std::cout << "\nBase step lenght : " << step; }
+
 		// incrementing the extract range and making sure it's valid
 		tmp = ( int )std::distance( p_start, pV.end() );
-		if ( tmp >= step ) { step = tmp - 1; }
+		if ( tmp <= step ) { step = tmp - 1; }
 
-		if_DBG { std::cout << "\nExtract range : " << std::distance( pV.begin(), p_start ) << " to " << std::distance( pV.begin(), std::next( p_stop ) ) << std::endl; }
 		std::advance( p_start, step );
+		if_DBG { std::cout << "\nExtract range : " << std::distance( pV.begin(), p_start ) << " to " << 1 + std::distance( pV.begin(), p_stop ) << std::endl; }
 		p_it = p_start;
 
 		// incrementing the insert range and making sure it's valid
 		tmp = ( int )std::distance( v_it, this->_V.end() );
-		if ( tmp >= step * 2 ) { step = ( tmp - 1 ) / 2; }
+		if ( tmp <= step * 2 ) { step = tmp / 2; }
 
-		if_DBG { std::cout << "Insert range : 0 to " << std::distance( this->_V.begin(), v_it ) << std::endl << std::endl; }
 		std::advance( v_it, step * 2 );
+		if_DBG { std::cout << "Insert range : 0 to " << std::distance( this->_V.begin(), v_it ) << std::endl << std::endl; }
 
 		// looping through the extract range and inserting the the pairs' smallest value into the insert range
 		while ( p_it != p_stop )
@@ -131,7 +133,7 @@ int	PmergeMe::sortList( void )
 
 	ILIT l_it = this->_L.begin();
 	PLIT p_it = pL.begin();
-	PLIT p_stop = std::next( pL.begin() );
+	PLIT p_stop = pL.begin();
 	PLIT p_start = pL.begin();
 
 	// inserting the pend chain's elements (except the first) back on _V using the jacobsthal sequence
@@ -139,21 +141,22 @@ int	PmergeMe::sortList( void )
 	{
 		if ( p_stop == std::prev( pL.end() )) { break; }
 		step = JD[ j++ ];
+		if_DBG { std::cout << "\nBase step lenght : " << step; }
 
 		// incrementing the extract range and making sure it's valid
 		tmp = ( int )std::distance( p_start, pL.end() );
-		if ( tmp >= step ) { step = tmp - 1; }
+		if ( tmp <= step ) { step = tmp - 1; }
 
-		if_DBG { std::cout << "\nExtract range : " << std::distance( pL.begin(), p_start ) << " to " << std::distance( pL.begin(), std::next( p_stop ) ) << std::endl; }
 		std::advance( p_start, step );
+		if_DBG { std::cout << "\nExtract range : " << std::distance( pL.begin(), p_start ) << " to " << 1 + std::distance( pL.begin(), p_stop ) << std::endl; }
 		p_it = p_start;
 
 		// incrementing the insert range and making sure it's valid
 		tmp = ( int )std::distance( l_it, this->_L.end() );
-		if ( tmp >= step * 2 ) { step = tmp / 2; }
+		if ( tmp <= step * 2 ) { step = tmp / 2; }
 
-		if_DBG { std::cout << "Insert range : 0 to " << std::distance( this->_L.begin(), l_it ) << std::endl << std::endl; }
 		std::advance( l_it, step * 2 );
+		if_DBG { std::cout << "Insert range : 0 to " << std::distance( this->_L.begin(), l_it ) << std::endl << std::endl; }
 
 
 		// looping through the extract range and inserting the the pairs' smallest value into the insert range

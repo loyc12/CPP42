@@ -150,9 +150,9 @@ void	PmergeMe::writeVect( std::ostream &out ) const
 	{
 		i++;
 
-		// skips the middle numbers if there are more than 2 * DISPLAY_HALF_MAX numbers
-		if ( !this->_debug && i >= 1 + DISPLAY_HALF_MAX && i < 1 + this->_V.size() - DISPLAY_HALF_MAX )
-			if ( i == 1 + DISPLAY_HALF_MAX ) out << "...";  else continue;
+		// skips the middle numbers if there are more than 2 * DSPL_MAX numbers
+		if ( !this->_debug && i >= 1 + DSPL_MAX && i < 1 + this->_V.size() - DSPL_MAX )
+			if ( i == 1 + DSPL_MAX ) out << "...";  else continue;
 		else out << *it;
 
 		if ( it != --( this->_V.end() )) { out << " "; }
@@ -167,9 +167,9 @@ void	PmergeMe::writeList( std::ostream &out ) const
 	{
 		i++;
 
-		// skips the middle numbers if there are more than 2 * DISPLAY_HALF_MAX numbers
-		if ( !this->_debug && i >= 1 + DISPLAY_HALF_MAX && i < 1 + this->_L.size() - DISPLAY_HALF_MAX )
-			if ( i == 1 + DISPLAY_HALF_MAX ) out << "...";  else continue;
+		// skips the middle numbers if there are more than 2 * DSPL_MAX numbers
+		if ( !this->_debug && i >= 1 + DSPL_MAX && i < 1 + this->_L.size() - DSPL_MAX )
+			if ( i == 1 + DSPL_MAX ) out << "...";  else continue;
 		else out << *it;
 
 		if ( it != --( this->_L.end() )) { out << " "; }

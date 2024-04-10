@@ -5,7 +5,7 @@
 # define if_DBG if ( this->_debug )
 # define elif else if
 # define DFLT_DBG false
-# define DISPLAY_HALF_MAX 16 // half the max number of elements to display
+# define DSPL_MAX 16 // half the max number of elements to display
 
 // basic libs
 # include <exception>
