@@ -38,13 +38,13 @@ int	PmergeMe::sortVect( void )
 	// initiating vars for the Ford-Johnson algorithm
 	int JD[] = JDIF; //	jacobsthal sequence (from 3 onward)
 	int j = 0;
-	int step = 0;
+	int step = 0; //					range increase lenght
 	int tmp;
 
-	IVIT v_it = this->_V.begin();
-	PVIT p_it = pV.begin();
-	PVIT p_stop = pV.begin();
-	PVIT p_start = pV.begin();
+	IVIT v_it = this->_V.begin(); //	main chain iterator
+	PVIT p_it = pV.begin(); //			pend chain iterator
+	PVIT p_stop = pV.begin(); //		pend chain range stop  ( exclusive )
+	PVIT p_start = pV.begin(); //		pend chain range start ( inclusive )
 
 	// inserting the pend chain's elements (except the first) back on _V using the jacobsthal sequence
 	while ( true )
@@ -127,15 +127,15 @@ int	PmergeMe::sortList( void )
 	// initiating vars for the Ford-Johnson algorithm
 	int JD[] = JDIF; //	jacobsthal sequence (from 3 onward)
 	int j = 0;
-	int step = 0;
+	int step = 0; //					range increase lenght
 	int tmp;
 
-	ILIT l_it = this->_L.begin();
-	PLIT p_it = pL.begin();
-	PLIT p_stop = pL.begin();
-	PLIT p_start = pL.begin();
+	ILIT l_it = this->_L.begin(); //	main chain iterator
+	PLIT p_it = pL.begin(); //			pend chain iterator
+	PLIT p_stop = pL.begin(); //		pend chain range stop  ( exclusive )
+	PLIT p_start = pL.begin(); //		pend chain range start ( inclusive )
 
-	// inserting the pend chain's elements (except the first) back on _V using the jacobsthal sequence
+	// inserting the pend chain's elements (except the first) back on _L using the jacobsthal sequence
 	while ( true )
 	{
 		if ( p_stop == std::prev( pL.end() )) { break; }
