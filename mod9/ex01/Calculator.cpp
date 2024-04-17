@@ -1,28 +1,22 @@
 #include <iostream>
 #include "Calculator.hpp"
 
+// Debuggers
+
+bool	Calculator::debug( void ) const { return ( this->_debug ); }
+void	Calculator::debug( bool b ) { this->_debug = b; }
+
 // Constructors - Destructor
 
 Calculator::Calculator()
 {
 	//std::cout << "[ Called def. constr. for a CALCULATOR instance ]\n";
-	this->_value = 0;
-}
-Calculator::Calculator( int n )
-{
-	//std::cout << "[ Called param. constr. for a CALCULATOR instance ]\n";
-	this->_value = n;
-}
-Calculator::Calculator( char c )
-{
-	//std::cout << "[ Called param. constr. for a CALCULATOR instance ]\n";
-	this->checkNum( c );
-	this->_value = c - '0';
+	this->_bank.clear();
 }
 Calculator::Calculator( const Calculator &other )
 {
 	//std::cout << "[ Called copy constr. for a CALCULATOR instance ]\n";
-	this->_value = other.getValue();
+	this->_bank = other.getBank();
 }
 Calculator::~Calculator() {} //std::cout << "[ Destroying a CALCULATOR instance ]\n"; }
 
@@ -31,7 +25,7 @@ Calculator::~Calculator() {} //std::cout << "[ Destroying a CALCULATOR instance 
 Calculator &Calculator::operator= ( const Calculator &other )
 {
 	//std::cout << "[ Called assign. op. for a CALCULATOR instance ]\n";
-	this->_value = other.getValue();
+	this->_bank = other.getBank();
 
 	return *this;
 }
@@ -41,117 +35,125 @@ void	Calculator::checkArg( const std::string &str ) const
 {
 	if ( str.empty() || str.length() > 1 )
 		throw BadArgument();
-	this->checkSymbol( str[ 0 ] );
 }
 
-void	Calculator::checkSymbol( char c ) const
-{
-	if (( c < '0' || c > '9' ) && c != '+' && c != '-' && c != '*' && c != '/' && c != '%' )
-		throw BadSymbol();
-}
-void	Calculator::checkNum( char c ) const
-{
-	if ( c < '0' || c > '9' )
-		throw BadDigit();
-}
-void	Calculator::checkOper( char c ) const
-{
-	if ( c != '+' && c != '-' && c != '*' && c != '/' && c != '%' )
-		throw BadOperator();
-}
+// Calculators
 
-
-// Setters - Getters
-
-void	Calculator::setValue( int n )
+void	Calculator::push( const std::string &str )
 {
-	this->_value = n;
-	if ( this->_debug )
-		std::cout << " > " << n << " < \n" << std::endl;
+	this->checkArg( str );
+	this->push( str[ 0 ] );
 }
-void	Calculator::setValue( char c )
+void	Calculator::push( char c )
 {
-	this->checkNum( c );
-	this->setValue( ( int )c - '0' );
-}
-int		Calculator::getValue( void ) const { return ( this->_value ); }
-
-
-// Calculations
-
-void	Calculator::add( int n )
-{
-	this->_value += n;
-	if ( this->_debug )
-		std::cout << "Adding " << n << std::endl;
-}
-void	Calculator::sub( int n )
-{
-	this->_value -= n;
-	if ( this->_debug )
-		std::cout << "Subtracting " << n << std::endl;
-}
-void	Calculator::mul( int n )
-{
-	this->_value *= n;
-	if ( this->_debug )
-		std::cout << "Multiplying by " << n << std::endl;
-}
-void	Calculator::div( int n )
-{
-	if ( n == 0 )
-		throw DivByZero();
-	this->_value /= n;
-	if ( this->_debug )
-		std::cout << "Dividing by " << n << std::endl;
-}
-void	Calculator::mod( int n )
-{
-	if ( n == 0 )
-		throw DivByZero();
-	this->_value %= n;
-	if ( this->_debug )
-		std::cout << "Modulo " << n << std::endl;
-}
-
-void	Calculator::add( char c ) { this->add( ( int )c - '0' ); }
-void	Calculator::sub( char c ) { this->sub( ( int )c - '0' ); }
-void	Calculator::mul( char c ) { this->mul( ( int )c - '0' ); }
-void	Calculator::div( char c ) { this->div( ( int )c - '0' ); }
-void	Calculator::mod( char c ) { this->mod( ( int )c - '0' ); }
-
-void	Calculator::calculate( char num, char oper )
-{
-	this->checkNum( num );
-	this->checkOper( oper );
-
-	int n = num - '0';
-
-	switch ( oper )
+	if ( c >= '0' && c <= '9' ) this->_bank.push_back( c - '0' );
+	else switch ( c )
 	{
-		case '+': this->add( n ); break;
-		case '-': this->sub( n ); break;
-		case '*': this->mul( n ); break;
-		case '/': this->div( n ); break;
-		case '%': this->mod( n ); break;
+		case '+': this->add(); break;
+		case '-': this->sub(); break;
+		case '*': this->mul(); break;
+		case '/': this->div(); break;
+		case '%': this->mod(); break;
+		default: throw BadSymbol();
 	}
-	if ( this->_debug )
-		std::cout << " > " << this->_value << " < \n" << std::endl;
 }
 
-
-// Others
-
-bool	Calculator::debug( void ) const { return ( this->_debug ); }
-void	Calculator::debug( bool b ) { this->_debug = b; }
-
-void	Calculator::printValue( void ) const
+void	Calculator::add()
 {
-	std::cout << "Equals : " << this->_value << std::endl;
+	int val_2 = this->popOut();
+	int val_1 = this->popOut();
+
+	if_DBG std::cout << val_1 << " added with " << val_2 << std::endl;
+
+	this->_bank.push_back( val_1 + val_2 );
+}
+void	Calculator::sub()
+{
+	int val_2 = this->popOut();
+	int val_1 = this->popOut();
+
+	if_DBG std::cout << val_1 << " subtracted by " << val_2 << std::endl;
+
+	this->_bank.push_back( val_1 - val_2 );
+}
+void	Calculator::mul()
+{
+	int val_2 = this->popOut();
+	int val_1 = this->popOut();
+
+	if_DBG std::cout << val_1 << " multiplied by " << val_2 << std::endl;
+
+	this->_bank.push_back( val_1 * val_2 );
+}
+void	Calculator::div()
+{
+	int val_2 = this->popOut();
+	int val_1 = this->popOut();
+
+	if_DBG std::cout << val_1 << " divided by " << val_2 << std::endl;
+
+	if ( val_2 == 0 ) throw DivByZero();
+
+	this->_bank.push_back( val_1 / val_2 );
+}
+void	Calculator::mod()
+{
+	int val_2 = this->popOut();
+	int val_1 = this->popOut();
+
+	if_DBG std::cout << val_1 << " modulo " << val_2 << std::endl;
+
+	if ( val_2 == 0 ) throw DivByZero();
+
+	this->_bank.push_back( val_1 % val_2 );
+}
+
+int		Calculator::popOut( void )
+{
+	if ( this->_bank.empty() ) throw EmptyBank();
+
+	int tmp = this->_bank.back();
+	this->_bank.pop_back();
+
+	return ( tmp );
+}
+
+// Setter - Getter
+
+void	Calculator::setBank( const DEQUE &bank ) { this->_bank = bank; }
+DEQUE	Calculator::getBank( void ) const { return ( this->_bank ); }
+void	Calculator::clearBank( void ) { this->_bank.clear(); }
+
+// Writers
+
+void Calculator::writeBank( std::ostream &out ) const
+{
+	DEQUE::const_iterator it = this->_bank.begin();
+	DEQUE::const_iterator ite = this->_bank.end();
+
+	while ( it != ite )
+	{
+		out << *it;
+		++it;
+	}
+}
+
+void	Calculator::printBank( void ) const
+{
+	std::cout << "Equals : ";
+	this->writeBank( std::cout );
+	std::cout << std::endl;
+}
+
+int		Calculator::getResult( void )
+{
+	if ( this->_bank.size() != 1 ) throw BadResult();
+
+	return ( this->_bank.front() );
 }
 
 std::ostream &operator<< (std::ostream &out, const Calculator &rhs)
 {
-	out << rhs.getValue();
+	rhs.writeBank( out );
 	return ( out );
 }

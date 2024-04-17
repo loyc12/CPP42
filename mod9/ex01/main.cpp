@@ -43,30 +43,21 @@ void splitStr( char *in, std::string *out)
 
 int calculate( int n, std::string *in )
 {
-	std::deque<char> bank ;
+
 	Calculator calc;
 	calc.debug( true );
 
 	std::cout << "\nFormula : ";
 
+	for ( int j = 0; j < n; j++ )
+		std::cout << in[ j ][ 0 ] << " ";
+
+	std::cout << std::endl << std::endl;
+
 	for ( int i = 0; i < n; i++ )
-	{
-		std::cout << in[ i ] << " ";
-		calc.checkArg( in[ i ] );
-		bank.push_back( in[ i ][ 0 ] );
-	}
+		calc.push( in[ i ] );
 
-	std::cout << " : ( " << bank.size() << " args )" << std::endl;
-
-	calc.setValue( getNextChar( &bank ));
-
-	while ( !bank.empty() )
-	{
-		char num = getNextChar( &bank );
-		char sym = getNextChar( &bank );
-
-		calc.calculate( num, sym );
-	}
+	std::cout << std::endl << "Result : " << calc.getResult() << std::endl;;
 
 	return (0);
 }
@@ -101,13 +92,13 @@ int	main( int ac, char **av )
 			xpr[ i - 1 ] = ( std::string )av[ i ];
 	}
 
-	if ( size % 2 == 0 )
+	if ( size <= 2 )
 	{
-		std::cerr << "\nInvalid number of arguments : " << size << " ( must be odd )\n"  << std::endl;
+		std::cerr << "\nInvalid number of arguments : must be at least 3\n"  << std::endl;
 		return ( 2 );
 	}
 
 	try { return calculate( size, xpr ); }
 	catch ( std::exception &e ) { std::cerr << e.what(); };
-	return ( 3 );
+	return ( 0 );
 }

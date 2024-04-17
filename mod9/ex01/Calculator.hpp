@@ -10,36 +10,53 @@
 # include <sstream>
 # include <string>
 
+# include <deque>
+# define DEQUE std::deque< int >
+
+# define elif else if
+# define if_DBG if ( this->_debug )
+
+// Enumerators
+enum e_opr
+{
+	ADD = -1,
+	SUB = -2,
+	MUL = -3,
+	DIV = -4,
+	MOD = -5
+};
+
 class Calculator
 {
 	private:
 		// Attributes
-		long _value;
-		bool _debug;
+		DEQUE	_bank;
+		bool	_debug;
 
 	protected:
 
 	// Nested Classes
 		class BadArgument :	public std::exception { XCPT { return "\nFormat Error : Invalid Agument Lenght ( != 1 )\n"; } };
 		class BadSymbol :	public std::exception { XCPT { return "\nFormat Error : Invalid Symbol\n"; } };
-		class BadDigit :	public std::exception { XCPT { return "\nFormat Error : Invalid Digit\n"; } };
-		class BadOperator :	public std::exception { XCPT { return "\nFormat Error : Invalid Operator\n"; } };
-		class DivByZero :	public std::exception { XCPT { return "\nMath Error : Division by Zero\n"; } };
+		class DivByZero :	public std::exception { XCPT { return "\nRuntime Error : Division by Zero\n"; } };
+		class BadResult :	public std::exception { XCPT { return "\nRuntime Error : Missing Operators\n"; } };
+		class EmptyBank :	public std::exception { XCPT { return "\nRuntime Error : Missing Values\n"; } };
 
-		// Calculations ( from ints )
-		void setValue( int n );
-
-		void add( int n );
-		void sub( int n );
-		void mul( int n );
-		void div( int n );
-		void mod( int n );
+		// Calculators
+		int		popOut( void );
+		void	add();
+		void	sub();
+		void	mul();
+		void	div();
+		void	mod();
 
 	public:
+		// Debuggers
+		bool	debug( void ) const;
+		void	debug( bool b );
+
 		// Constructors - Destructor
 		Calculator();
-		Calculator( int n );
-		Calculator( char c );
 		Calculator( const Calculator &other );
 		~Calculator();
 
@@ -47,30 +64,23 @@ class Calculator
 		Calculator &operator= ( const Calculator &other );
 
 		// Checkers
-		void checkArg( const std::string &str ) const;
-		void checkSymbol( char c ) const;
-		void checkNum( char c ) const;
-		void checkOper( char c ) const;
+		void	checkArg( const std::string &str ) const;
 
 		// Setters - Getters
-		void setValue( char c );
-		int	 getValue( void ) const;
+		void	setBank( const DEQUE &bank );
+		DEQUE	getBank( void ) const;
+		void	clearBank( void );
+		int 	getResult( void );
 
-		// Calculations ( from chars )
-		void add( char c );
-		void sub( char c );
-		void mul( char c );
-		void div( char c );
-		void mod( char c );
+		// Calculators
+		void	push( const std::string &str );
+		void	push( char c );
 
-		void calculate( char sym, char num );
-
-		// Others
-		bool debug( void ) const;
-		void debug( bool b );
-		void printValue( void ) const;
+		// Writers
+		void	writeBank( std::ostream &out ) const;
+		void	printBank( void ) const;
 };
 
-std::ostream &operator<< (std::ostream &out, const Calculator &rhs);
+std::ostream &operator<< ( std::ostream &out, const Calculator &rhs );
 
 #endif // CALCULATOR_HPP
