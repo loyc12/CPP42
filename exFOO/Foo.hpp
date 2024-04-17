@@ -10,6 +10,9 @@
 # include <sstream>
 # include <string>
 
+# define C_STR const std::string
+# define TTT template< typename T >
+# define if_DBG if ( this->_debug )
 
 // CLASS FOO ( implemented in .cpp file )
 class Foo
@@ -17,43 +20,53 @@ class Foo
 	private:
 		// Attributes
 		std::string	name;
+		bool		_debug;
 
 	protected:
 		// Checkers
-		void checkName( const std::string _name ) const;
+		void checkName( C_STR _name ) const;
 
 		// Nested Classes
 		class BadName : public std::exception { XCPT { return "Foo error : invalid name, idiot!"; } };
 
 	public:
+		// Debuggers
+		void	debug( bool _debug );
+		bool	debug( void ) const;
+
 		// Constructors - Destructor
 		Foo();
-		Foo( const std::string _name );
+		Foo( C_STR _name );
 		Foo( const Foo &other );
 		~Foo();
 
 		// Operators
 		Foo &operator= ( const Foo &other );
 
-		// Setters - Getters
-		void				setName( const std::string _name );
-		const std::string	getName( void ) const;
+		// Setters
+		void	setName( C_STR _name );
+		void	clearName( void );
 
-		// Others
+		// Getters
+		C_STR	getName( void ) const;
+
+		// Writers
+		void	writeName( std::ostream &out ) const;
 		void	printName( void ) const;
 
 };
 
-std::ostream &operator<< (std::ostream &out, const Foo &rhs);
+std::ostream &operator<< ( std::ostream &out, const Foo &rhs );
 
 
 // TEMPLATE CLASS FOO_T ( implemented in .tpp file )
-template <class T>
+template< class T >
 class Foo_T
 {
 	private:
 		// Attributes
-		T	value;
+		T		value;
+		bool	_debug;
 
 	protected:
 		// Checkers
@@ -63,25 +76,32 @@ class Foo_T
 		class BadValue : public std::exception { XCPT { return "Foo_T error : invalid value, dumbass!"; } };
 
 	public:
+		// Debuggers
+		void	debug( bool _debug );
+		bool	debug( void ) const;
+
 		// Constructors - Destructor
 		Foo_T();
 		Foo_T( const T _value );
-		Foo_T( const Foo_T<T> &other );
+		Foo_T( const Foo_T< T > &other );
 		~Foo_T();
 
 		// Operators
-		Foo_T<T> &operator= ( const Foo_T<T> &other );
+		Foo_T<T> &operator= ( const Foo_T< T > &other );
 
-		// Setters - Getters
+		// Setters
 		void	setValue( const T _value );
+		void	clearvalue( void );
+
+		// Getters
 		const T	getValue( void ) const;
 
-		// Others
+		// Writers
+		void	writeValue( std::ostream &out ) const;
 		void	printValue( void ) const;
 
 };
-template < typename T >
-std::ostream &operator<< (std::ostream &out, const Foo_T<T> &rhs);
+TTT std::ostream &operator<< ( std::ostream &out, const Foo_T< T > &rhs );
 
 # include "Foo.tpp"
 
