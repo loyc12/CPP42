@@ -29,11 +29,13 @@ CX		=	.cpp
 RM		=	rm -rf
 CPY		=	cp -f
 MKDR	=	mkdir -p
-INCLUDE =	-I include
 
-# Creates file paths
-SRCS	=	$(addprefix $(SRCDIR), $(addsuffix $(CX), $(FILES)))
-OBJS	=	$(addprefix $(OBJDIR), $(addsuffix .o, $(FILES)))
+# Formating include paths
+INCS	=	$(addprefix -I , $(INCDIRS))
+
+# Creates srcfiles paths
+SRCS	=	$(addprefix $(SRCDIR), $(addsuffix $(CX), $(SRCFILES)))
+OBJS	=	$(addprefix $(OBJDIR), $(addsuffix .o, $(SRCFILES)))
 
 # Command to call when using make run or make leaks
 CMD		=	./$(NAME) $(ARGS)
@@ -47,18 +49,22 @@ CMD		=	./$(NAME) $(ARGS)
 long: cmake glfw $(NAME)
 
 # For standard compilation
-all: $(NAME)
+all: $(OBJDIR) $(NAME)
 
 # Compiles all files into an executable
 $(NAME): $(OBJS)
 	@echo "$(GREEN)\nFiles compiled with flags : $(CFLAGS)\n $(DEFCOL)"
-	$(HIDE) $(CC) $(MODE) $(CFLAGS) -o $@ $^ $(INCLUDE) $(LIBS) $(LIBX)
+	$(HIDE) $(CC) $(MODE) $(CFLAGS) $(INCS) $(LIBS) -o $@ $^
 	@echo "$(CYAN)Executable created !\n $(DEFCOL)"
+
+# Creates the object directory
+$(OBJDIR):
+	$(HIDE) $(MKDR) $(OBJDIR)
 
 # Compiles each source file into a .o file
 $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%$(CX)
 	@echo "$(YELLOW)Compiling file : $< $(DEFCOL)"
-	$(HIDE) $(CC) $(MODE) $(CFLAGS) -c $< -o $@
+	$(HIDE) $(CC) $(MODE) $(CFLAGS) $(INCS) -c $< -o $@
 
 
 #------------------------------------------------------------------------------#
