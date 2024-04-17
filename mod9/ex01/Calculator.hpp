@@ -34,8 +34,7 @@ class Calculator
 		bool	_debug;
 
 	protected:
-
-	// Nested Classes
+		// Nested Classes
 		class BadArgument :	public std::exception { XCPT { return "\nFormat Error : Invalid Agument Lenght ( != 1 )\n"; } };
 		class BadSymbol :	public std::exception { XCPT { return "\nFormat Error : Invalid Symbol\n"; } };
 		class DivByZero :	public std::exception { XCPT { return "\nRuntime Error : Division by Zero\n"; } };
@@ -72,13 +71,13 @@ class Calculator
 		void	clearBank( void );
 		int 	getResult( void );
 
-		// Calculators
-		void	push( const std::string &str );
-		void	push( char c );
-
 		// Writers
 		void	writeBank( std::ostream &out ) const;
 		void	printBank( void ) const;
+
+		// Calculators
+		void	push( const std::string &str );
+		void	push( char c );
 };
 
 std::ostream &operator<< ( std::ostream &out, const Calculator &rhs );
