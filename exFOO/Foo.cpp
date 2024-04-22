@@ -1,62 +1,68 @@
-#include "Foo.hpp"
+#include "Foo.hpp" // for class Foo
 
 // Debuggers
-void Foo::debug( bool debug ) { this->_debug = debug; }
-bool Foo::debug( void ) const { return ( this->_debug ); }
+void	Foo::debug( bool debug ) { this->_debug = debug; }
+bool	Foo::debug( void ) const { return ( this->_debug ); }
 
-// Constructors - Destructor
+// Destructor
+Foo::~Foo() { DEBUG( std::cout << "[ Destroying a FOO instance ]\n" ); }
+
+// Constructors
 Foo::Foo()
 {
-	this->_debug = false;
-
-	if_DBG std::cout << "[ Called def. constr. for a FOO instance ]\n";
-
-	this->name = "UNINITIALIZED";
+	DEBUG( std::cout << "[ Called def. constr. for a FOO instance ]\n" );
+	this->_name = "UNINITIALIZED";
+	this->_ptrVal = NULL;
 }
-Foo::Foo( const std::string _name )
+Foo::Foo( C_STR name )
 {
-	this->_debug = false;
-
-	if_DBG std::cout << "[ Called param. constr. for a FOO instance ]\n";
-
-	this->name = _name;
+	DEBUG( std::cout << "[ Called param. constr. for a FOO instance ]\n" );
+	this->_name = name;
+	this->_ptrVal = NULL;
 }
+
+// Reconstructors
 Foo::Foo( const Foo &other )
 {
-	if_DBG std::cout << "[ Called copy constr. for a FOO instance ]\n";
-
-	this->name = other.getName();
-	this->_debug = other.debug();
+	DEBUG( std::cout << "[ Called copy constr. for a FOO instance ]\n" );
+	this->_name = other._name;
+	this->_ptrVal = new int( *other._ptrVal );
 }
-Foo::~Foo() { if_DBG std::cout << "[ Destroying a FOO instance ]\n"; }
-
-// Operators
 Foo &Foo::operator= ( const Foo &other )
 {
-	if_DBG std::cout << "[ Called assign. op. for a FOO instance ]\n";
-
-	this->name = other.getName();
-	this->_debug = other.debug();
-
-	return *this;
+	DEBUG( std::cout << "[ Called assign. oper. for a FOO instance ]\n" );
+	if ( this != &other )
+	{
+		this->_name = other._name;
+		this->_ptrVal = new int( *other._ptrVal );
+	}
+	return ( *this );
 }
 
-// Checkers
-void	Foo::checkName( const std::string _name ) const { if ( _name.empty() ) throw BadName(); }
+// Clearers
+void	Foo::clearName( void ) { this->_name = "UNINITIALIZED"; }
+void	Foo::clearPtrVal( void ) { this->_ptrVal = NULL; }
+void	Foo::clearPtr( void ) { delete this->_ptrVal; this->_ptrVal = NULL; }
 
 // Setters
-void	Foo::setName( const std::string _name ) { checkName( _name );  this->name = _name; }
-void	Foo::clearName( void ) { this->name = "UNINITIALIZED"; }
+void	Foo::setName( C_STR name ) { this->_name = name; }
+void	Foo::setPtrVal( int val ) { this->_ptrVal = new int( val ); }
 
 // Getters
-const std::string	Foo::getName( void ) const { return ( this->name ); }
+C_STR	Foo::getName( void ) const { return ( this->_name ); }
+int		Foo::getPtrVal( void ) const { return ( *this->_ptrVal ); }
+
+// Fetchers
+C_STR	&Foo::fetchName( void ) { return ( this->_name ); }
+int		&Foo::fetchPtrVal( void ) { return ( *this->_ptrVal ); }
+int*	&Foo::fetchPtr( void ) { return ( this->_ptrVal ); }
+
+// Checkers
+bool	Foo::checkName() const { return ( this->_name != "UNINITIALIZED" ); }
+bool	Foo::checkPtrVal() const { return ( this->_ptrVal != NULL ); }
 
 // Writers
-void	Foo::writeName( std::ostream &out ) const { out << this->getName(); }
-void	Foo::printName( void ) const { std::cout << this->getName(); }
+void	Foo::writeName( std::ostream &out ) const { out << this->_name; }
+void	Foo::printName( void ) const { this->writeName( std::cout );}
 
-std::ostream &operator<< (std::ostream &out, const Foo &rhs)
-{
-	out << rhs.getName();
-	return ( out );
-}
+std::ostream &operator<<( std::ostream &out, const Foo &rhs ) { rhs.writeName( out ); return ( out ); }

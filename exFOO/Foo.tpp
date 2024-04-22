@@ -1,61 +1,67 @@
-#include "Foo.hpp"
+# include "Foo.hpp" // for template class Foo_T
 
-// Debbugers
-TTT void Foo_T< T >::debug( bool debug ) { this->_debug = debug; }
-TTT bool Foo_T< T >::debug( void ) const { return ( this->_debug ); }
+// Debuggers
+TTT void	Foo_T< T >::debug( bool debug ) { this->_debug = debug; }
+TTT bool	Foo_T< T >::debug( void ) const { return ( this->_debug ); }
 
-// Constructors - Destructor
+// Destructor
+TTT Foo_T< T >::~Foo_T() { DEBUG( std::cout << "[ Destroying a FOO_T instance ]\n" ); }
+
+// Constructors
 TTT Foo_T< T >::Foo_T()
 {
-	this->_debug = false;
-
-	if_DBG std::cout << "[ Called def. constr. for a FOO_T instance ]\n";
-
-	this->value = 0;
+	DEBUG( std::cout << "[ Called def. constr. for a FOO_T instance ]\n" );
+	this->_bar = T();
+	this->_ptrVal = NULL;
 }
-TTT Foo_T< T >::Foo_T( const T _value )
+TTT Foo_T< T >::Foo_T( T bar )
 {
-	this->_debug = false;
-
-	if_DBG std::cout << "[ Called param. constr. for a FOO_T instance ]\n";
-
-	this->value = _value;
+	DEBUG( std::cout << "[ Called param. constr. for a FOO_T instance ]\n" );
+	this->_bar = bar;
+	this->_ptrVal = NULL;
 }
-TTT Foo_T< T >::Foo_T( const Foo_T &other )
+
+// Reconstructors
+TTT Foo_T< T >::Foo_T( const Foo_T< T > &other )
 {
-	this->_debug = false;
-
-	if_DBG std::cout << "[ Called copy constr. for a FOO_T instance ]\n";
-
-	this->value = other.getValue();
+	DEBUG( std::cout << "[ Called copy constr. for a FOO_T instance ]\n" );
+	this->_bar = other._bar;
+	this->_ptrVal = *other._ptrVal;
 }
-TTT Foo_T< T >::~Foo_T() { std::cout << "[ Destroying a FOO_T instance ]\n"; }
-
-// Operators
-TTT Foo_T< T > &Foo_T< T >::operator= ( const Foo_T &other )
+TTT Foo_T< T > &Foo_T< T >::operator=( const Foo_T< T > &other )
 {
-	this->_debug = false;
-
-	if_DBG std::cout << "[ Called assign. op. for a FOO_T instance ]\n";
-
-	this->value = other.getValue();
-
-	return *this;
+	DEBUG( std::cout << "[ Called assign. oper. for a FOO_T instance ]\n" );
+	if ( this != &other )
+	{
+		this->_bar = other._bar;
+		this->_ptrVal = new T( *other._ptrVal );
+	}
+	return ( *this );
 }
+
+// Clearers
+TTT void	Foo_T< T >::clearBar( void ) { this->_bar = T(); }
+TTT void	Foo_T< T >::clearPtrVal( void ) { this->_ptrVal = NULL; }
+TTT void	Foo_T< T >::clearPtr( void ) { delete this->_ptrVal; this->_ptrVal = NULL; }
+
+// Setters
+TTT void	Foo_T< T >::setBar( T bar ) { this->_bar = bar; }
+TTT void	Foo_T< T >::setPtrVal( T val ) { this->_ptrVal = new T( val ); }
+
+// Getters
+TTT T	Foo_T< T >::getBar( void ) const { return ( this->_bar ); }
+TTT T	Foo_T< T >::getPtrVal( void ) const { return ( *this->_ptrVal ); }
+
+// Fetchers
+TTT T	&Foo_T< T >::fetchBar( void ) { return ( this->_bar ); }
+TTT T	&Foo_T< T >::fetchPtrVal( void ) { return ( *this->_ptrVal ); }
+TTT T*	&Foo_T< T >::fetchPtr( void ) { return ( this->_ptrVal ); }
 
 // Checkers
-TTT void	Foo_T< T >::checkValue( const T _value ) const { if ( _value < 0 ) throw BadValue(); }
-
-// Setters - Getters
-TTT void	Foo_T< T >::setValue( const T _value ) { checkValue( _value ); this->value = _value; }
-TTT const T	Foo_T< T >::getValue( void ) const { return ( this->value ); }
+TTT bool	Foo_T< T >::checkBar() const { return ( this->_bar != T() ); }
+TTT bool	Foo_T< T >::checkPtrVal() const { return ( this->_ptrVal != NULL ); }
 
 // Writers
-TTT void	Foo_T<T>::writeValue( std::ostream &out ) const { out << this->getValue(); }
-TTT void	Foo_T<T>::printValue( void ) const { std::cout << this->getValue(); }
-
-TTT std::ostream &operator<< ( std::ostream &out, const Foo_T<T> &rhs )
-{
-	out << rhs.getValue();
-	return ( out );
-}
+TTT void	Foo_T< T >::writeBar( std::ostream &out ) const { out << this->_bar; }
+TTT void	Foo_T< T >::printBar( void ) const { this->writeBar( std::cout );}
+TTT std::ostream &operator<<( std::ostream &out, const Foo_T< T > &rhs ) { rhs.writeBar( out ); return ( out ); }

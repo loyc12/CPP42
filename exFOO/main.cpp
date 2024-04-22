@@ -2,17 +2,21 @@
 
 void test()
 {
-	Foo t1( "t1" );
+	Foo t1( "zero" );
 	std::cout << "\n >>> Insert test here" << std::endl;
-	std::cout << "     | type : s\n" << std::endl;
+	std::cout << "     | type : s" << std::endl;
+
+	std::cout << "     | name : " << t1.getName() << std::endl << std::endl;
 }
 
 template <typename T>
 void test_T()
 {
-	Foo_T<T> t1( 0 );
+	Foo_T<T> t1( 42 );
 	std::cout << "\n >>> Insert test here" << std::endl;
-	std::cout << "     | type : " << typeid( T ).name() << '\n' << std::endl;
+	std::cout << "     | type : " << typeid( T ).name() << std::endl;
+
+	std::cout << "     | bar  : " << t1.getBar() << std::endl << std::endl;
 }
 
 void runTests( void )
