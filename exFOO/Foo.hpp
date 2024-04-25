@@ -61,7 +61,6 @@ class Foo
 		void	printName( void ) const;
 
 		friend	std::ostream &operator<< ( std::ostream &out, const Foo &rhs );
-
 };
 
 // TEMPLATE CLASS FOO_T ( implemented in .tpp file )
@@ -104,13 +103,13 @@ class Foo_T
 		void	setPtrVal( T _val );
 
 		// Getters
-		T	getBar( void ) const;
-		T	getPtrVal( void ) const;
+		T		getBar( void ) const;
+		T		getPtrVal( void ) const;
 
 		// Fetchers
-		T	&fetchBar( void );
-		T	&fetchPtrVal( void );
-		T*	&fetchPtr( void );
+		T		&fetchBar( void );
+		T		&fetchPtrVal( void );
+		T*		&fetchPtr( void );
 
 		// Checkers
 		bool	checkBar() const;
