@@ -1,3 +1,6 @@
+#ifndef FOO_TPP
+# define FOO_TPP
+
 # include "Foo.hpp" // for template class Foo_T
 
 // Debuggers
@@ -65,3 +68,5 @@ TTT bool	Foo_T< T >::checkPtrVal() const { return ( this->_ptrVal != NULL ); }
 TTT void	Foo_T< T >::writeBar( std::ostream &out ) const { out << this->_bar; }
 TTT void	Foo_T< T >::printBar( void ) const { this->writeBar( std::cout );}
 TTT std::ostream &operator<<( std::ostream &out, const Foo_T< T > &rhs ) { rhs.writeBar( out ); return ( out ); }
+
+#endif // FOO_TPP
