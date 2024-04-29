@@ -64,8 +64,7 @@ class Foo
 };
 
 // TEMPLATE CLASS FOO_T ( implemented in .tpp file )
-template< class T >
-class Foo_T
+TTT class Foo_T
 {
 	private:
 		// Attributes
