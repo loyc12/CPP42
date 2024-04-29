@@ -15,7 +15,7 @@ int	Array<T>::checkIndex( int i ) const
 
 	else
 		return i;
-};
+}
 
 // Constructors - Destructor
 template < typename T >
@@ -26,7 +26,7 @@ Array<T>::Array()
 	this->_size = 0;
 	this->_bank = new T[ this->_size ];
 
-};
+}
 template < typename T >
 Array<T>::Array( unsigned int n )
 {
@@ -37,7 +37,7 @@ Array<T>::Array( unsigned int n )
 
 	for ( int i = 0; i < this->_size; i++ )
 		this->_bank[ i ] = T();
-};
+}
 template < typename T >
 Array<T>::Array( const Array<T> &other )
 {
@@ -48,14 +48,14 @@ Array<T>::Array( const Array<T> &other )
 
 	for ( int i = 0; i < this->_size; i++ )
 		this->_bank[ i ] = other.value( i );
-};
+}
 template < typename T >
 Array<T>::~Array()
 {
 	std::cout << "[ Destroying an ARRAY instance ]\n";
 
 	delete [] this->_bank;
-};
+}
 
 // Operator Overloads
 template < typename T >
@@ -72,15 +72,15 @@ Array<T> &Array<T>::operator= ( const Array<T> &other )
 		this->_bank[ i ] = other.value( i );
 
 	return *this;
-};
+}
 template < typename T >
-T &Array<T>::operator[] ( int i ) { return this->_bank[ this->checkIndex( i )]; };
+T &Array<T>::operator[] ( int i ) { return this->_bank[ this->checkIndex( i )]; }
 
 // Getters
 template < typename T >
-int	Array<T>::size( void ) const { return this->_size; };
+int	Array<T>::size( void ) const { return this->_size; }
 template < typename T >
-T	Array<T>::value( int i ) const { return this->_bank[ this->checkIndex( i )]; };
+T	Array<T>::value( int i ) const { return this->_bank[ this->checkIndex( i )]; }
 
 template < typename T >
 std::ostream &operator<< ( std::ostream &out, const Array<T> &rhs )
