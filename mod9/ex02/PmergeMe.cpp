@@ -90,18 +90,6 @@ IVEC	PmergeMe::getVect( void ) const { return this->_V; }
 ILST	PmergeMe::getList( void ) const { return this->_L; }
 time_t	PmergeMe::getSortTime(  ) const { return this->_sortTime; }
 
-// checkers
-/*
-// throw and error if there is duplicate values
-void	checkVect()
-{
-	return;
-}
-void	checkList()
-{
-	return;
-}
-*/
 
 // Sorters
 

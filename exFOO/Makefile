@@ -14,9 +14,10 @@ DEFAULT_GOAL: all
 		re run rerun \
 		leaks releaks \
 		vleaks revleaks \
-		norm libft \
+		norm sub libft \
 		brew cmake \
 		glfw grind \
+		help man \
 
 
 #------------------------------------------------------------------------------#
@@ -45,9 +46,6 @@ CMD		=	./$(NAME) $(ARGS)
 #                                 BASE TARGETS                                 #
 #------------------------------------------------------------------------------#
 
-# For full install (except brew)
-long: cmake glfw $(NAME)
-
 # For standard compilation
 all: $(OBJDIR) $(NAME)
 
@@ -72,15 +70,13 @@ $(OBJS): $(OBJDIR)%.o : $(SRCDIR)%$(CX)
 #------------------------------------------------------------------------------#
 
 # Removes objects
-clear: clean
-clean:
+clean clear:
 	$(HIDE) $(RM) $(OBJS)
 	$(HIDE) $(RM) $(NAME).dSYM
 	@echo "$(MAGENTA)\nDeleted object files\n $(DEFCOL)"
 
 # Removes object dir and executable
-fclear: fclean
-fclean: clean
+fclean fclear: clean
 	$(HIDE) $(RM) $(OBJDIR)
 	@echo "$(RED)Deleted object directory\n $(DEFCOL)"
 	$(HIDE) $(RM) $(NAME)
@@ -165,6 +161,9 @@ libft:
 #                                 BREW TARGETS                                 #
 #------------------------------------------------------------------------------#
 
+# For full install (except brew)
+long: cmake glfw $(NAME)
+
 # Installs/Updates homebrew (WARNING : can be very slow !)
 brew:
 	@echo "$(YELLOW)\nInstalling Brew\n $(DEFCOL)"
@@ -205,3 +204,36 @@ grind:
 	else \
 		echo "$(RED)\n! FAILED TO INSTALL VALGRIND !\n $(DEFCOL)"; \
 	fi
+
+
+#------------------------------------------------------------------------------#
+#                                 HELP TARGETS                                 #
+#------------------------------------------------------------------------------#
+
+# Displays the help message
+help man:
+	@echo "$(BLUE)Usage : make [target] $(DEFCOL)"
+	@echo ""
+	@echo "$(CYAN)Targets$(DEFCOL)"
+	@echo ""
+	@echo "  $(GREEN)help/man$(DEFCOL)   : Displays this message"
+	@echo ""
+	@echo "  $(GREEN)all$(DEFCOL)        : Compiles the program"
+	@echo "  $(GREEN)clea[n/r]$(DEFCOL)  : Removes object files"
+	@echo "  $(GREEN)fclea[n/r]$(DEFCOL) : Removes object files and executable"
+	@echo ""
+	@echo "  $(GREEN)re$(DEFCOL)         : Removes object files and executable and recompiles"
+	@echo "  $(GREEN)(re)run$(DEFCOL)    : (Re)Compiles and runs the program"
+	@echo "  $(GREEN)(re)leaks$(DEFCOL)  : (Re)Compiles and runs the program with leaks"
+	@echo "  $(GREEN)(re)vleaks$(DEFCOL) : (Re)Compiles and runs the program with valgrind"
+	@echo ""
+	@echo "  $(GREEN)sub$(DEFCOL)        : Updates the git submodules"
+	@echo "  $(GREEN)libft$(DEFCOL)      : Updates the libft submodule"
+	@echo "  $(GREEN)norm$(DEFCOL)       : Norminettes the project"
+	@echo ""
+	@echo "  $(GREEN)long$(DEFCOL)       : Installs/Updates everything except brew"
+	@echo "  $(GREEN)brew$(DEFCOL)       : Installs/Updates homebrew"
+	@echo "  $(GREEN)cmake$(DEFCOL)      : Installs/Updates cmake"
+	@echo "  $(GREEN)glfw$(DEFCOL)       : Installs/Updates glfw"
+	@echo "  $(GREEN)grind$(DEFCOL)      : Installs/Updates valgrind"
+	@echo ""

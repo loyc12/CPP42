@@ -104,7 +104,6 @@ std::string ScalarConverter::getString() const
 	return str;
 }
 
-
 std::ostream &operator<< ( std::ostream &out, const ScalarConverter &rhs )
 {
 	out << rhs.getString();
