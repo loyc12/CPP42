@@ -23,45 +23,42 @@
 	3.1  : STEP : put Y0 ( smallest value of P0 ) at the beginning of said final array
 	3.2  : EXAMPLE : the array should now look like; [ Y0, X0, X1, X2, X3, X4, X5, ... ]
 
-	==== USING FACTORS OF 2 ====
-
-	4    : STEP : create a variable to store the current range factor ( f ), and initiate it to 2
-	4.1  : NOTE : this means that, if the range factor is n, the range size will be n^2
-	4.2  : NOTE : I will call each successive range Jn, where n is the range factor
-
-	5    : STEP : iter over each yet-uninserted Yn, where n <= f
-	5.1  : IMPORTANT : we need to iterate backwards ( starting from Yf and decresing towards Y0 )
-	5.2  : IMPORTANT : we need to avoid inserting the same value twice, and thus need to stop at Y(F-1)
-	5.1  : IMPORTANT
-
-
 	==== USING THE JACKOBSTHAL SEQUENCE ====
 
 	4    : STEP : load or build the jacobsthal sequence ( 1, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, ... ) ( sequence where Jn = (Jn-1) + 2(Jn-2) )
-	4.1  : NOTE : we will call each jacobsthal element Jn. we will use j when a Jn is used as an index ( ex : Xj instead of XJn )
-	4.2  : NOTE : we will use these Jn to find each successive insertion range size ( from index 0 to Xj, where j = Jn )
-	4.3  : NOTE : the initial Jn value is that of J2 ( value of 3 ), as the insertion of Y0 is trivial and already done ( J0 / J1 are thus skipped )
-	4.4  : NOTE : this means the first insertion range is; [ Y0, X0, X1 ]
+	4.1  : NOTE : we will call each jacobsthal element Je, where e is the index of the current jacobsthal element
+	4.2  : NOTE : to simplify notation when talking about the index of a pair in relation to Je, we will use e ( ex : Y(Je) -> Ye, Y( Je - 1 ) -> Y(e-1), ... )
+	4.3  : NOTE : as we need to insert Yn values from n = Je to n = J(e-1), we will call the previously used jacobsthal element Jp, where p = e - 1
+	4.4  : NOTE : to simplify notation when talking about the index of a pair in relation to Jp, we will use p ( ex : Y(Jp) -> Yp, Y( Jp + 1) -> Y(p+1), ... )
 
-	5    : STEP : iter over each yet-uninserted Yn, and insert them into the final array
-	5.1  : IMPORTANT : you need to insert them in reverse order ( from Yj to Y0, stopping at the previous Yj )
-	5.2  : EXAMPLE : inserting Y2 ( largest Yn in range J3 ); [ Y0, X0, X1 ] -> [ Y0, X0, X1, Y2 ]
-	5.3  : NOTE : as the iteration range is a fixed size, the final value will be kicked out of the range after each insertion
-	5.4  : EXAMPLE : [ Y0, X0, X1, Y2 ] -> [ Y0, X0, X1 ]
-	5.5  : NOTE : this is by design, since all remaining insertion in this range are garanteed to be smaller than the kicked value
+	5    : vars :	e ( current jacobsthal element index )
+	|				p ( previous jacobsthal element index )			== e - 1
+	|				max_pair_index ( the n to insert from )			== Je
+	|				min_pair_index ( the n to stop inserting at )	== J(p)
+	|				insertion_range ( the numbers of elements in the final array to look at while inserting )
 
-	6    : STEP : repeat step 5 until all yet uninserted Yn bellow Y(j+1) have been inserted
-	6.1  : EXAMPLE : on the first loop ( range of J2 = 3 ), we insert Y2, then Y1. we then finish, as Y0 is already inserted
+	5.1  : NOTE : min_pair_index is used as a stop point, and is never inserted after having been reached, as it already has been in the previous loop
 
-	7    : STEP : once you are done inserting in this range, set the new range to J(n+1), and go back to step 5 ( again... nested loop are so fun after all )
-	7.2  : EXAMPLE : on the second loop ( range of J3 = 5 ), we insert Y4, then Y3, then finish, since Y3 is already inserted
-	7.3  : EXAMPLE : on the third loop ( range of J4 = 11 ), we insert Y10 to Y5, then finish, since Y5 is already inserted
-	7.4  : NOTE : on each succesive loop, the range increases by a factor of 2, thus making sure it is always optimized for binary search
-	7.5  : IMPORTANT : make sure to cap the insertion range to the final array's size ( which is often not equal to 2^n - 1 )
+	6    : STEP : since we already inserted Y0, we will initiate e to 2, and other variables consequently
+	6.1  : NOTE : the insertion range will be from the start of the final array to X(e-1) ( aka 3 long on the first loop )
+	6.3  : NOTE : as the iteration range is a fixed size, the final value will be kicked out of the range after each insertion \
+	|             this is by design, since all remaining insertion in this range are garanteed to be smaller than the kicked value
 
-	8    : IMPORTANT : what I call range ( ex : a range of 5 ), is actually the index of the Yn to restart the insertion from
-	8.1  : EXAMPLE : this means that range 5 will actually look like [ Y0, X0, X1, Y2, X2, X3, X4 ]
-	8.2  : NOTE : the actual "lenght" of each ranges is simply 2n - 1, where n starts a 2 and increase by 1 after each loop
+	7    : STEP : take the last yet uninserted Yn in the scope [ Y(e), Y(p+1) ] and insert it right before the first value larger than it
+	7.1  : IMPORTANT : you need to insert the Yn values in REVERSE ORDER ( from largest index to smallest ), or the algorithm WILL break
+	7.2  : STEP : repeat step 7 until all yet values in the scope have been inserted
+	7.3  : EXAMPLE : on the first loop ( iterating over the scope [ Y2, Y1 ] ), we insert Y2, then Y1, and then finish
+	7.4  : EXAMPLE : this could looks like ; [ Y0, X0, X1 ] -> [ Y0, X0, Y1, (X1) ] -> [ Y0, X0, Y1 ] -> [ Y2, Y0, X0, (Y2) ] -> [ Y2, Y0, X1 ]
+	7.5  : NOTE : the value in parenthesis is the value that was kicked out of the range, as it is not longer needed to compare against \
+	|			  as all remaining values in the range are garanteed to be smaller than it. This is the core of the algorithm's optimization
+
+	8    : STEP : once you are done inserting in this range, set the min_pair_index to the current max_pair_index
+	8.1  : STEP : then, set the max_pair_index to the next max_pair_index ( aka J(e+1) )
+	8.2  : STEP : then, set the insertion range to its next value ( aka range = (range * 2) + 1 )
+	8.2  : EXAMPLE : at the end of the first loop, we set min_pair_index to J2 ( aka 3 ), and max_pair_index to J4 ( aka 5 )( as 5 is the next jacobsthal element )
+	8.3  : EXAMPLE : thus, in the second loop, we insert Y4 and Y3
+	8.4  : EXAMPLE : after, in the third loop, we insert Y10 to Y5
+	8.5  : IMPORTANT : make sure to cap the insertion range to the final array's size ( which is often not equal to 2^n - 1 )
 
 	9   : STEP : once all Yn have been inserted, insert the last remaining Yn ( if any ) into the array via a simple binary search
 
